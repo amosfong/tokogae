@@ -1,0 +1,13 @@
+.classpath
+.gradle/
+.idea/
+.project
+.sass-cache/
+.settings/
+bin/
+build/
+classes/
+ivy.xml.MD5
+lib/
+node_modules/
+tmp/
