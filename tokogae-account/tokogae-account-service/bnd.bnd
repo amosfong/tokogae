@@ -1,0 +1,5 @@
+Bundle-Name: Tokogae Accouunt Service
+Bundle-SymbolicName: com.tokogae.account.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
