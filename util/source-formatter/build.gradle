@@ -1,0 +1,6 @@
+dependencies {
+	api group: "commons-io", name: "commons-io", version: "2.15.1"
+	implementation group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
+	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "154.0.0"
+}
