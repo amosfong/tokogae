@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.tokogae.account.model.Subject">
+		<field name="mvccVersion" type="long" />
+		<field name="subjectId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="displayName" type="String" />
+		<field name="male" type="boolean" />
+		<field name="birthday" type="Date" />
+	</model>
+</model-hints>
