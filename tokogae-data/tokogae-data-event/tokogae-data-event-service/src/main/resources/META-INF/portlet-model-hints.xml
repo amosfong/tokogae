@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.tokogae.data.event.model.FoodItem">
+		<field name="mvccVersion" type="long" />
+		<field name="foodItemId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="locationOfOrigin" type="String" />
+		<field name="brand" type="String" />
+		<field name="quantity" type="long" />
+		<field name="quantityUnit" type="String" />
+	</model>
+</model-hints>
