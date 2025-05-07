@@ -1,0 +1,7 @@
+Bundle-Name: Tokogae Data Event API
+Bundle-SymbolicName: com.tokogae.data.event.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.tokogae.data.event.exception,\
+	com.tokogae.data.event.model,\
+	com.tokogae.data.event.service

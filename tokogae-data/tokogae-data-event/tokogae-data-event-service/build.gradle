@@ -1,0 +1,19 @@
+buildService {
+	apiDir = "../tokogae-data-event-api/src/main/java"
+	databaseNameMaxLength = 64
+}
+
+dependencies {
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "4.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.aop.api", version: "3.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "154.0.0"
+	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":tokogae-data:tokogae-data-event:tokogae-data-event-api")
+}
