@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
-import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Exercise;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -19,13 +19,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing FoodItem in entity cache.
+ * The cache model class for representing Exercise in entity cache.
  *
  * @author Amos Fong
  * @generated
  */
-public class FoodItemCacheModel
-	implements CacheModel<FoodItem>, Externalizable, MVCCModel {
+public class ExerciseCacheModel
+	implements CacheModel<Exercise>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -33,14 +33,14 @@ public class FoodItemCacheModel
 			return true;
 		}
 
-		if (!(object instanceof FoodItemCacheModel)) {
+		if (!(object instanceof ExerciseCacheModel)) {
 			return false;
 		}
 
-		FoodItemCacheModel foodItemCacheModel = (FoodItemCacheModel)object;
+		ExerciseCacheModel exerciseCacheModel = (ExerciseCacheModel)object;
 
-		if ((foodItemId == foodItemCacheModel.foodItemId) &&
-			(mvccVersion == foodItemCacheModel.mvccVersion)) {
+		if ((exerciseId == exerciseCacheModel.exerciseId) &&
+			(mvccVersion == exerciseCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -50,7 +50,7 @@ public class FoodItemCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, foodItemId);
+		int hashCode = HashUtil.hash(0, exerciseId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -71,8 +71,8 @@ public class FoodItemCacheModel
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", foodItemId=");
-		sb.append(foodItemId);
+		sb.append(", exerciseId=");
+		sb.append(exerciseId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -87,79 +87,61 @@ public class FoodItemCacheModel
 		sb.append(occurTime);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", locationOfOrigin=");
-		sb.append(locationOfOrigin);
-		sb.append(", brand=");
-		sb.append(brand);
+		sb.append(", type=");
+		sb.append(type);
+		sb.append(", duration=");
+		sb.append(duration);
+		sb.append(", intensityLevel=");
+		sb.append(intensityLevel);
 		sb.append(", quantity=");
 		sb.append(quantity);
-		sb.append(", quantityUnit=");
-		sb.append(quantityUnit);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public FoodItem toEntityModel() {
-		FoodItemImpl foodItemImpl = new FoodItemImpl();
+	public Exercise toEntityModel() {
+		ExerciseImpl exerciseImpl = new ExerciseImpl();
 
-		foodItemImpl.setMvccVersion(mvccVersion);
-		foodItemImpl.setFoodItemId(foodItemId);
-		foodItemImpl.setCompanyId(companyId);
-		foodItemImpl.setUserId(userId);
+		exerciseImpl.setMvccVersion(mvccVersion);
+		exerciseImpl.setExerciseId(exerciseId);
+		exerciseImpl.setCompanyId(companyId);
+		exerciseImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
-			foodItemImpl.setCreateDate(null);
+			exerciseImpl.setCreateDate(null);
 		}
 		else {
-			foodItemImpl.setCreateDate(new Date(createDate));
+			exerciseImpl.setCreateDate(new Date(createDate));
 		}
 
-		foodItemImpl.setOccurDay(occurDay);
-		foodItemImpl.setOccurDaySegment(occurDaySegment);
-		foodItemImpl.setOccurTime(occurTime);
+		exerciseImpl.setOccurDay(occurDay);
+		exerciseImpl.setOccurDaySegment(occurDaySegment);
+		exerciseImpl.setOccurTime(occurTime);
 
 		if (name == null) {
-			foodItemImpl.setName("");
+			exerciseImpl.setName("");
 		}
 		else {
-			foodItemImpl.setName(name);
+			exerciseImpl.setName(name);
 		}
 
-		if (locationOfOrigin == null) {
-			foodItemImpl.setLocationOfOrigin("");
-		}
-		else {
-			foodItemImpl.setLocationOfOrigin(locationOfOrigin);
-		}
+		exerciseImpl.setType(type);
+		exerciseImpl.setDuration(duration);
+		exerciseImpl.setIntensityLevel(intensityLevel);
+		exerciseImpl.setQuantity(quantity);
 
-		if (brand == null) {
-			foodItemImpl.setBrand("");
-		}
-		else {
-			foodItemImpl.setBrand(brand);
-		}
+		exerciseImpl.resetOriginalValues();
 
-		foodItemImpl.setQuantity(quantity);
-
-		if (quantityUnit == null) {
-			foodItemImpl.setQuantityUnit("");
-		}
-		else {
-			foodItemImpl.setQuantityUnit(quantityUnit);
-		}
-
-		foodItemImpl.resetOriginalValues();
-
-		return foodItemImpl;
+		return exerciseImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		foodItemId = objectInput.readLong();
+		exerciseId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -172,18 +154,21 @@ public class FoodItemCacheModel
 
 		occurTime = objectInput.readLong();
 		name = objectInput.readUTF();
-		locationOfOrigin = objectInput.readUTF();
-		brand = objectInput.readUTF();
 
-		quantity = objectInput.readLong();
-		quantityUnit = objectInput.readUTF();
+		type = objectInput.readInt();
+
+		duration = objectInput.readInt();
+
+		intensityLevel = objectInput.readInt();
+
+		quantity = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(foodItemId);
+		objectOutput.writeLong(exerciseId);
 
 		objectOutput.writeLong(companyId);
 
@@ -203,32 +188,17 @@ public class FoodItemCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (locationOfOrigin == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(locationOfOrigin);
-		}
+		objectOutput.writeInt(type);
 
-		if (brand == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(brand);
-		}
+		objectOutput.writeInt(duration);
 
-		objectOutput.writeLong(quantity);
+		objectOutput.writeInt(intensityLevel);
 
-		if (quantityUnit == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(quantityUnit);
-		}
+		objectOutput.writeInt(quantity);
 	}
 
 	public long mvccVersion;
-	public long foodItemId;
+	public long exerciseId;
 	public long companyId;
 	public long userId;
 	public long createDate;
@@ -236,9 +206,9 @@ public class FoodItemCacheModel
 	public int occurDaySegment;
 	public long occurTime;
 	public String name;
-	public String locationOfOrigin;
-	public String brand;
-	public long quantity;
-	public String quantityUnit;
+	public int type;
+	public int duration;
+	public int intensityLevel;
+	public int quantity;
 
 }

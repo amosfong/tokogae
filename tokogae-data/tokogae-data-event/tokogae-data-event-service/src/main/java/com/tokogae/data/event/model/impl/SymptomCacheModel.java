@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
-import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Symptom;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -19,13 +19,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing FoodItem in entity cache.
+ * The cache model class for representing Symptom in entity cache.
  *
  * @author Amos Fong
  * @generated
  */
-public class FoodItemCacheModel
-	implements CacheModel<FoodItem>, Externalizable, MVCCModel {
+public class SymptomCacheModel
+	implements CacheModel<Symptom>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -33,14 +33,14 @@ public class FoodItemCacheModel
 			return true;
 		}
 
-		if (!(object instanceof FoodItemCacheModel)) {
+		if (!(object instanceof SymptomCacheModel)) {
 			return false;
 		}
 
-		FoodItemCacheModel foodItemCacheModel = (FoodItemCacheModel)object;
+		SymptomCacheModel symptomCacheModel = (SymptomCacheModel)object;
 
-		if ((foodItemId == foodItemCacheModel.foodItemId) &&
-			(mvccVersion == foodItemCacheModel.mvccVersion)) {
+		if ((symptomId == symptomCacheModel.symptomId) &&
+			(mvccVersion == symptomCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -50,7 +50,7 @@ public class FoodItemCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, foodItemId);
+		int hashCode = HashUtil.hash(0, symptomId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -67,12 +67,12 @@ public class FoodItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", foodItemId=");
-		sb.append(foodItemId);
+		sb.append(", symptomId=");
+		sb.append(symptomId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -87,79 +87,70 @@ public class FoodItemCacheModel
 		sb.append(occurTime);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", locationOfOrigin=");
-		sb.append(locationOfOrigin);
-		sb.append(", brand=");
-		sb.append(brand);
-		sb.append(", quantity=");
-		sb.append(quantity);
-		sb.append(", quantityUnit=");
-		sb.append(quantityUnit);
+		sb.append(", startDate=");
+		sb.append(startDate);
+		sb.append(", endDate=");
+		sb.append(endDate);
+		sb.append(", intensityLevel=");
+		sb.append(intensityLevel);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public FoodItem toEntityModel() {
-		FoodItemImpl foodItemImpl = new FoodItemImpl();
+	public Symptom toEntityModel() {
+		SymptomImpl symptomImpl = new SymptomImpl();
 
-		foodItemImpl.setMvccVersion(mvccVersion);
-		foodItemImpl.setFoodItemId(foodItemId);
-		foodItemImpl.setCompanyId(companyId);
-		foodItemImpl.setUserId(userId);
+		symptomImpl.setMvccVersion(mvccVersion);
+		symptomImpl.setSymptomId(symptomId);
+		symptomImpl.setCompanyId(companyId);
+		symptomImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
-			foodItemImpl.setCreateDate(null);
+			symptomImpl.setCreateDate(null);
 		}
 		else {
-			foodItemImpl.setCreateDate(new Date(createDate));
+			symptomImpl.setCreateDate(new Date(createDate));
 		}
 
-		foodItemImpl.setOccurDay(occurDay);
-		foodItemImpl.setOccurDaySegment(occurDaySegment);
-		foodItemImpl.setOccurTime(occurTime);
+		symptomImpl.setOccurDay(occurDay);
+		symptomImpl.setOccurDaySegment(occurDaySegment);
+		symptomImpl.setOccurTime(occurTime);
 
 		if (name == null) {
-			foodItemImpl.setName("");
+			symptomImpl.setName("");
 		}
 		else {
-			foodItemImpl.setName(name);
+			symptomImpl.setName(name);
 		}
 
-		if (locationOfOrigin == null) {
-			foodItemImpl.setLocationOfOrigin("");
+		if (startDate == Long.MIN_VALUE) {
+			symptomImpl.setStartDate(null);
 		}
 		else {
-			foodItemImpl.setLocationOfOrigin(locationOfOrigin);
+			symptomImpl.setStartDate(new Date(startDate));
 		}
 
-		if (brand == null) {
-			foodItemImpl.setBrand("");
-		}
-		else {
-			foodItemImpl.setBrand(brand);
-		}
-
-		foodItemImpl.setQuantity(quantity);
-
-		if (quantityUnit == null) {
-			foodItemImpl.setQuantityUnit("");
+		if (endDate == Long.MIN_VALUE) {
+			symptomImpl.setEndDate(null);
 		}
 		else {
-			foodItemImpl.setQuantityUnit(quantityUnit);
+			symptomImpl.setEndDate(new Date(endDate));
 		}
 
-		foodItemImpl.resetOriginalValues();
+		symptomImpl.setIntensityLevel(intensityLevel);
 
-		return foodItemImpl;
+		symptomImpl.resetOriginalValues();
+
+		return symptomImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
-		foodItemId = objectInput.readLong();
+		symptomId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -172,18 +163,17 @@ public class FoodItemCacheModel
 
 		occurTime = objectInput.readLong();
 		name = objectInput.readUTF();
-		locationOfOrigin = objectInput.readUTF();
-		brand = objectInput.readUTF();
+		startDate = objectInput.readLong();
+		endDate = objectInput.readLong();
 
-		quantity = objectInput.readLong();
-		quantityUnit = objectInput.readUTF();
+		intensityLevel = objectInput.readInt();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		objectOutput.writeLong(foodItemId);
+		objectOutput.writeLong(symptomId);
 
 		objectOutput.writeLong(companyId);
 
@@ -203,32 +193,14 @@ public class FoodItemCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (locationOfOrigin == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(locationOfOrigin);
-		}
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
 
-		if (brand == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(brand);
-		}
-
-		objectOutput.writeLong(quantity);
-
-		if (quantityUnit == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(quantityUnit);
-		}
+		objectOutput.writeInt(intensityLevel);
 	}
 
 	public long mvccVersion;
-	public long foodItemId;
+	public long symptomId;
 	public long companyId;
 	public long userId;
 	public long createDate;
@@ -236,9 +208,8 @@ public class FoodItemCacheModel
 	public int occurDaySegment;
 	public long occurTime;
 	public String name;
-	public String locationOfOrigin;
-	public String brand;
-	public long quantity;
-	public String quantityUnit;
+	public long startDate;
+	public long endDate;
+	public int intensityLevel;
 
 }

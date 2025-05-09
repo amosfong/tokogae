@@ -37,6 +37,9 @@ public class FoodItemWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("occurDay", getOccurDay());
+		attributes.put("occurDaySegment", getOccurDaySegment());
+		attributes.put("occurTime", getOccurTime());
 		attributes.put("name", getName());
 		attributes.put("locationOfOrigin", getLocationOfOrigin());
 		attributes.put("brand", getBrand());
@@ -76,6 +79,24 @@ public class FoodItemWrapper
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long occurDay = (Long)attributes.get("occurDay");
+
+		if (occurDay != null) {
+			setOccurDay(occurDay);
+		}
+
+		Integer occurDaySegment = (Integer)attributes.get("occurDaySegment");
+
+		if (occurDaySegment != null) {
+			setOccurDaySegment(occurDaySegment);
+		}
+
+		Long occurTime = (Long)attributes.get("occurTime");
+
+		if (occurTime != null) {
+			setOccurTime(occurTime);
 		}
 
 		String name = (String)attributes.get("name");
@@ -182,6 +203,36 @@ public class FoodItemWrapper
 	@Override
 	public String getName() {
 		return model.getName();
+	}
+
+	/**
+	 * Returns the occur day of this food item.
+	 *
+	 * @return the occur day of this food item
+	 */
+	@Override
+	public long getOccurDay() {
+		return model.getOccurDay();
+	}
+
+	/**
+	 * Returns the occur day segment of this food item.
+	 *
+	 * @return the occur day segment of this food item
+	 */
+	@Override
+	public int getOccurDaySegment() {
+		return model.getOccurDaySegment();
+	}
+
+	/**
+	 * Returns the occur time of this food item.
+	 *
+	 * @return the occur time of this food item
+	 */
+	@Override
+	public long getOccurTime() {
+		return model.getOccurTime();
 	}
 
 	/**
@@ -307,6 +358,36 @@ public class FoodItemWrapper
 	@Override
 	public void setName(String name) {
 		model.setName(name);
+	}
+
+	/**
+	 * Sets the occur day of this food item.
+	 *
+	 * @param occurDay the occur day of this food item
+	 */
+	@Override
+	public void setOccurDay(long occurDay) {
+		model.setOccurDay(occurDay);
+	}
+
+	/**
+	 * Sets the occur day segment of this food item.
+	 *
+	 * @param occurDaySegment the occur day segment of this food item
+	 */
+	@Override
+	public void setOccurDaySegment(int occurDaySegment) {
+		model.setOccurDaySegment(occurDaySegment);
+	}
+
+	/**
+	 * Sets the occur time of this food item.
+	 *
+	 * @param occurTime the occur time of this food item
+	 */
+	@Override
+	public void setOccurTime(long occurTime) {
+		model.setOccurTime(occurTime);
 	}
 
 	/**

@@ -1,16 +1,48 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.tokogae.data.event.model.Exercise">
+		<field name="mvccVersion" type="long" />
+		<field name="exerciseId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="occurDay" type="long" />
+		<field name="occurDaySegment" type="int" />
+		<field name="occurTime" type="long" />
+		<field name="name" type="String" />
+		<field name="type" type="int" />
+		<field name="duration" type="int" />
+		<field name="intensityLevel" type="int" />
+		<field name="quantity" type="int" />
+	</model>
 	<model name="com.tokogae.data.event.model.FoodItem">
 		<field name="mvccVersion" type="long" />
 		<field name="foodItemId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
+		<field name="occurDay" type="long" />
+		<field name="occurDaySegment" type="int" />
+		<field name="occurTime" type="long" />
 		<field name="name" type="String" />
 		<field name="locationOfOrigin" type="String" />
 		<field name="brand" type="String" />
 		<field name="quantity" type="long" />
 		<field name="quantityUnit" type="String" />
+	</model>
+	<model name="com.tokogae.data.event.model.Symptom">
+		<field name="mvccVersion" type="long" />
+		<field name="symptomId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="occurDay" type="long" />
+		<field name="occurDaySegment" type="int" />
+		<field name="occurTime" type="long" />
+		<field name="name" type="String" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="intensityLevel" type="int" />
 	</model>
 </model-hints>

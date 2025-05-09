@@ -137,6 +137,48 @@ public interface FoodItemModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the occur day of this food item.
+	 *
+	 * @return the occur day of this food item
+	 */
+	public long getOccurDay();
+
+	/**
+	 * Sets the occur day of this food item.
+	 *
+	 * @param occurDay the occur day of this food item
+	 */
+	public void setOccurDay(long occurDay);
+
+	/**
+	 * Returns the occur day segment of this food item.
+	 *
+	 * @return the occur day segment of this food item
+	 */
+	public int getOccurDaySegment();
+
+	/**
+	 * Sets the occur day segment of this food item.
+	 *
+	 * @param occurDaySegment the occur day segment of this food item
+	 */
+	public void setOccurDaySegment(int occurDaySegment);
+
+	/**
+	 * Returns the occur time of this food item.
+	 *
+	 * @return the occur time of this food item
+	 */
+	public long getOccurTime();
+
+	/**
+	 * Sets the occur time of this food item.
+	 *
+	 * @param occurTime the occur time of this food item
+	 */
+	public void setOccurTime(long occurTime);
+
+	/**
 	 * Returns the name of this food item.
 	 *
 	 * @return the name of this food item
