@@ -94,7 +94,7 @@ public class SourceFormatter {
 					ExcludeSyntax.REGEX, "^((?!/src/).)*/build/.*")));
 
 		_allFileNames = SourceFormatterUtil.scanForFileNames(
-			_baseDirName, new String[0], new String[] {"**/*.java"},
+			_baseDirName, new String[0], new String[] {"**/*.java", "**/*.jsp"},
 			_sourceFormatterExcludes);
 	}
 

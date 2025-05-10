@@ -29,7 +29,8 @@ public class CopyrightCheck {
 		String copyright = content.substring(0, y);
 
 		if (!copyright.equals(_copyrightTxt)) {
-			return _copyrightTxt + content.substring(y + 2);
+			return content.substring(0, x) + _copyrightTxt +
+				content.substring(y + 2);
 		}
 
 		return content;
