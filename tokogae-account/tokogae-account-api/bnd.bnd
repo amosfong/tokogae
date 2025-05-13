@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.tokogae.account.exception,\
 	com.tokogae.account.model,\
-	com.tokogae.account.service
+	com.tokogae.account.service,\
+	com.tokogae.account.service.persistence

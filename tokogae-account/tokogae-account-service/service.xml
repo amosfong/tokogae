@@ -24,5 +24,11 @@
 		<column name="displayName" type="String" />
 		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
 	</entity>
 </service-builder>

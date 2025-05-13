@@ -6,6 +6,14 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+PortletURL viewSubjectsURL = PortletURLBuilder.createRenderURL(
+	renderResponse
+).setMVCRenderCommandName(
+	"/tokogae/subjects"
+).buildPortletURL();
+%>
+
 <hr />
 
 <h1 style="font-family: cursive; font-size: 50px; text-align: center;">
@@ -43,3 +51,5 @@
 </pre>
 
 <hr />
+
+<a href="<%= viewSubjectsURL.toString() %>">View Subjects</a>
