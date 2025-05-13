@@ -35,6 +35,18 @@ public class SubjectServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.tokogae.account.model.Subject> getSubjects(
+		long userId, int start, int end) {
+
+		return _subjectService.getSubjects(userId, start, end);
+	}
+
+	@Override
+	public int getSubjectsCount(long userId) {
+		return _subjectService.getSubjectsCount(userId);
+	}
+
+	@Override
 	public SubjectService getWrappedService() {
 		return _subjectService;
 	}

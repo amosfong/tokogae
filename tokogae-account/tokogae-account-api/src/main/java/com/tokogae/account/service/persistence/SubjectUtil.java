@@ -111,6 +111,168 @@ public class SubjectUtil {
 	}
 
 	/**
+	 * Returns all the subjects where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching subjects
+	 */
+	public static List<Subject> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the subjects where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SubjectModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of subjects
+	 * @param end the upper bound of the range of subjects (not inclusive)
+	 * @return the range of matching subjects
+	 */
+	public static List<Subject> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the subjects where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SubjectModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of subjects
+	 * @param end the upper bound of the range of subjects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching subjects
+	 */
+	public static List<Subject> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<Subject> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the subjects where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SubjectModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of subjects
+	 * @param end the upper bound of the range of subjects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching subjects
+	 */
+	public static List<Subject> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<Subject> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first subject in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subject
+	 * @throws NoSuchSubjectException if a matching subject could not be found
+	 */
+	public static Subject findByUserId_First(
+			long userId, OrderByComparator<Subject> orderByComparator)
+		throws com.tokogae.account.exception.NoSuchSubjectException {
+
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first subject in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching subject, or <code>null</code> if a matching subject could not be found
+	 */
+	public static Subject fetchByUserId_First(
+		long userId, OrderByComparator<Subject> orderByComparator) {
+
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last subject in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subject
+	 * @throws NoSuchSubjectException if a matching subject could not be found
+	 */
+	public static Subject findByUserId_Last(
+			long userId, OrderByComparator<Subject> orderByComparator)
+		throws com.tokogae.account.exception.NoSuchSubjectException {
+
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last subject in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching subject, or <code>null</code> if a matching subject could not be found
+	 */
+	public static Subject fetchByUserId_Last(
+		long userId, OrderByComparator<Subject> orderByComparator) {
+
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	 * Returns the subjects before and after the current subject in the ordered set where userId = &#63;.
+	 *
+	 * @param subjectId the primary key of the current subject
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next subject
+	 * @throws NoSuchSubjectException if a subject with the primary key could not be found
+	 */
+	public static Subject[] findByUserId_PrevAndNext(
+			long subjectId, long userId,
+			OrderByComparator<Subject> orderByComparator)
+		throws com.tokogae.account.exception.NoSuchSubjectException {
+
+		return getPersistence().findByUserId_PrevAndNext(
+			subjectId, userId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the subjects where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 */
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	 * Returns the number of subjects where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching subjects
+	 */
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	 * Caches the subject in the entity cache if it is enabled.
 	 *
 	 * @param subject the subject

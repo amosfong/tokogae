@@ -283,6 +283,13 @@ public class SubjectLocalServiceWrapper
 		return _subjectLocalService.getSubjects(start, end);
 	}
 
+	@Override
+	public java.util.List<com.tokogae.account.model.Subject> getSubjects(
+		long userId, int start, int end) {
+
+		return _subjectLocalService.getSubjects(userId, start, end);
+	}
+
 	/**
 	 * Returns the number of subjects.
 	 *
@@ -291,6 +298,11 @@ public class SubjectLocalServiceWrapper
 	@Override
 	public int getSubjectsCount() {
 		return _subjectLocalService.getSubjectsCount();
+	}
+
+	@Override
+	public int getSubjectsCount(long userId) {
+		return _subjectLocalService.getSubjectsCount(userId);
 	}
 
 	/**

@@ -235,6 +235,9 @@ public interface SubjectLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Subject> getSubjects(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Subject> getSubjects(long userId, int start, int end);
+
 	/**
 	 * Returns the number of subjects.
 	 *
@@ -242,6 +245,9 @@ public interface SubjectLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSubjectsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSubjectsCount(long userId);
 
 	/**
 	 * Updates the subject in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

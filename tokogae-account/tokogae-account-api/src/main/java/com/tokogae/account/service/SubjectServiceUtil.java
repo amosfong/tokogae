@@ -6,6 +6,10 @@ package com.tokogae.account.service;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
 
+import com.tokogae.account.model.Subject;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for Subject. This utility wraps
  * <code>com.tokogae.account.service.impl.SubjectServiceImpl</code> and is an
@@ -33,6 +37,14 @@ public class SubjectServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<Subject> getSubjects(long userId, int start, int end) {
+		return getService().getSubjects(userId, start, end);
+	}
+
+	public static int getSubjectsCount(long userId) {
+		return getService().getSubjectsCount(userId);
 	}
 
 	public static SubjectService getService() {

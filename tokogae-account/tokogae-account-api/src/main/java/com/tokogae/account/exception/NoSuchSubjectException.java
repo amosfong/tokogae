@@ -1,6 +1,7 @@
 /**
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+
 package com.tokogae.account.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;

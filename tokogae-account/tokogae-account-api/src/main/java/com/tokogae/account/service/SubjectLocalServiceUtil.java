@@ -256,6 +256,10 @@ public class SubjectLocalServiceUtil {
 		return getService().getSubjects(start, end);
 	}
 
+	public static List<Subject> getSubjects(long userId, int start, int end) {
+		return getService().getSubjects(userId, start, end);
+	}
+
 	/**
 	 * Returns the number of subjects.
 	 *
@@ -263,6 +267,10 @@ public class SubjectLocalServiceUtil {
 	 */
 	public static int getSubjectsCount() {
 		return getService().getSubjectsCount();
+	}
+
+	public static int getSubjectsCount(long userId) {
+		return getService().getSubjectsCount(userId);
 	}
 
 	/**

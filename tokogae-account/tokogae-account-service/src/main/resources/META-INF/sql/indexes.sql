@@ -1,0 +1,1 @@
+create index IX_598F440C on Subject (userId);
