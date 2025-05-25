@@ -4,6 +4,7 @@
 
 package com.tokogae.account.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import com.tokogae.account.model.Subject;
@@ -29,6 +30,18 @@ public class SubjectServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.account.service.impl.SubjectServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static Subject addSubject(
+			String firstName, String lastName, String displayName, int gender,
+			java.util.Date birthday)
+		throws PortalException {
+
+		return getService().addSubject(
+			firstName, lastName, displayName, gender, birthday);
+	}
+
+	public static Subject deleteSubject(long subjectId) throws PortalException {
+		return getService().deleteSubject(subjectId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -39,12 +52,25 @@ public class SubjectServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static Subject getSubject(long subjectId) throws PortalException {
+		return getService().getSubject(subjectId);
+	}
+
 	public static List<Subject> getSubjects(long userId, int start, int end) {
 		return getService().getSubjects(userId, start, end);
 	}
 
 	public static int getSubjectsCount(long userId) {
 		return getService().getSubjectsCount(userId);
+	}
+
+	public static Subject updateSubject(
+			long subjectId, String firstName, String lastName,
+			String displayName, int gender, java.util.Date birthday)
+		throws PortalException {
+
+		return getService().updateSubject(
+			subjectId, firstName, lastName, displayName, gender, birthday);
 	}
 
 	public static SubjectService getService() {

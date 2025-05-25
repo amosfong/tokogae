@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the Subject service. Represents a row in the &quot;Subject&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Subject service. Represents a row in the &quot;TOKOGAE_Subject&quot; database table, with each column mapped to a property of this class.
  *
  * @author Amos Fong
  * @see SubjectModel

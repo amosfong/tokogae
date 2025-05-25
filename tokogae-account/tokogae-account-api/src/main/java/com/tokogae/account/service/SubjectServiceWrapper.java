@@ -24,6 +24,23 @@ public class SubjectServiceWrapper
 		_subjectService = subjectService;
 	}
 
+	@Override
+	public com.tokogae.account.model.Subject addSubject(
+			String firstName, String lastName, String displayName, int gender,
+			java.util.Date birthday)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _subjectService.addSubject(
+			firstName, lastName, displayName, gender, birthday);
+	}
+
+	@Override
+	public com.tokogae.account.model.Subject deleteSubject(long subjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _subjectService.deleteSubject(subjectId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -32,6 +49,13 @@ public class SubjectServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _subjectService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.tokogae.account.model.Subject getSubject(long subjectId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _subjectService.getSubject(subjectId);
 	}
 
 	@Override
@@ -44,6 +68,16 @@ public class SubjectServiceWrapper
 	@Override
 	public int getSubjectsCount(long userId) {
 		return _subjectService.getSubjectsCount(userId);
+	}
+
+	@Override
+	public com.tokogae.account.model.Subject updateSubject(
+			long subjectId, String firstName, String lastName,
+			String displayName, int gender, java.util.Date birthday)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _subjectService.updateSubject(
+			subjectId, firstName, lastName, displayName, gender, birthday);
 	}
 
 	@Override

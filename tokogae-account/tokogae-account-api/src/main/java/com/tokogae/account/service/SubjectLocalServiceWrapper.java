@@ -25,6 +25,15 @@ public class SubjectLocalServiceWrapper
 		_subjectLocalService = subjectLocalService;
 	}
 
+	@Override
+	public com.tokogae.account.model.Subject addSubject(
+		long userId, String firstName, String lastName, String displayName,
+		int gender, java.util.Date birthday) {
+
+		return _subjectLocalService.addSubject(
+			userId, firstName, lastName, displayName, gender, birthday);
+	}
+
 	/**
 	 * Adds the subject to the database. Also notifies the appropriate model listeners.
 	 *
@@ -303,6 +312,16 @@ public class SubjectLocalServiceWrapper
 	@Override
 	public int getSubjectsCount(long userId) {
 		return _subjectLocalService.getSubjectsCount(userId);
+	}
+
+	@Override
+	public com.tokogae.account.model.Subject updateSubject(
+			long subjectId, String firstName, String lastName,
+			String displayName, int gender, java.util.Date birthday)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _subjectLocalService.updateSubject(
+			subjectId, firstName, lastName, displayName, gender, birthday);
 	}
 
 	/**

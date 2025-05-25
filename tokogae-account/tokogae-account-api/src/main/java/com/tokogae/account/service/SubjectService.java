@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import com.tokogae.account.model.Subject;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,6 +43,12 @@ public interface SubjectService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.account.service.impl.SubjectServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the subject remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SubjectServiceUtil} if injection and service tracking are not available.
 	 */
+	public Subject addSubject(
+			String firstName, String lastName, String displayName, int gender,
+			Date birthday)
+		throws PortalException;
+
+	public Subject deleteSubject(long subjectId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -51,9 +58,17 @@ public interface SubjectService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Subject getSubject(long subjectId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Subject> getSubjects(long userId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSubjectsCount(long userId);
+
+	public Subject updateSubject(
+			long subjectId, String firstName, String lastName,
+			String displayName, int gender, Date birthday)
+		throws PortalException;
 
 }

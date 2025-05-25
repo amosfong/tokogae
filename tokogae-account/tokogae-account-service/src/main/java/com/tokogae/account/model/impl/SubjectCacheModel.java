@@ -87,8 +87,8 @@ public class SubjectCacheModel
 		sb.append(lastName);
 		sb.append(", displayName=");
 		sb.append(displayName);
-		sb.append(", male=");
-		sb.append(male);
+		sb.append(", gender=");
+		sb.append(gender);
 		sb.append(", birthday=");
 		sb.append(birthday);
 		sb.append("}");
@@ -140,7 +140,7 @@ public class SubjectCacheModel
 			subjectImpl.setDisplayName(displayName);
 		}
 
-		subjectImpl.setMale(male);
+		subjectImpl.setGender(gender);
 
 		if (birthday == Long.MIN_VALUE) {
 			subjectImpl.setBirthday(null);
@@ -169,7 +169,7 @@ public class SubjectCacheModel
 		lastName = objectInput.readUTF();
 		displayName = objectInput.readUTF();
 
-		male = objectInput.readBoolean();
+		gender = objectInput.readInt();
 		birthday = objectInput.readLong();
 	}
 
@@ -206,7 +206,7 @@ public class SubjectCacheModel
 			objectOutput.writeUTF(displayName);
 		}
 
-		objectOutput.writeBoolean(male);
+		objectOutput.writeInt(gender);
 		objectOutput.writeLong(birthday);
 	}
 
@@ -219,7 +219,7 @@ public class SubjectCacheModel
 	public String firstName;
 	public String lastName;
 	public String displayName;
-	public boolean male;
+	public int gender;
 	public long birthday;
 
 }

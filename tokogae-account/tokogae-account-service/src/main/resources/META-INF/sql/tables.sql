@@ -1,4 +1,4 @@
-create table Subject (
+create table TOKOGAE_Subject (
 	mvccVersion LONG default 0 not null,
 	subjectId LONG not null primary key,
 	companyId LONG,
@@ -8,6 +8,6 @@ create table Subject (
 	firstName VARCHAR(75) null,
 	lastName VARCHAR(75) null,
 	displayName VARCHAR(75) null,
-	male BOOLEAN,
+	gender INTEGER,
 	birthday DATE null
 );

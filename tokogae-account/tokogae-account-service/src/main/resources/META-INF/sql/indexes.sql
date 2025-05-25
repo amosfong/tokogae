@@ -1,1 +1,1 @@
-create index IX_598F440C on Subject (userId);
+create index IX_6D42E3B9 on TOKOGAE_Subject (userId);

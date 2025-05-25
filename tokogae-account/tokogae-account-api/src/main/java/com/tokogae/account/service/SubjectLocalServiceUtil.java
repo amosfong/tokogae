@@ -36,6 +36,13 @@ public class SubjectLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.account.service.impl.SubjectLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static Subject addSubject(
+		long userId, String firstName, String lastName, String displayName,
+		int gender, java.util.Date birthday) {
+
+		return getService().addSubject(
+			userId, firstName, lastName, displayName, gender, birthday);
+	}
 
 	/**
 	 * Adds the subject to the database. Also notifies the appropriate model listeners.
@@ -271,6 +278,15 @@ public class SubjectLocalServiceUtil {
 
 	public static int getSubjectsCount(long userId) {
 		return getService().getSubjectsCount(userId);
+	}
+
+	public static Subject updateSubject(
+			long subjectId, String firstName, String lastName,
+			String displayName, int gender, java.util.Date birthday)
+		throws PortalException {
+
+		return getService().updateSubject(
+			subjectId, firstName, lastName, displayName, gender, birthday);
 	}
 
 	/**

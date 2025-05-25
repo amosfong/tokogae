@@ -12,7 +12,7 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;Subject&quot; database table.
+ * The table class for the &quot;TOKOGAE_Subject&quot; database table.
  *
  * @author Amos Fong
  * @see Subject
@@ -40,13 +40,13 @@ public class SubjectTable extends BaseTable<SubjectTable> {
 		"lastName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SubjectTable, String> displayName = createColumn(
 		"displayName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SubjectTable, Boolean> male = createColumn(
-		"male", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<SubjectTable, Integer> gender = createColumn(
+		"gender", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<SubjectTable, Date> birthday = createColumn(
 		"birthday", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private SubjectTable() {
-		super("Subject", SubjectTable::new);
+		super("TOKOGAE_Subject", SubjectTable::new);
 	}
 
 }

@@ -41,7 +41,7 @@ public class SubjectWrapper
 		attributes.put("firstName", getFirstName());
 		attributes.put("lastName", getLastName());
 		attributes.put("displayName", getDisplayName());
-		attributes.put("male", isMale());
+		attributes.put("gender", getGender());
 		attributes.put("birthday", getBirthday());
 
 		return attributes;
@@ -103,10 +103,10 @@ public class SubjectWrapper
 			setDisplayName(displayName);
 		}
 
-		Boolean male = (Boolean)attributes.get("male");
+		Integer gender = (Integer)attributes.get("gender");
 
-		if (male != null) {
-			setMale(male);
+		if (gender != null) {
+			setGender(gender);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -172,6 +172,16 @@ public class SubjectWrapper
 	}
 
 	/**
+	 * Returns the gender of this subject.
+	 *
+	 * @return the gender of this subject
+	 */
+	@Override
+	public int getGender() {
+		return model.getGender();
+	}
+
+	/**
 	 * Returns the last name of this subject.
 	 *
 	 * @return the last name of this subject
@@ -179,16 +189,6 @@ public class SubjectWrapper
 	@Override
 	public String getLastName() {
 		return model.getLastName();
-	}
-
-	/**
-	 * Returns the male of this subject.
-	 *
-	 * @return the male of this subject
-	 */
-	@Override
-	public boolean getMale() {
-		return model.getMale();
 	}
 
 	/**
@@ -251,16 +251,6 @@ public class SubjectWrapper
 		return model.getUserUuid();
 	}
 
-	/**
-	 * Returns <code>true</code> if this subject is male.
-	 *
-	 * @return <code>true</code> if this subject is male; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isMale() {
-		return model.isMale();
-	}
-
 	@Override
 	public void persist() {
 		model.persist();
@@ -317,6 +307,16 @@ public class SubjectWrapper
 	}
 
 	/**
+	 * Sets the gender of this subject.
+	 *
+	 * @param gender the gender of this subject
+	 */
+	@Override
+	public void setGender(int gender) {
+		model.setGender(gender);
+	}
+
+	/**
 	 * Sets the last name of this subject.
 	 *
 	 * @param lastName the last name of this subject
@@ -324,16 +324,6 @@ public class SubjectWrapper
 	@Override
 	public void setLastName(String lastName) {
 		model.setLastName(lastName);
-	}
-
-	/**
-	 * Sets whether this subject is male.
-	 *
-	 * @param male the male of this subject
-	 */
-	@Override
-	public void setMale(boolean male) {
-		model.setMale(male);
 	}
 
 	/**

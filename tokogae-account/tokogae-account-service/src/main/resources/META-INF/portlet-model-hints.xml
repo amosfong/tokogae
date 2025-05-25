@@ -11,7 +11,7 @@
 		<field name="firstName" type="String" />
 		<field name="lastName" type="String" />
 		<field name="displayName" type="String" />
-		<field name="male" type="boolean" />
+		<field name="gender" type="int" />
 		<field name="birthday" type="Date" />
 	</model>
 </model-hints>

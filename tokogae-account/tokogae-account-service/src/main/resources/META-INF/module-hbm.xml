@@ -3,7 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.tokogae.account.model.Subject" />
-	<class dynamic-update="true" name="com.tokogae.account.model.impl.SubjectImpl" table="Subject">
+	<class dynamic-update="true" name="com.tokogae.account.model.impl.SubjectImpl" table="TOKOGAE_Subject">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subjectId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -15,7 +15,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="displayName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="male" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="gender" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="birthday" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

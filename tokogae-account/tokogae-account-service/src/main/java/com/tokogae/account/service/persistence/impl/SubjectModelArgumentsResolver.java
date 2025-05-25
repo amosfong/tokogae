@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"class.name=com.tokogae.account.model.impl.SubjectImpl",
-		"table.name=Subject"
+		"table.name=TOKOGAE_Subject"
 	},
 	service = ArgumentsResolver.class
 )
