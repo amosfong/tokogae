@@ -44,6 +44,18 @@ public class FoodItemLocalServiceWrapper
 		return _foodItemLocalService.addFoodItem(foodItem);
 	}
 
+	@Override
+	public com.tokogae.data.event.model.FoodItem addFoodItem(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, String locationOfOrigin, String brand,
+			int quantity, String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _foodItemLocalService.addFoodItem(
+			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
 	/**
 	 * Creates a new food item with the primary key. Does not add the food item to the database.
 	 *
@@ -315,6 +327,18 @@ public class FoodItemLocalServiceWrapper
 		com.tokogae.data.event.model.FoodItem foodItem) {
 
 		return _foodItemLocalService.updateFoodItem(foodItem);
+	}
+
+	@Override
+	public com.tokogae.data.event.model.FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _foodItemLocalService.updateFoodItem(
+			foodItemId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 
 	@Override

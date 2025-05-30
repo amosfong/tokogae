@@ -4,7 +4,10 @@
 
 package com.tokogae.data.event.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+
+import com.tokogae.data.event.model.FoodItem;
 
 /**
  * Provides the remote service utility for FoodItem. This utility wraps
@@ -25,6 +28,22 @@ public class FoodItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.FoodItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static FoodItem addFoodItem(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return getService().addFoodItem(
+			subjectId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
+	public static FoodItem deleteFoodItem(long foodItemId)
+		throws PortalException {
+
+		return getService().deleteFoodItem(foodItemId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -33,6 +52,17 @@ public class FoodItemServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return getService().updateFoodItem(
+			foodItemId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 
 	public static FoodItemService getService() {

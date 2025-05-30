@@ -51,6 +51,17 @@ public class FoodItemLocalServiceUtil {
 		return getService().addFoodItem(foodItem);
 	}
 
+	public static FoodItem addFoodItem(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, String locationOfOrigin, String brand,
+			int quantity, String quantityUnit)
+		throws PortalException {
+
+		return getService().addFoodItem(
+			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
 	/**
 	 * Creates a new food item with the primary key. Does not add the food item to the database.
 	 *
@@ -279,6 +290,17 @@ public class FoodItemLocalServiceUtil {
 	 */
 	public static FoodItem updateFoodItem(FoodItem foodItem) {
 		return getService().updateFoodItem(foodItem);
+	}
+
+	public static FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return getService().updateFoodItem(
+			foodItemId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 
 	public static FoodItemLocalService getService() {

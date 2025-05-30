@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import com.tokogae.data.event.model.FoodItem;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -37,6 +39,13 @@ public interface FoodItemService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.FoodItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the food item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FoodItemServiceUtil} if injection and service tracking are not available.
 	 */
+	public FoodItem addFoodItem(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException;
+
+	public FoodItem deleteFoodItem(long foodItemId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -44,5 +53,11 @@ public interface FoodItemService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException;
 
 }

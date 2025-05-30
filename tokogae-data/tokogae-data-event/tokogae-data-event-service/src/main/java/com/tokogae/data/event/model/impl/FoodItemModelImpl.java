@@ -63,11 +63,11 @@ public class FoodItemModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"foodItemId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"occurDay", Types.BIGINT},
-		{"occurDaySegment", Types.INTEGER}, {"occurTime", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"locationOfOrigin", Types.VARCHAR},
-		{"brand", Types.VARCHAR}, {"quantity", Types.BIGINT},
-		{"quantityUnit", Types.VARCHAR}
+		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
+		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
+		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"locationOfOrigin", Types.VARCHAR}, {"brand", Types.VARCHAR},
+		{"quantity", Types.BIGINT}, {"quantityUnit", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,6 +79,7 @@ public class FoodItemModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
@@ -90,7 +91,7 @@ public class FoodItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity LONG,quantityUnit VARCHAR(75) null)";
+		"create table FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity LONG,quantityUnit VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FoodItem";
 
@@ -226,6 +227,7 @@ public class FoodItemModelImpl
 			attributeGetterFunctions.put("companyId", FoodItem::getCompanyId);
 			attributeGetterFunctions.put("userId", FoodItem::getUserId);
 			attributeGetterFunctions.put("createDate", FoodItem::getCreateDate);
+			attributeGetterFunctions.put("subjectId", FoodItem::getSubjectId);
 			attributeGetterFunctions.put("occurDay", FoodItem::getOccurDay);
 			attributeGetterFunctions.put(
 				"occurDaySegment", FoodItem::getOccurDaySegment);
@@ -267,6 +269,9 @@ public class FoodItemModelImpl
 			attributeSetterBiConsumers.put(
 				"createDate",
 				(BiConsumer<FoodItem, Date>)FoodItem::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"subjectId",
+				(BiConsumer<FoodItem, Long>)FoodItem::setSubjectId);
 			attributeSetterBiConsumers.put(
 				"occurDay", (BiConsumer<FoodItem, Long>)FoodItem::setOccurDay);
 			attributeSetterBiConsumers.put(
@@ -383,6 +388,21 @@ public class FoodItemModelImpl
 		}
 
 		_createDate = createDate;
+	}
+
+	@JSON
+	@Override
+	public long getSubjectId() {
+		return _subjectId;
+	}
+
+	@Override
+	public void setSubjectId(long subjectId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subjectId = subjectId;
 	}
 
 	@JSON
@@ -586,6 +606,7 @@ public class FoodItemModelImpl
 		foodItemImpl.setCompanyId(getCompanyId());
 		foodItemImpl.setUserId(getUserId());
 		foodItemImpl.setCreateDate(getCreateDate());
+		foodItemImpl.setSubjectId(getSubjectId());
 		foodItemImpl.setOccurDay(getOccurDay());
 		foodItemImpl.setOccurDaySegment(getOccurDaySegment());
 		foodItemImpl.setOccurTime(getOccurTime());
@@ -613,6 +634,8 @@ public class FoodItemModelImpl
 		foodItemImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 		foodItemImpl.setCreateDate(
 			this.<Date>getColumnOriginalValue("createDate"));
+		foodItemImpl.setSubjectId(
+			this.<Long>getColumnOriginalValue("subjectId"));
 		foodItemImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
 		foodItemImpl.setOccurDaySegment(
 			this.<Integer>getColumnOriginalValue("occurDaySegment"));
@@ -716,6 +739,8 @@ public class FoodItemModelImpl
 		else {
 			foodItemCacheModel.createDate = Long.MIN_VALUE;
 		}
+
+		foodItemCacheModel.subjectId = getSubjectId();
 
 		foodItemCacheModel.occurDay = getOccurDay();
 
@@ -823,6 +848,7 @@ public class FoodItemModelImpl
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
+	private long _subjectId;
 	private long _occurDay;
 	private int _occurDaySegment;
 	private long _occurTime;
@@ -865,6 +891,7 @@ public class FoodItemModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("subjectId", _subjectId);
 		_columnOriginalValues.put("occurDay", _occurDay);
 		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
 		_columnOriginalValues.put("occurTime", _occurTime);
@@ -896,21 +923,23 @@ public class FoodItemModelImpl
 
 		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("occurDay", 32L);
+		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDaySegment", 64L);
+		columnBitmasks.put("occurDay", 64L);
 
-		columnBitmasks.put("occurTime", 128L);
+		columnBitmasks.put("occurDaySegment", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("occurTime", 256L);
 
-		columnBitmasks.put("locationOfOrigin", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("brand", 1024L);
+		columnBitmasks.put("locationOfOrigin", 1024L);
 
-		columnBitmasks.put("quantity", 2048L);
+		columnBitmasks.put("brand", 2048L);
 
-		columnBitmasks.put("quantityUnit", 4096L);
+		columnBitmasks.put("quantity", 4096L);
+
+		columnBitmasks.put("quantityUnit", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

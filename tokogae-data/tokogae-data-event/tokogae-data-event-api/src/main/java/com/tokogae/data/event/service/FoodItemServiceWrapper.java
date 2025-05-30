@@ -24,6 +24,25 @@ public class FoodItemServiceWrapper
 		_foodItemService = foodItemService;
 	}
 
+	@Override
+	public com.tokogae.data.event.model.FoodItem addFoodItem(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _foodItemService.addFoodItem(
+			subjectId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
+	@Override
+	public com.tokogae.data.event.model.FoodItem deleteFoodItem(long foodItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _foodItemService.deleteFoodItem(foodItemId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -32,6 +51,18 @@ public class FoodItemServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _foodItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.tokogae.data.event.model.FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _foodItemService.updateFoodItem(
+			foodItemId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 
 	@Override

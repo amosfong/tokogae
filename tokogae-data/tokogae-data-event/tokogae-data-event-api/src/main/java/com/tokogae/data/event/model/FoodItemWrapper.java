@@ -37,6 +37,7 @@ public class FoodItemWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("subjectId", getSubjectId());
 		attributes.put("occurDay", getOccurDay());
 		attributes.put("occurDaySegment", getOccurDaySegment());
 		attributes.put("occurTime", getOccurTime());
@@ -79,6 +80,12 @@ public class FoodItemWrapper
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Long subjectId = (Long)attributes.get("subjectId");
+
+		if (subjectId != null) {
+			setSubjectId(subjectId);
 		}
 
 		Long occurDay = (Long)attributes.get("occurDay");
@@ -266,6 +273,16 @@ public class FoodItemWrapper
 	}
 
 	/**
+	 * Returns the subject ID of this food item.
+	 *
+	 * @return the subject ID of this food item
+	 */
+	@Override
+	public long getSubjectId() {
+		return model.getSubjectId();
+	}
+
+	/**
 	 * Returns the user ID of this food item.
 	 *
 	 * @return the user ID of this food item
@@ -418,6 +435,16 @@ public class FoodItemWrapper
 	@Override
 	public void setQuantityUnit(String quantityUnit) {
 		model.setQuantityUnit(quantityUnit);
+	}
+
+	/**
+	 * Sets the subject ID of this food item.
+	 *
+	 * @param subjectId the subject ID of this food item
+	 */
+	@Override
+	public void setSubjectId(long subjectId) {
+		model.setSubjectId(subjectId);
 	}
 
 	/**

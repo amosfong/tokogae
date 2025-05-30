@@ -20,6 +20,7 @@ create table FoodItem (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
+	subjectId LONG,
 	occurDay LONG,
 	occurDaySegment INTEGER,
 	occurTime LONG,

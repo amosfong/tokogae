@@ -32,6 +32,8 @@ public class FoodItemTable extends BaseTable<FoodItemTable> {
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<FoodItemTable, Long> subjectId = createColumn(
+		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, Long> occurDay = createColumn(
 		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, Integer> occurDaySegment = createColumn(

@@ -66,6 +66,12 @@ public interface FoodItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public FoodItem addFoodItem(FoodItem foodItem);
 
+	public FoodItem addFoodItem(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, String locationOfOrigin, String brand,
+			int quantity, String quantityUnit)
+		throws PortalException;
+
 	/**
 	 * Creates a new food item with the primary key. Does not add the food item to the database.
 	 *
@@ -255,5 +261,11 @@ public interface FoodItemLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public FoodItem updateFoodItem(FoodItem foodItem);
+
+	public FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException;
 
 }

@@ -67,7 +67,7 @@ public class FoodItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -79,6 +79,8 @@ public class FoodItemCacheModel
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", subjectId=");
+		sb.append(subjectId);
 		sb.append(", occurDay=");
 		sb.append(occurDay);
 		sb.append(", occurDaySegment=");
@@ -116,6 +118,7 @@ public class FoodItemCacheModel
 			foodItemImpl.setCreateDate(new Date(createDate));
 		}
 
+		foodItemImpl.setSubjectId(subjectId);
 		foodItemImpl.setOccurDay(occurDay);
 		foodItemImpl.setOccurDaySegment(occurDaySegment);
 		foodItemImpl.setOccurTime(occurTime);
@@ -166,6 +169,8 @@ public class FoodItemCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 
+		subjectId = objectInput.readLong();
+
 		occurDay = objectInput.readLong();
 
 		occurDaySegment = objectInput.readInt();
@@ -189,6 +194,8 @@ public class FoodItemCacheModel
 
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(subjectId);
 
 		objectOutput.writeLong(occurDay);
 
@@ -232,6 +239,7 @@ public class FoodItemCacheModel
 	public long companyId;
 	public long userId;
 	public long createDate;
+	public long subjectId;
 	public long occurDay;
 	public int occurDaySegment;
 	public long occurTime;

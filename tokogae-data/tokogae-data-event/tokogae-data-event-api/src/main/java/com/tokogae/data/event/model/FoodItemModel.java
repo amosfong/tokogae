@@ -137,6 +137,20 @@ public interface FoodItemModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the subject ID of this food item.
+	 *
+	 * @return the subject ID of this food item
+	 */
+	public long getSubjectId();
+
+	/**
+	 * Sets the subject ID of this food item.
+	 *
+	 * @param subjectId the subject ID of this food item
+	 */
+	public void setSubjectId(long subjectId);
+
+	/**
 	 * Returns the occur day of this food item.
 	 *
 	 * @return the occur day of this food item
