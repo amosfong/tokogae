@@ -41,6 +41,7 @@
 
 		<!-- Other fields -->
 
+		<column name="subjectId" type="long" />
 		<column name="occurDay" type="long" />
 		<column name="occurDaySegment" type="int" />
 		<column name="occurTime" type="long" />

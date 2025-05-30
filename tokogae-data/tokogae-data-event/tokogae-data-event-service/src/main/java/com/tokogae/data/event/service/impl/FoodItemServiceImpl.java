@@ -5,7 +5,9 @@
 package com.tokogae.data.event.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
+import com.tokogae.data.event.model.FoodItem;
 import com.tokogae.data.event.service.base.FoodItemServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -21,4 +23,31 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class FoodItemServiceImpl extends FoodItemServiceBaseImpl {
+
+	public FoodItem addFoodItem(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return foodItemLocalService.addFoodItem(
+			getUserId(), subjectId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
+	public FoodItem deleteFoodItem(long foodItemId) throws PortalException {
+		return foodItemLocalService.deleteFoodItem(foodItemId);
+	}
+
+	public FoodItem updateFoodItem(
+			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String locationOfOrigin, String brand, int quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return foodItemLocalService.updateFoodItem(
+			foodItemId, occurDay, occurDaySegment, occurTime, name,
+			locationOfOrigin, brand, quantity, quantityUnit);
+	}
+
 }
