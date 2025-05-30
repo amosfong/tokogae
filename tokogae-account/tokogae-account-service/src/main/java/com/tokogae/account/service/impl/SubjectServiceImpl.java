@@ -6,14 +6,17 @@ package com.tokogae.account.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import com.tokogae.account.model.Subject;
+import com.tokogae.account.permission.SubjectPermission;
 import com.tokogae.account.service.base.SubjectServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Amos Fong
@@ -37,10 +40,16 @@ public class SubjectServiceImpl extends SubjectServiceBaseImpl {
 	}
 
 	public Subject deleteSubject(long subjectId) throws PortalException {
+		_subjectPermission.check(
+			getPermissionChecker(), subjectId, ActionKeys.DELETE);
+
 		return subjectLocalService.deleteSubject(subjectId);
 	}
 
 	public Subject getSubject(long subjectId) throws PortalException {
+		_subjectPermission.check(
+			getPermissionChecker(), subjectId, ActionKeys.VIEW);
+
 		return subjectLocalService.getSubject(subjectId);
 	}
 
@@ -57,8 +66,14 @@ public class SubjectServiceImpl extends SubjectServiceBaseImpl {
 			String displayName, int gender, Date birthday)
 		throws PortalException {
 
+		_subjectPermission.check(
+			getPermissionChecker(), subjectId, ActionKeys.UPDATE);
+
 		return subjectLocalService.updateSubject(
 			subjectId, firstName, lastName, displayName, gender, birthday);
 	}
+
+	@Reference
+	private SubjectPermission _subjectPermission;
 
 }
