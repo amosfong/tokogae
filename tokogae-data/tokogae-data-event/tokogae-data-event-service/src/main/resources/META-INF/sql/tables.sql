@@ -37,10 +37,12 @@ create table Symptom (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
+	subjectId LONG,
 	occurDay LONG,
 	occurDaySegment INTEGER,
 	occurTime LONG,
 	name VARCHAR(75) null,
+	affectedArea VARCHAR(75) null,
 	startDate DATE null,
 	endDate DATE null,
 	intensityLevel INTEGER

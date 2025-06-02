@@ -25,6 +25,19 @@ public class SymptomLocalServiceWrapper
 		_symptomLocalService = symptomLocalService;
 	}
 
+	@Override
+	public com.tokogae.data.event.model.Symptom addSymptom(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, String affectedArea,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _symptomLocalService.addSymptom(
+			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
+			affectedArea, startDate, endDate, intensityLevel);
+	}
+
 	/**
 	 * Adds the symptom to the database. Also notifies the appropriate model listeners.
 	 *
@@ -291,6 +304,18 @@ public class SymptomLocalServiceWrapper
 	@Override
 	public int getSymptomsCount() {
 		return _symptomLocalService.getSymptomsCount();
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Symptom updateSymptom(
+			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, java.util.Date startDate,
+			java.util.Date endDate, int intensityLevel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _symptomLocalService.updateSymptom(
+			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
+			startDate, endDate, intensityLevel);
 	}
 
 	/**

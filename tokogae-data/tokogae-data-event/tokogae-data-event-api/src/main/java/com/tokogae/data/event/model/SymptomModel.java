@@ -137,6 +137,20 @@ public interface SymptomModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the subject ID of this symptom.
+	 *
+	 * @return the subject ID of this symptom
+	 */
+	public long getSubjectId();
+
+	/**
+	 * Sets the subject ID of this symptom.
+	 *
+	 * @param subjectId the subject ID of this symptom
+	 */
+	public void setSubjectId(long subjectId);
+
+	/**
 	 * Returns the occur day of this symptom.
 	 *
 	 * @return the occur day of this symptom
@@ -192,6 +206,21 @@ public interface SymptomModel
 	 * @param name the name of this symptom
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the affected area of this symptom.
+	 *
+	 * @return the affected area of this symptom
+	 */
+	@AutoEscape
+	public String getAffectedArea();
+
+	/**
+	 * Sets the affected area of this symptom.
+	 *
+	 * @param affectedArea the affected area of this symptom
+	 */
+	public void setAffectedArea(String affectedArea);
 
 	/**
 	 * Returns the start date of this symptom.

@@ -67,7 +67,7 @@ public class SymptomCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -79,6 +79,8 @@ public class SymptomCacheModel
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", subjectId=");
+		sb.append(subjectId);
 		sb.append(", occurDay=");
 		sb.append(occurDay);
 		sb.append(", occurDaySegment=");
@@ -87,6 +89,8 @@ public class SymptomCacheModel
 		sb.append(occurTime);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", affectedArea=");
+		sb.append(affectedArea);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", endDate=");
@@ -114,6 +118,7 @@ public class SymptomCacheModel
 			symptomImpl.setCreateDate(new Date(createDate));
 		}
 
+		symptomImpl.setSubjectId(subjectId);
 		symptomImpl.setOccurDay(occurDay);
 		symptomImpl.setOccurDaySegment(occurDaySegment);
 		symptomImpl.setOccurTime(occurTime);
@@ -123,6 +128,13 @@ public class SymptomCacheModel
 		}
 		else {
 			symptomImpl.setName(name);
+		}
+
+		if (affectedArea == null) {
+			symptomImpl.setAffectedArea("");
+		}
+		else {
+			symptomImpl.setAffectedArea(affectedArea);
 		}
 
 		if (startDate == Long.MIN_VALUE) {
@@ -157,12 +169,15 @@ public class SymptomCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 
+		subjectId = objectInput.readLong();
+
 		occurDay = objectInput.readLong();
 
 		occurDaySegment = objectInput.readInt();
 
 		occurTime = objectInput.readLong();
 		name = objectInput.readUTF();
+		affectedArea = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 
@@ -180,6 +195,8 @@ public class SymptomCacheModel
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
+		objectOutput.writeLong(subjectId);
+
 		objectOutput.writeLong(occurDay);
 
 		objectOutput.writeInt(occurDaySegment);
@@ -193,6 +210,13 @@ public class SymptomCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (affectedArea == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(affectedArea);
+		}
+
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
 
@@ -204,10 +228,12 @@ public class SymptomCacheModel
 	public long companyId;
 	public long userId;
 	public long createDate;
+	public long subjectId;
 	public long occurDay;
 	public int occurDaySegment;
 	public long occurTime;
 	public String name;
+	public String affectedArea;
 	public long startDate;
 	public long endDate;
 	public int intensityLevel;

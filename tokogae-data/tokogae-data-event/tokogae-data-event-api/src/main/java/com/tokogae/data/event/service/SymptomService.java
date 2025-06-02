@@ -12,6 +12,10 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import com.tokogae.data.event.model.Symptom;
+
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -37,6 +41,13 @@ public interface SymptomService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the symptom remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SymptomServiceUtil} if injection and service tracking are not available.
 	 */
+	public Symptom addSymptom(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, Date startDate, Date endDate,
+			int intensityLevel)
+		throws PortalException;
+
+	public Symptom deleteSymptom(long symptomId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -44,5 +55,11 @@ public interface SymptomService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public Symptom updateSymptom(
+			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, Date startDate, Date endDate,
+			int intensityLevel)
+		throws PortalException;
 
 }

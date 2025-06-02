@@ -37,10 +37,12 @@ public class SymptomWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("subjectId", getSubjectId());
 		attributes.put("occurDay", getOccurDay());
 		attributes.put("occurDaySegment", getOccurDaySegment());
 		attributes.put("occurTime", getOccurTime());
 		attributes.put("name", getName());
+		attributes.put("affectedArea", getAffectedArea());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("intensityLevel", getIntensityLevel());
@@ -80,6 +82,12 @@ public class SymptomWrapper
 			setCreateDate(createDate);
 		}
 
+		Long subjectId = (Long)attributes.get("subjectId");
+
+		if (subjectId != null) {
+			setSubjectId(subjectId);
+		}
+
 		Long occurDay = (Long)attributes.get("occurDay");
 
 		if (occurDay != null) {
@@ -104,6 +112,12 @@ public class SymptomWrapper
 			setName(name);
 		}
 
+		String affectedArea = (String)attributes.get("affectedArea");
+
+		if (affectedArea != null) {
+			setAffectedArea(affectedArea);
+		}
+
 		Date startDate = (Date)attributes.get("startDate");
 
 		if (startDate != null) {
@@ -126,6 +140,16 @@ public class SymptomWrapper
 	@Override
 	public Symptom cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the affected area of this symptom.
+	 *
+	 * @return the affected area of this symptom
+	 */
+	@Override
+	public String getAffectedArea() {
+		return model.getAffectedArea();
 	}
 
 	/**
@@ -239,6 +263,16 @@ public class SymptomWrapper
 	}
 
 	/**
+	 * Returns the subject ID of this symptom.
+	 *
+	 * @return the subject ID of this symptom
+	 */
+	@Override
+	public long getSubjectId() {
+		return model.getSubjectId();
+	}
+
+	/**
 	 * Returns the symptom ID of this symptom.
 	 *
 	 * @return the symptom ID of this symptom
@@ -271,6 +305,16 @@ public class SymptomWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the affected area of this symptom.
+	 *
+	 * @param affectedArea the affected area of this symptom
+	 */
+	@Override
+	public void setAffectedArea(String affectedArea) {
+		model.setAffectedArea(affectedArea);
 	}
 
 	/**
@@ -381,6 +425,16 @@ public class SymptomWrapper
 	@Override
 	public void setStartDate(Date startDate) {
 		model.setStartDate(startDate);
+	}
+
+	/**
+	 * Sets the subject ID of this symptom.
+	 *
+	 * @param subjectId the subject ID of this symptom
+	 */
+	@Override
+	public void setSubjectId(long subjectId) {
+		model.setSubjectId(subjectId);
 	}
 
 	/**

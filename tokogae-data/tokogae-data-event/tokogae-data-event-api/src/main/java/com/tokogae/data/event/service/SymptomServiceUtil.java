@@ -4,7 +4,10 @@
 
 package com.tokogae.data.event.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+
+import com.tokogae.data.event.model.Symptom;
 
 /**
  * Provides the remote service utility for Symptom. This utility wraps
@@ -25,6 +28,20 @@ public class SymptomServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static Symptom addSymptom(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, java.util.Date startDate,
+			java.util.Date endDate, int intensityLevel)
+		throws PortalException {
+
+		return getService().addSymptom(
+			subjectId, occurDay, occurDaySegment, occurTime, name, affectedArea,
+			startDate, endDate, intensityLevel);
+	}
+
+	public static Symptom deleteSymptom(long symptomId) throws PortalException {
+		return getService().deleteSymptom(symptomId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -33,6 +50,17 @@ public class SymptomServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static Symptom updateSymptom(
+			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, java.util.Date startDate,
+			java.util.Date endDate, int intensityLevel)
+		throws PortalException {
+
+		return getService().updateSymptom(
+			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
+			startDate, endDate, intensityLevel);
 	}
 
 	public static SymptomService getService() {

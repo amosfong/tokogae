@@ -24,6 +24,25 @@ public class SymptomServiceWrapper
 		_symptomService = symptomService;
 	}
 
+	@Override
+	public com.tokogae.data.event.model.Symptom addSymptom(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, java.util.Date startDate,
+			java.util.Date endDate, int intensityLevel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _symptomService.addSymptom(
+			subjectId, occurDay, occurDaySegment, occurTime, name, affectedArea,
+			startDate, endDate, intensityLevel);
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Symptom deleteSymptom(long symptomId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _symptomService.deleteSymptom(symptomId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -32,6 +51,18 @@ public class SymptomServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _symptomService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Symptom updateSymptom(
+			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			String name, String affectedArea, java.util.Date startDate,
+			java.util.Date endDate, int intensityLevel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _symptomService.updateSymptom(
+			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
+			startDate, endDate, intensityLevel);
 	}
 
 	@Override

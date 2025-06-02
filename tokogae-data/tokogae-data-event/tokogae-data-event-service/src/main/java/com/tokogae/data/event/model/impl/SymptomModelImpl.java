@@ -63,9 +63,10 @@ public class SymptomModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"symptomId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"occurDay", Types.BIGINT},
-		{"occurDaySegment", Types.INTEGER}, {"occurTime", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
+		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
+		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
+		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"affectedArea", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
 		{"endDate", Types.TIMESTAMP}, {"intensityLevel", Types.INTEGER}
 	};
 
@@ -78,17 +79,19 @@ public class SymptomModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("affectedArea", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("intensityLevel", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,startDate DATE null,endDate DATE null,intensityLevel INTEGER)";
+		"create table Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,affectedArea VARCHAR(75) null,startDate DATE null,endDate DATE null,intensityLevel INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table Symptom";
 
@@ -223,11 +226,14 @@ public class SymptomModelImpl
 			attributeGetterFunctions.put("companyId", Symptom::getCompanyId);
 			attributeGetterFunctions.put("userId", Symptom::getUserId);
 			attributeGetterFunctions.put("createDate", Symptom::getCreateDate);
+			attributeGetterFunctions.put("subjectId", Symptom::getSubjectId);
 			attributeGetterFunctions.put("occurDay", Symptom::getOccurDay);
 			attributeGetterFunctions.put(
 				"occurDaySegment", Symptom::getOccurDaySegment);
 			attributeGetterFunctions.put("occurTime", Symptom::getOccurTime);
 			attributeGetterFunctions.put("name", Symptom::getName);
+			attributeGetterFunctions.put(
+				"affectedArea", Symptom::getAffectedArea);
 			attributeGetterFunctions.put("startDate", Symptom::getStartDate);
 			attributeGetterFunctions.put("endDate", Symptom::getEndDate);
 			attributeGetterFunctions.put(
@@ -261,6 +267,8 @@ public class SymptomModelImpl
 				"createDate",
 				(BiConsumer<Symptom, Date>)Symptom::setCreateDate);
 			attributeSetterBiConsumers.put(
+				"subjectId", (BiConsumer<Symptom, Long>)Symptom::setSubjectId);
+			attributeSetterBiConsumers.put(
 				"occurDay", (BiConsumer<Symptom, Long>)Symptom::setOccurDay);
 			attributeSetterBiConsumers.put(
 				"occurDaySegment",
@@ -269,6 +277,9 @@ public class SymptomModelImpl
 				"occurTime", (BiConsumer<Symptom, Long>)Symptom::setOccurTime);
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<Symptom, String>)Symptom::setName);
+			attributeSetterBiConsumers.put(
+				"affectedArea",
+				(BiConsumer<Symptom, String>)Symptom::setAffectedArea);
 			attributeSetterBiConsumers.put(
 				"startDate", (BiConsumer<Symptom, Date>)Symptom::setStartDate);
 			attributeSetterBiConsumers.put(
@@ -376,6 +387,21 @@ public class SymptomModelImpl
 
 	@JSON
 	@Override
+	public long getSubjectId() {
+		return _subjectId;
+	}
+
+	@Override
+	public void setSubjectId(long subjectId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subjectId = subjectId;
+	}
+
+	@JSON
+	@Override
 	public long getOccurDay() {
 		return _occurDay;
 	}
@@ -437,6 +463,26 @@ public class SymptomModelImpl
 		}
 
 		_name = name;
+	}
+
+	@JSON
+	@Override
+	public String getAffectedArea() {
+		if (_affectedArea == null) {
+			return "";
+		}
+		else {
+			return _affectedArea;
+		}
+	}
+
+	@Override
+	public void setAffectedArea(String affectedArea) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_affectedArea = affectedArea;
 	}
 
 	@JSON
@@ -545,10 +591,12 @@ public class SymptomModelImpl
 		symptomImpl.setCompanyId(getCompanyId());
 		symptomImpl.setUserId(getUserId());
 		symptomImpl.setCreateDate(getCreateDate());
+		symptomImpl.setSubjectId(getSubjectId());
 		symptomImpl.setOccurDay(getOccurDay());
 		symptomImpl.setOccurDaySegment(getOccurDaySegment());
 		symptomImpl.setOccurTime(getOccurTime());
 		symptomImpl.setName(getName());
+		symptomImpl.setAffectedArea(getAffectedArea());
 		symptomImpl.setStartDate(getStartDate());
 		symptomImpl.setEndDate(getEndDate());
 		symptomImpl.setIntensityLevel(getIntensityLevel());
@@ -571,12 +619,16 @@ public class SymptomModelImpl
 		symptomImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 		symptomImpl.setCreateDate(
 			this.<Date>getColumnOriginalValue("createDate"));
+		symptomImpl.setSubjectId(
+			this.<Long>getColumnOriginalValue("subjectId"));
 		symptomImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
 		symptomImpl.setOccurDaySegment(
 			this.<Integer>getColumnOriginalValue("occurDaySegment"));
 		symptomImpl.setOccurTime(
 			this.<Long>getColumnOriginalValue("occurTime"));
 		symptomImpl.setName(this.<String>getColumnOriginalValue("name"));
+		symptomImpl.setAffectedArea(
+			this.<String>getColumnOriginalValue("affectedArea"));
 		symptomImpl.setStartDate(
 			this.<Date>getColumnOriginalValue("startDate"));
 		symptomImpl.setEndDate(this.<Date>getColumnOriginalValue("endDate"));
@@ -674,6 +726,8 @@ public class SymptomModelImpl
 			symptomCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		symptomCacheModel.subjectId = getSubjectId();
+
 		symptomCacheModel.occurDay = getOccurDay();
 
 		symptomCacheModel.occurDaySegment = getOccurDaySegment();
@@ -686,6 +740,14 @@ public class SymptomModelImpl
 
 		if ((name != null) && (name.length() == 0)) {
 			symptomCacheModel.name = null;
+		}
+
+		symptomCacheModel.affectedArea = getAffectedArea();
+
+		String affectedArea = symptomCacheModel.affectedArea;
+
+		if ((affectedArea != null) && (affectedArea.length() == 0)) {
+			symptomCacheModel.affectedArea = null;
 		}
 
 		Date startDate = getStartDate();
@@ -774,10 +836,12 @@ public class SymptomModelImpl
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
+	private long _subjectId;
 	private long _occurDay;
 	private int _occurDaySegment;
 	private long _occurTime;
 	private String _name;
+	private String _affectedArea;
 	private Date _startDate;
 	private Date _endDate;
 	private int _intensityLevel;
@@ -815,10 +879,12 @@ public class SymptomModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("subjectId", _subjectId);
 		_columnOriginalValues.put("occurDay", _occurDay);
 		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
 		_columnOriginalValues.put("occurTime", _occurTime);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("affectedArea", _affectedArea);
 		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("endDate", _endDate);
 		_columnOriginalValues.put("intensityLevel", _intensityLevel);
@@ -845,19 +911,23 @@ public class SymptomModelImpl
 
 		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("occurDay", 32L);
+		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDaySegment", 64L);
+		columnBitmasks.put("occurDay", 64L);
 
-		columnBitmasks.put("occurTime", 128L);
+		columnBitmasks.put("occurDaySegment", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("occurTime", 256L);
 
-		columnBitmasks.put("startDate", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("endDate", 1024L);
+		columnBitmasks.put("affectedArea", 1024L);
 
-		columnBitmasks.put("intensityLevel", 2048L);
+		columnBitmasks.put("startDate", 2048L);
+
+		columnBitmasks.put("endDate", 4096L);
+
+		columnBitmasks.put("intensityLevel", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

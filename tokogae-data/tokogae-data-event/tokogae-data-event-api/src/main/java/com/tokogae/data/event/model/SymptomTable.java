@@ -32,6 +32,8 @@ public class SymptomTable extends BaseTable<SymptomTable> {
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<SymptomTable, Long> subjectId = createColumn(
+		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Long> occurDay = createColumn(
 		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Integer> occurDaySegment = createColumn(
@@ -40,6 +42,8 @@ public class SymptomTable extends BaseTable<SymptomTable> {
 		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SymptomTable, String> affectedArea = createColumn(
+		"affectedArea", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Date> startDate = createColumn(
 		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Date> endDate = createColumn(
