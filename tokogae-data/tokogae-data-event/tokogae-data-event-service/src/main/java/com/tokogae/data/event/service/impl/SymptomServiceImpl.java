@@ -44,6 +44,8 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 	}
 
 	public Symptom deleteSymptom(long symptomId) throws PortalException {
+		Symptom symptom = symptomLocalService.getSymptom(symptomId);
+
 		_subjectPermission.check(
 			getPermissionChecker(), symptom.getSubjectId(), ActionKeys.UPDATE);
 
