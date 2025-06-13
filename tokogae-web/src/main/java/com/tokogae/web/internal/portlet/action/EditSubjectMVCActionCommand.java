@@ -15,10 +15,10 @@ import com.tokogae.account.exception.NoSuchSubjectException;
 import com.tokogae.account.service.SubjectService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
 
-import java.util.Date;
+import jakarta.portlet.ActionRequest;
+import jakarta.portlet.ActionResponse;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + TokogaePortletKeys.TOKOGAE,
+		"jakarta.portlet.name=" + TokogaePortletKeys.TOKOGAE,
 		"mvc.command.name=/tokogae/edit_subject"
 	},
 	service = MVCActionCommand.class

@@ -11,9 +11,9 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
 import com.tokogae.web.internal.display.context.SubjectsDisplayContext;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import jakarta.portlet.PortletException;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + TokogaePortletKeys.TOKOGAE,
+		"jakarta.portlet.name=" + TokogaePortletKeys.TOKOGAE,
 		"mvc.command.name=/tokogae/subjects"
 	},
 	service = MVCRenderCommand.class

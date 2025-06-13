@@ -24,7 +24,7 @@ page import="com.tokogae.web.internal.constants.TokogaeWebKeys" %><%@
 page import="com.tokogae.web.internal.display.context.SubjectsDisplayContext" %><%@
 page import="com.tokogae.web.internal.display.context.SubjectsToolbarDisplayContext" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="jakarta.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

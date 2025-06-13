@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.tokogae.account.model.Subject;
 import com.tokogae.account.service.SubjectService;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
 
 /**
  * @author Amos Fong
