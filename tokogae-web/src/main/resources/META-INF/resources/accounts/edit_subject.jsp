@@ -28,6 +28,8 @@
 			<aui:input cssClass="lfr-input-text-container" name="firstName" />
 
 			<aui:input cssClass="lfr-textarea-container" name="lastName" />
+
+			<aui:input cssClass="lfr-textarea-container" name="displayName" />
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

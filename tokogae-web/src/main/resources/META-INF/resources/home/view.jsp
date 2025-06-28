@@ -7,49 +7,87 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL viewSubjectsURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/tokogae/subjects"
-).buildPortletURL();
+HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<hr />
+<div class="row">
+	<div class="col-md-3">
+		<liferay-util:include page="/sidebar.jsp" servletContext="<%= application %>" />
+	</div>
 
-<h1 style="font-family: cursive; font-size: 50px; text-align: center;">
-	Tree of Knowledege of Good and Evil
-</h1>
+	<div class="col-md-9">
+		<portlet:actionURL name="/tokogae/edit_food_item" var="editFoodItemURL" />
 
-<p>
-	The Lord God took the man and put him in the garden of Eden to work it and keep it. And the Lord God commanded the man, saying, "You may surely eat of every tree of the garden, but of the tree of the knowledge of good and evil you shall not eat, for in the day that you eat of it you shall surely die."
-</p>
+		<liferay-frontend:edit-form
+			action="<%= editFoodItemURL %>"
+			enctype="multipart/form-data"
+			method="post"
+			name="fm1"
+		>
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+			<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
 
-<p>
-	But the serpent said to the woman, "You will not surely die. For God knows that when you eat of it your eyes will be opened, and you will be like God, knowing good and evil."
-</p>
+			<aui:select id="subjectId" label="subject" name="subjectId">
 
-<div style="text-align: right;">
-	Genesis 2:15-17, 3:4-5
+				<%
+				for (Subject subject : homeDisplayContext.getSubjects()) {
+				%>
+
+					<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<liferay-frontend:edit-form-body>
+				<liferay-frontend:fieldset
+					collapsed="<%= false %>"
+					collapsible="<%= true %>"
+					label="details"
+				>
+					<aui:input name="occurDay" value="<%= homeDisplayContext.getCurrentOccurDay() %>" />
+
+					<aui:select id="occurDaySegment" label="day-segment" name="occurDaySegment">
+
+						<%
+						for (int daySegment : DaySegments.VALUES) {
+						%>
+
+							<aui:option label="<%= DaySegments.getLabel(daySegment) %>" value="<%= daySegment %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:input name="name" />
+
+					<aui:select id="quantityUnit" label="quantity-unit" name="quantityUnit">
+
+						<%
+						for (String quantityUnit : QuantityUnits.VALUES) {
+						%>
+
+							<aui:option label="<%= quantityUnit %>" value="<%= quantityUnit %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:input name="quantity" value="1" />
+				</liferay-frontend:fieldset>
+			</liferay-frontend:edit-form-body>
+
+			<liferay-frontend:edit-form-footer>
+				<liferay-frontend:edit-form-buttons />
+			</liferay-frontend:edit-form-footer>
+		</liferay-frontend:edit-form>
+
+		Today
+	</div>
 </div>
-
-<hr />
-
-<pre style="font-weight: bold; margin-left: 35%;">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#####&nbsp;######&nbsp;###
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####&nbsp;\/#|#@#&nbsp;|/####
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#@##\/#/&nbsp;\||/##/_/@#/##
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###@\&nbsp;\/#@#|/&nbsp;\/&nbsp;#&nbsp;###-##
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##_\_#\_\##&nbsp;|&nbsp;#/#@#_/_###
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;####&nbsp;#&nbsp;\&nbsp;/|&nbsp;/&nbsp;&nbsp;####-##
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#@--@##`\&nbsp;|/,#@-@#-#@#-&nbsp;&nbsp;&nbsp;.o_,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-#@###&nbsp;\|||/&nbsp;##@#--#--&nbsp;&nbsp;/
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\--
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|||
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|||
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/|||\
-._..,..|/.,.\..,.-\\./-/\..,@.\|/.,@..,.,\/
-</pre>
-
-<hr />
-
-<a href="<%= viewSubjectsURL.toString() %>">View Subjects</a>

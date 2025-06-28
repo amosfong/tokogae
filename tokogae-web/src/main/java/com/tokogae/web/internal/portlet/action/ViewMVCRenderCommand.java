@@ -5,14 +5,18 @@
 package com.tokogae.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import com.tokogae.account.service.SubjectService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
+import com.tokogae.web.internal.display.context.HomeDisplayContext;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Amos Fong
@@ -31,7 +35,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		HomeDisplayContext homeDisplayContext = new HomeDisplayContext(
+			renderRequest, renderResponse, _subjectService);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, homeDisplayContext);
+
 		return "/home/view.jsp";
 	}
+
+	@Reference
+	private SubjectService _subjectService;
 
 }

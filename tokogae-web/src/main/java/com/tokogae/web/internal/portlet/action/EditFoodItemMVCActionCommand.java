@@ -7,8 +7,11 @@ package com.tokogae.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import com.tokogae.data.event.exception.NoSuchFoodItemException;
 import com.tokogae.data.event.service.FoodItemService;
@@ -16,6 +19,10 @@ import com.tokogae.web.internal.constants.TokogaePortletKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+
+import java.text.DateFormat;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,10 +58,20 @@ public class EditFoodItemMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateFoodItem(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long foodItemId = ParamUtil.getLong(actionRequest, "foodItemId");
 
 		long subjectId = ParamUtil.getLong(actionRequest, "subjectId");
-		long occurDay = ParamUtil.getLong(actionRequest, "occurDay");
+
+		String occurDayString = ParamUtil.getString(actionRequest, "occurDay");
+
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", themeDisplay.getTimeZone());
+
+		Date occurDayDate = dateFormat.parse(occurDayString);
+
 		int occurDaySegment = ParamUtil.getInteger(
 			actionRequest, "occurDaySegment");
 		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
@@ -68,13 +85,13 @@ public class EditFoodItemMVCActionCommand extends BaseMVCActionCommand {
 
 		if (foodItemId <= 0) {
 			_foodItemService.addFoodItem(
-				subjectId, occurDay, occurDaySegment, occurTime, name,
-				locationOfOrigin, brand, quantity, quantityUnit);
+				subjectId, occurDayDate.getTime(), occurDaySegment, occurTime,
+				name, locationOfOrigin, brand, quantity, quantityUnit);
 		}
 		else {
 			_foodItemService.addFoodItem(
-				foodItemId, occurDay, occurDaySegment, occurTime, name,
-				locationOfOrigin, brand, quantity, quantityUnit);
+				foodItemId, occurDayDate.getTime(), occurDaySegment, occurTime,
+				name, locationOfOrigin, brand, quantity, quantityUnit);
 		}
 	}
 
