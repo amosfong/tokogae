@@ -12,7 +12,7 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;Exercise&quot; database table.
+ * The table class for the &quot;TOKOGAEData_Exercise&quot; database table.
  *
  * @author Amos Fong
  * @see Exercise
@@ -50,7 +50,7 @@ public class ExerciseTable extends BaseTable<ExerciseTable> {
 		"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private ExerciseTable() {
-		super("Exercise", ExerciseTable::new);
+		super("TOKOGAEData_Exercise", ExerciseTable::new);
 	}
 
 }

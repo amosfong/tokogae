@@ -12,7 +12,7 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;Symptom&quot; database table.
+ * The table class for the &quot;TOKOGAEData_Symptom&quot; database table.
  *
  * @author Amos Fong
  * @see Symptom
@@ -52,7 +52,7 @@ public class SymptomTable extends BaseTable<SymptomTable> {
 		"intensityLevel", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private SymptomTable() {
-		super("Symptom", SymptomTable::new);
+		super("TOKOGAEData_Symptom", SymptomTable::new);
 	}
 
 }

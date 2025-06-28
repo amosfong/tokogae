@@ -1,4 +1,4 @@
-create table Exercise (
+create table TOKOGAEData_Exercise (
 	mvccVersion LONG default 0 not null,
 	exerciseId LONG not null primary key,
 	companyId LONG,
@@ -14,7 +14,7 @@ create table Exercise (
 	quantity INTEGER
 );
 
-create table FoodItem (
+create table TOKOGAEData_FoodItem (
 	mvccVersion LONG default 0 not null,
 	foodItemId LONG not null primary key,
 	companyId LONG,
@@ -31,7 +31,7 @@ create table FoodItem (
 	quantityUnit VARCHAR(75) null
 );
 
-create table Symptom (
+create table TOKOGAEData_Symptom (
 	mvccVersion LONG default 0 not null,
 	symptomId LONG not null primary key,
 	companyId LONG,

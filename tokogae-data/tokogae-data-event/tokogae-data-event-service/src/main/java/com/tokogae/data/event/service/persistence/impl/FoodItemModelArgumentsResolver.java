@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"class.name=com.tokogae.data.event.model.impl.FoodItemImpl",
-		"table.name=FoodItem"
+		"table.name=TOKOGAEData_FoodItem"
 	},
 	service = ArgumentsResolver.class
 )

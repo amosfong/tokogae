@@ -5,7 +5,7 @@
 	<import class="com.tokogae.data.event.model.Exercise" />
 	<import class="com.tokogae.data.event.model.FoodItem" />
 	<import class="com.tokogae.data.event.model.Symptom" />
-	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.ExerciseImpl" table="Exercise">
+	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.ExerciseImpl" table="TOKOGAEData_Exercise">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="exerciseId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -22,7 +22,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="intensityLevel" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
-	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.FoodItemImpl" table="FoodItem">
+	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.FoodItemImpl" table="TOKOGAEData_FoodItem">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="foodItemId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -40,7 +40,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantityUnit" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.SymptomImpl" table="Symptom">
+	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.SymptomImpl" table="TOKOGAEData_Symptom">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="symptomId" type="long">
 			<generator class="assigned" />
 		</id>

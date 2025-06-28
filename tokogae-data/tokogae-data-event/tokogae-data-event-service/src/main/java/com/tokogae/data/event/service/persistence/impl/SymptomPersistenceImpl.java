@@ -32,7 +32,7 @@ import com.tokogae.data.event.model.impl.SymptomImpl;
 import com.tokogae.data.event.model.impl.SymptomModelImpl;
 import com.tokogae.data.event.service.persistence.SymptomPersistence;
 import com.tokogae.data.event.service.persistence.SymptomUtil;
-import com.tokogae.data.event.service.persistence.impl.constants.TOKOGAE_DataPersistenceConstants;
+import com.tokogae.data.event.service.persistence.impl.constants.TOKOGAEDataPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -617,7 +617,7 @@ public class SymptomPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = TOKOGAEDataPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -625,7 +625,7 @@ public class SymptomPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = TOKOGAEDataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -634,7 +634,7 @@ public class SymptomPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = TOKOGAEDataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {

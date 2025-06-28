@@ -12,7 +12,7 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;FoodItem&quot; database table.
+ * The table class for the &quot;TOKOGAEData_FoodItem&quot; database table.
  *
  * @author Amos Fong
  * @see FoodItem
@@ -52,7 +52,7 @@ public class FoodItemTable extends BaseTable<FoodItemTable> {
 		"quantityUnit", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private FoodItemTable() {
-		super("FoodItem", FoodItemTable::new);
+		super("TOKOGAEData_FoodItem", FoodItemTable::new);
 	}
 
 }

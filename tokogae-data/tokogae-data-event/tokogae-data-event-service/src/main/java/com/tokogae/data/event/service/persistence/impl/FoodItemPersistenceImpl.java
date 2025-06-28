@@ -32,7 +32,7 @@ import com.tokogae.data.event.model.impl.FoodItemImpl;
 import com.tokogae.data.event.model.impl.FoodItemModelImpl;
 import com.tokogae.data.event.service.persistence.FoodItemPersistence;
 import com.tokogae.data.event.service.persistence.FoodItemUtil;
-import com.tokogae.data.event.service.persistence.impl.constants.TOKOGAE_DataPersistenceConstants;
+import com.tokogae.data.event.service.persistence.impl.constants.TOKOGAEDataPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -617,7 +617,7 @@ public class FoodItemPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = TOKOGAEDataPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -625,7 +625,7 @@ public class FoodItemPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = TOKOGAEDataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -634,7 +634,7 @@ public class FoodItemPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TOKOGAE_DataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = TOKOGAEDataPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {

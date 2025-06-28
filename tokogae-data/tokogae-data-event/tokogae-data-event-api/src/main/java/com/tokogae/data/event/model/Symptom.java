@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the Symptom service. Represents a row in the &quot;Symptom&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Symptom service. Represents a row in the &quot;TOKOGAEData_Symptom&quot; database table, with each column mapped to a property of this class.
  *
  * @author Amos Fong
  * @see SymptomModel

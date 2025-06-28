@@ -8,7 +8,7 @@ package com.tokogae.data.event.service.persistence.impl.constants;
  * @author Amos Fong
  * @generated
  */
-public class TOKOGAE_DataPersistenceConstants {
+public class TOKOGAEDataPersistenceConstants {
 
 	public static final String BUNDLE_SYMBOLIC_NAME =
 		"com.tokogae.data.event.service";
