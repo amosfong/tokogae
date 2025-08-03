@@ -6,8 +6,13 @@ package com.tokogae.data.event.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import com.tokogae.account.service.SubjectLocalService;
+import com.tokogae.data.event.model.DataEvent;
+import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.FoodItem;
 import com.tokogae.data.event.service.base.FoodItemLocalServiceBaseImpl;
 
@@ -46,12 +51,40 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 		foodItem.setQuantity(quantity);
 		foodItem.setQuantityUnit(quantityUnit);
 
-		return foodItemPersistence.update(foodItem);
+		foodItem = foodItemPersistence.update(foodItem);
+
+		DataEvent dataEvent = _dataEventFactory.create(foodItem);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.reindex(dataEvent);
+
+				return null;
+			});
+
+		return foodItem;
 	}
 
 	@Override
 	public FoodItem deleteFoodItem(long foodItemId) throws PortalException {
-		return foodItemPersistence.remove(foodItemId);
+		FoodItem foodItem = foodItemPersistence.remove(foodItemId);
+
+		DataEvent dataEvent = _dataEventFactory.create(foodItem);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.delete(dataEvent);
+
+				return null;
+			});
+
+		return foodItem;
 	}
 
 	public FoodItem updateFoodItem(
@@ -71,8 +104,28 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 		foodItem.setQuantity(quantity);
 		foodItem.setQuantityUnit(quantityUnit);
 
-		return foodItemPersistence.update(foodItem);
+		foodItem = foodItemPersistence.update(foodItem);
+
+		DataEvent dataEvent = _dataEventFactory.create(foodItem);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.reindex(dataEvent);
+
+				return null;
+			});
+
+		return foodItem;
 	}
+
+	@Reference
+	private DataEventFactory _dataEventFactory;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private SubjectLocalService _subjectLocalService;

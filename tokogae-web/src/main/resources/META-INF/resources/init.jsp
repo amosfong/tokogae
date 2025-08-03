@@ -23,12 +23,15 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.tokogae.account.model.Subject" %><%@
 page import="com.tokogae.constants.DaySegments" %><%@
 page import="com.tokogae.constants.QuantityUnits" %><%@
+page import="com.tokogae.data.event.model.DataEvent" %><%@
 page import="com.tokogae.web.internal.constants.TokogaeWebKeys" %><%@
 page import="com.tokogae.web.internal.display.context.HomeDisplayContext" %><%@
 page import="com.tokogae.web.internal.display.context.SubjectsDisplayContext" %><%@
 page import="com.tokogae.web.internal.display.context.SubjectsToolbarDisplayContext" %>
 
 <%@ page import="jakarta.portlet.PortletURL" %>
+
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

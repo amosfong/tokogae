@@ -88,6 +88,17 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>
 
-		Today
+		<%
+		List<DataEvent> dataEvents = homeDisplayContext.getTodaysDataEvents();
+
+		for (DataEvent dataEvent : dataEvents) {
+		%>
+
+			<%= dataEvent.getSummary() %>
+
+		<%
+		}
+		%>
+
 	</div>
 </div>
