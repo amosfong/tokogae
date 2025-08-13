@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +30,8 @@ import com.tokogae.data.event.service.FoodItemLocalService;
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.framework.BundleContext;
@@ -72,6 +75,16 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
+
+		Date minOccurDate = (Date)searchContext.getAttribute("minOccurDate");
+		Date maxOccurDate = (Date)searchContext.getAttribute("maxOccurDate");
+
+		RangeTermFilter rangeTermFilter = new RangeTermFilter(
+			"occurDate_sortable", true, true,
+			String.valueOf(minOccurDate.getTime()),
+			String.valueOf(maxOccurDate.getTime()));
+
+		contextBooleanFilter.add(rangeTermFilter, BooleanClauseOccur.MUST);
 
 		long[] subjectIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("subjectIds"), null);
@@ -151,10 +164,11 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
-		//long companyId = GetterUtil.getLong(ids[0]);
+		List<FoodItem> foodItems = _foodItemLocalService.getFoodItems(-1, -1);
 
-		// get fooditems and reindex
-
+		for (FoodItem foodItem : foodItems) {
+			doReindex(_dataEventFactory.create(foodItem));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

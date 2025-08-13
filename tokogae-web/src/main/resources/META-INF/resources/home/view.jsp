@@ -11,11 +11,49 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 %>
 
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<liferay-util:include page="/sidebar.jsp" servletContext="<%= application %>" />
 	</div>
 
-	<div class="col-md-9">
+	<div class="col-md-3">
+		<clay:sheet>
+			<h2 class="sheet-title">
+				<liferay-ui:message key="today" />
+			</h2>
+
+			<%
+			Map<Integer, List<DataEvent>> dataEventsMap = homeDisplayContext.getTodaysDataEventsMap();
+
+			for (int daySegment : DaySegments.VALUES) {
+			%>
+
+			<ul class="list-group">
+				<li class="list-group-header">
+					<liferay-ui:message key="<%= DaySegments.getLabel(daySegment) %>" />
+				</li>
+
+				<%
+				if (!dataEventsMap.containsKey(daySegment)) {
+					continue;
+				}
+
+				for (DataEvent dataEvent : dataEventsMap.get(daySegment)) {
+				%>
+
+					<li class="list-group-item py-0">
+						<%= dataEvent.getSummary() %>
+					</li>
+
+			<%
+				}
+			}
+			%>
+
+			</ul>
+		</clay:sheet>
+	</div>
+
+	<div class="col-md-7">
 		<portlet:actionURL name="/tokogae/edit_food_item" var="editFoodItemURL" />
 
 		<liferay-frontend:edit-form
@@ -49,7 +87,7 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 				>
 					<aui:input name="occurDay" value="<%= homeDisplayContext.getCurrentOccurDay() %>" />
 
-					<aui:select id="occurDaySegment" label="day-segment" name="occurDaySegment">
+					<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="occurDaySegment" label="day-segment" name="occurDaySegment">
 
 						<%
 						for (int daySegment : DaySegments.VALUES) {
@@ -87,18 +125,5 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 				<liferay-frontend:edit-form-buttons />
 			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>
-
-		<%
-		List<DataEvent> dataEvents = homeDisplayContext.getTodaysDataEvents();
-
-		for (DataEvent dataEvent : dataEvents) {
-		%>
-
-			<%= dataEvent.getSummary() %>
-
-		<%
-		}
-		%>
-
 	</div>
 </div>

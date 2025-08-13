@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import com.tokogae.account.model.Subject;
 import com.tokogae.account.service.SubjectService;
+import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.FoodItem;
@@ -38,7 +40,9 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Amos Fong
@@ -74,7 +78,9 @@ public class HomeDisplayContext {
 			_themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
-	public List<DataEvent> getTodaysDataEvents() throws Exception {
+	public Map<Integer, List<DataEvent>> getTodaysDataEventsMap()
+		throws Exception {
+
 		Indexer<DataEvent> indexer = IndexerRegistryUtil.getIndexer(
 			DataEvent.class);
 
@@ -108,7 +114,7 @@ public class HomeDisplayContext {
 		searchContext.setAttribute("subjectIds", subjectIds);
 
 		searchContext.setEnd(1000);
-		searchContext.setStart(1);
+		searchContext.setStart(0);
 
 		Sort sort = new Sort("occurDay", false);
 
@@ -116,9 +122,11 @@ public class HomeDisplayContext {
 
 		Hits hits = indexer.search(searchContext);
 
-		List<DataEvent> dataEvents = new ArrayList<>();
+		Map<Integer, List<DataEvent>> dataEventsMap = new HashMap<>();
 
 		for (Document document : hits.getDocs()) {
+			DataEvent dataEvent = null;
+
 			String[] primaryKeyArray = StringUtil.split(
 				document.get(Field.ENTRY_CLASS_PK), StringPool.POUND);
 
@@ -128,11 +136,34 @@ public class HomeDisplayContext {
 			if (className.equals(FoodItem.class.getName())) {
 				FoodItem foodItem = _foodItemLocalService.getFoodItem(classPK);
 
-				dataEvents.add(_dataEventFactory.create(foodItem));
+				dataEvent = _dataEventFactory.create(foodItem);
 			}
+
+			Calendar dataEventCalendar = Calendar.getInstance(
+				_themeDisplay.getTimeZone());
+
+			dataEventCalendar.setTime(dataEvent.getOccurDate());
+
+			long dataEventDayTime =
+				(dataEventCalendar.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
+					(dataEventCalendar.get(Calendar.MINUTE) * Time.MINUTE) +
+						(dataEventCalendar.get(Calendar.SECOND) * Time.SECOND) +
+							dataEventCalendar.get(Calendar.MILLISECOND);
+
+			int daySegment = DaySegments.getDaySegment(dataEventDayTime);
+
+			List<DataEvent> dataEvents = dataEventsMap.get(daySegment);
+
+			if (dataEvents == null) {
+				dataEvents = new ArrayList<>();
+
+				dataEventsMap.put(daySegment, dataEvents);
+			}
+
+			dataEvents.add(dataEvent);
 		}
 
-		return dataEvents;
+		return dataEventsMap;
 	}
 
 	private DataEventFactory _dataEventFactory;

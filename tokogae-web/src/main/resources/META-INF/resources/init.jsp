@@ -31,7 +31,8 @@ page import="com.tokogae.web.internal.display.context.SubjectsToolbarDisplayCont
 
 <%@ page import="jakarta.portlet.PortletURL" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

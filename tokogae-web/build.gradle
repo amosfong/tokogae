@@ -10,5 +10,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":tokogae-account:tokogae-account-api")
+	compileOnly project(":tokogae-api")
 	compileOnly project(":tokogae-data:tokogae-data-event:tokogae-data-event-api")
 }
