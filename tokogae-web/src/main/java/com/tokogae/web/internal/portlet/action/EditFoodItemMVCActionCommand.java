@@ -79,7 +79,7 @@ public class EditFoodItemMVCActionCommand extends BaseMVCActionCommand {
 		String locationOfOrigin = ParamUtil.getString(
 			actionRequest, "locationOfOrigin");
 		String brand = ParamUtil.getString(actionRequest, "brand");
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		double quantity = ParamUtil.getDouble(actionRequest, "quantity");
 		String quantityUnit = ParamUtil.getString(
 			actionRequest, "quantityUnit");
 

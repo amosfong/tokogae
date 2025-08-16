@@ -48,7 +48,7 @@
 		<column name="name" type="String" />
 		<column name="locationOfOrigin" type="String" />
 		<column name="brand" type="String" />
-		<column name="quantity" type="long" />
+		<column name="quantity" type="double" />
 		<column name="quantityUnit" type="String" />
 	</entity>
 	<entity local-service="true" name="Symptom" remote-service="true">

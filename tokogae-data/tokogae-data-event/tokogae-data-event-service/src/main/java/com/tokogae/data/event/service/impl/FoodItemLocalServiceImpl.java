@@ -31,7 +31,7 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 	public FoodItem addFoodItem(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
 			long occurTime, String name, String locationOfOrigin, String brand,
-			int quantity, String quantityUnit)
+			double quantity, String quantityUnit)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -89,7 +89,7 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 	public FoodItem updateFoodItem(
 			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String locationOfOrigin, String brand, int quantity,
+			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException {
 

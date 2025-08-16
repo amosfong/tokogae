@@ -52,7 +52,7 @@ public class DataEventImpl implements DataEvent {
 
 			StringBundler sb = new StringBundler();
 
-			sb.append(foodItem.getQuantity());
+			sb.append(foodItem.getQuantityLabel());
 			sb.append(StringPool.SPACE);
 			sb.append(foodItem.getQuantityUnit());
 			sb.append(StringPool.SPACE);
