@@ -180,7 +180,7 @@ public class FoodItemCacheModel
 		locationOfOrigin = objectInput.readUTF();
 		brand = objectInput.readUTF();
 
-		quantity = objectInput.readLong();
+		quantity = objectInput.readDouble();
 		quantityUnit = objectInput.readUTF();
 	}
 
@@ -224,7 +224,7 @@ public class FoodItemCacheModel
 			objectOutput.writeUTF(brand);
 		}
 
-		objectOutput.writeLong(quantity);
+		objectOutput.writeDouble(quantity);
 
 		if (quantityUnit == null) {
 			objectOutput.writeUTF("");
@@ -246,7 +246,7 @@ public class FoodItemCacheModel
 	public String name;
 	public String locationOfOrigin;
 	public String brand;
-	public long quantity;
+	public double quantity;
 	public String quantityUnit;
 
 }

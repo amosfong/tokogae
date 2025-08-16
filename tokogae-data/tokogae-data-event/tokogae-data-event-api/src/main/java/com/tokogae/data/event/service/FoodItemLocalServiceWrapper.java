@@ -48,7 +48,7 @@ public class FoodItemLocalServiceWrapper
 	public com.tokogae.data.event.model.FoodItem addFoodItem(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
 			long occurTime, String name, String locationOfOrigin, String brand,
-			int quantity, String quantityUnit)
+			double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _foodItemLocalService.addFoodItem(
@@ -332,7 +332,7 @@ public class FoodItemLocalServiceWrapper
 	@Override
 	public com.tokogae.data.event.model.FoodItem updateFoodItem(
 			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String locationOfOrigin, String brand, int quantity,
+			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

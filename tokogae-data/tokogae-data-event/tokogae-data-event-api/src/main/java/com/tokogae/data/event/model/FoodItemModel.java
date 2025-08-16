@@ -242,14 +242,14 @@ public interface FoodItemModel
 	 *
 	 * @return the quantity of this food item
 	 */
-	public long getQuantity();
+	public double getQuantity();
 
 	/**
 	 * Sets the quantity of this food item.
 	 *
 	 * @param quantity the quantity of this food item
 	 */
-	public void setQuantity(long quantity);
+	public void setQuantity(double quantity);
 
 	/**
 	 * Returns the quantity unit of this food item.

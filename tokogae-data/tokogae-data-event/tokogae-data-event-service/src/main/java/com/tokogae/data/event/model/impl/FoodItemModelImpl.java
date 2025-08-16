@@ -67,7 +67,7 @@ public class FoodItemModelImpl
 		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
 		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"locationOfOrigin", Types.VARCHAR}, {"brand", Types.VARCHAR},
-		{"quantity", Types.BIGINT}, {"quantityUnit", Types.VARCHAR}
+		{"quantity", Types.DOUBLE}, {"quantityUnit", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -86,12 +86,12 @@ public class FoodItemModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("locationOfOrigin", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("brand", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("quantity", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("quantityUnit", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity LONG,quantityUnit VARCHAR(75) null)";
+		"create table TOKOGAEData_FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_FoodItem";
@@ -289,7 +289,8 @@ public class FoodItemModelImpl
 			attributeSetterBiConsumers.put(
 				"brand", (BiConsumer<FoodItem, String>)FoodItem::setBrand);
 			attributeSetterBiConsumers.put(
-				"quantity", (BiConsumer<FoodItem, Long>)FoodItem::setQuantity);
+				"quantity",
+				(BiConsumer<FoodItem, Double>)FoodItem::setQuantity);
 			attributeSetterBiConsumers.put(
 				"quantityUnit",
 				(BiConsumer<FoodItem, String>)FoodItem::setQuantityUnit);
@@ -513,12 +514,12 @@ public class FoodItemModelImpl
 
 	@JSON
 	@Override
-	public long getQuantity() {
+	public double getQuantity() {
 		return _quantity;
 	}
 
 	@Override
-	public void setQuantity(long quantity) {
+	public void setQuantity(double quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -646,7 +647,8 @@ public class FoodItemModelImpl
 		foodItemImpl.setLocationOfOrigin(
 			this.<String>getColumnOriginalValue("locationOfOrigin"));
 		foodItemImpl.setBrand(this.<String>getColumnOriginalValue("brand"));
-		foodItemImpl.setQuantity(this.<Long>getColumnOriginalValue("quantity"));
+		foodItemImpl.setQuantity(
+			this.<Double>getColumnOriginalValue("quantity"));
 		foodItemImpl.setQuantityUnit(
 			this.<String>getColumnOriginalValue("quantityUnit"));
 
@@ -856,7 +858,7 @@ public class FoodItemModelImpl
 	private String _name;
 	private String _locationOfOrigin;
 	private String _brand;
-	private long _quantity;
+	private double _quantity;
 	private String _quantityUnit;
 
 	public <T> T getColumnValue(String columnName) {

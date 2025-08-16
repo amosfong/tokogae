@@ -41,7 +41,7 @@ public interface FoodItemService extends BaseService {
 	 */
 	public FoodItem addFoodItem(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String locationOfOrigin, String brand, int quantity,
+			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException;
 
@@ -56,7 +56,7 @@ public interface FoodItemService extends BaseService {
 
 	public FoodItem updateFoodItem(
 			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String locationOfOrigin, String brand, int quantity,
+			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException;
 

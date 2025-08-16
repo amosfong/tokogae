@@ -124,7 +124,7 @@ public class FoodItemWrapper
 			setBrand(brand);
 		}
 
-		Long quantity = (Long)attributes.get("quantity");
+		Double quantity = (Double)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
@@ -258,8 +258,13 @@ public class FoodItemWrapper
 	 * @return the quantity of this food item
 	 */
 	@Override
-	public long getQuantity() {
+	public double getQuantity() {
 		return model.getQuantity();
+	}
+
+	@Override
+	public String getQuantityLabel() {
+		return model.getQuantityLabel();
 	}
 
 	/**
@@ -423,7 +428,7 @@ public class FoodItemWrapper
 	 * @param quantity the quantity of this food item
 	 */
 	@Override
-	public void setQuantity(long quantity) {
+	public void setQuantity(double quantity) {
 		model.setQuantity(quantity);
 	}
 

@@ -27,7 +27,7 @@ create table TOKOGAEData_FoodItem (
 	name VARCHAR(75) null,
 	locationOfOrigin VARCHAR(75) null,
 	brand VARCHAR(75) null,
-	quantity LONG,
+	quantity DOUBLE,
 	quantityUnit VARCHAR(75) null
 );
 

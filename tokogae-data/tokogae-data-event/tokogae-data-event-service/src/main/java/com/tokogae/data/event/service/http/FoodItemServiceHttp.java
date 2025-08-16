@@ -44,7 +44,7 @@ public class FoodItemServiceHttp {
 	public static com.tokogae.data.event.model.FoodItem addFoodItem(
 			HttpPrincipal httpPrincipal, long subjectId, long occurDay,
 			int occurDaySegment, long occurTime, String name,
-			String locationOfOrigin, String brand, int quantity,
+			String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -128,7 +128,7 @@ public class FoodItemServiceHttp {
 	public static com.tokogae.data.event.model.FoodItem updateFoodItem(
 			HttpPrincipal httpPrincipal, long foodItemId, long occurDay,
 			int occurDaySegment, long occurTime, String name,
-			String locationOfOrigin, String brand, int quantity,
+			String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -173,14 +173,14 @@ public class FoodItemServiceHttp {
 
 	private static final Class<?>[] _addFoodItemParameterTypes0 = new Class[] {
 		long.class, long.class, int.class, long.class, String.class,
-		String.class, String.class, int.class, String.class
+		String.class, String.class, double.class, String.class
 	};
 	private static final Class<?>[] _deleteFoodItemParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateFoodItemParameterTypes2 =
 		new Class[] {
 			long.class, long.class, int.class, long.class, String.class,
-			String.class, String.class, int.class, String.class
+			String.class, String.class, double.class, String.class
 		};
 
 }

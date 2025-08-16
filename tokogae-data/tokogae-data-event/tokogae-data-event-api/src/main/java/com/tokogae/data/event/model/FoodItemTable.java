@@ -46,8 +46,8 @@ public class FoodItemTable extends BaseTable<FoodItemTable> {
 		"locationOfOrigin", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, String> brand = createColumn(
 		"brand", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<FoodItemTable, Long> quantity = createColumn(
-		"quantity", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FoodItemTable, Double> quantity = createColumn(
+		"quantity", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, String> quantityUnit = createColumn(
 		"quantityUnit", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

@@ -46,4 +46,6 @@ public interface FoodItem extends FoodItemModel, PersistedModel {
 
 		};
 
+	public String getQuantityLabel();
+
 }
