@@ -19,9 +19,9 @@ dependencies {
 	implementation project(":util:source-formatter")
 }
 
-task fs(type: JavaExec)
+task formatSourceCustom(type: JavaExec)
 
-fs {
+formatSourceCustom {
 	dependsOn(":util:source-formatter:compileJava")
 
 	mainClass = 'com.tokogae.source.formatter.SourceFormatter'

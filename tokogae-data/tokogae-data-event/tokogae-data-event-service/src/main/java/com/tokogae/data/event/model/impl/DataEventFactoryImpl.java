@@ -8,6 +8,7 @@ import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Symptom;
 
 import java.util.Date;
 
@@ -42,6 +43,7 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		}
 
 	*/
+
 	public DataEvent create(FoodItem foodItem) {
 		DataEvent dataEvent = new DataEventImpl();
 
@@ -62,6 +64,30 @@ public class DataEventFactoryImpl implements DataEventFactory {
 
 		dataEvent.setOriginalObject(foodItem);
 		dataEvent.setSubjectId(foodItem.getSubjectId());
+
+		return dataEvent;
+	}
+
+	public DataEvent create(Symptom symptom) {
+		DataEvent dataEvent = new DataEventImpl();
+
+		dataEvent.setCompanyId(symptom.getCompanyId());
+		dataEvent.setClassName(Symptom.class.getName());
+		dataEvent.setClassPK(symptom.getSymptomId());
+
+		long occurTime = 0;
+
+		if (symptom.getOccurTime() > 0) {
+			occurTime = symptom.getOccurTime();
+		}
+		else {
+			occurTime = DaySegments.getDayTime(symptom.getOccurDaySegment());
+		}
+
+		dataEvent.setOccurDate(new Date(symptom.getOccurDay() + occurTime));
+
+		dataEvent.setOriginalObject(symptom);
+		dataEvent.setSubjectId(symptom.getSubjectId());
 
 		return dataEvent;
 	}

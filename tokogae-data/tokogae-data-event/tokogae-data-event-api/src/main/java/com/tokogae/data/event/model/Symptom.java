@@ -46,4 +46,6 @@ public interface Symptom extends PersistedModel, SymptomModel {
 
 		};
 
+	public String getIntensityLevelLabel();
+
 }

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Symptom;
 
 import java.util.Date;
 
@@ -57,6 +58,21 @@ public class DataEventImpl implements DataEvent {
 			sb.append(foodItem.getQuantityUnit());
 			sb.append(StringPool.SPACE);
 			sb.append(foodItem.getName());
+
+			return sb.toString();
+		}
+		else if (_className.equals(Symptom.class.getName())) {
+			Symptom symptom = (Symptom)_originalObject;
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(symptom.getIntensityLevelLabel());
+			sb.append(StringPool.SPACE);
+			sb.append(symptom.getName());
+			sb.append(StringPool.SPACE);
+			sb.append(" on ");
+			sb.append(StringPool.SPACE);
+			sb.append(symptom.getAffectedArea());
 
 			return sb.toString();
 		}

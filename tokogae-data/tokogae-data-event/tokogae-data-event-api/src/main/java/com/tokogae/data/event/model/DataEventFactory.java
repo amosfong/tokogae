@@ -11,4 +11,6 @@ public interface DataEventFactory {
 
 	public DataEvent create(FoodItem foodItem);
 
+	public DataEvent create(Symptom symptom);
+
 }

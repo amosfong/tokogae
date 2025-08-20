@@ -192,6 +192,11 @@ public class SymptomWrapper
 		return model.getIntensityLevel();
 	}
 
+	@Override
+	public String getIntensityLevelLabel() {
+		return model.getIntensityLevelLabel();
+	}
+
 	/**
 	 * Returns the mvcc version of this symptom.
 	 *

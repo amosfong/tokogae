@@ -4,9 +4,12 @@
 
 package com.tokogae.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -28,7 +31,9 @@ import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SymptomLocalService;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -52,13 +57,15 @@ public class HomeDisplayContext {
 	public HomeDisplayContext(
 		DataEventFactory dataEventFactory,
 		FoodItemLocalService foodItemLocalService, RenderRequest renderRequest,
-		RenderResponse renderResponse, SubjectService subjectService) {
+		RenderResponse renderResponse, SubjectService subjectService,
+		SymptomLocalService symptomLocalService) {
 
 		_dataEventFactory = dataEventFactory;
 		_foodItemLocalService = foodItemLocalService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_subjectService = subjectService;
+		_symptomLocalService = symptomLocalService;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
@@ -76,6 +83,19 @@ public class HomeDisplayContext {
 	public List<Subject> getSubjects() throws PortalException {
 		return _subjectService.getSubjects(
 			_themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	public List<TabsItem> getTabsItems() {
+		return TabsItemListBuilder.add(
+			tabsItem -> {
+				tabsItem.setActive(true);
+				tabsItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "food"));
+			}
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "symptoms"))
+		).build();
 	}
 
 	public Map<Integer, List<DataEvent>> getTodaysDataEventsMap()
@@ -138,6 +158,11 @@ public class HomeDisplayContext {
 
 				dataEvent = _dataEventFactory.create(foodItem);
 			}
+			else if (className.equals(Symptom.class.getName())) {
+				Symptom symptom = _symptomLocalService.getSymptom(classPK);
+
+				dataEvent = _dataEventFactory.create(symptom);
+			}
 
 			Calendar dataEventCalendar = Calendar.getInstance(
 				_themeDisplay.getTimeZone());
@@ -173,6 +198,7 @@ public class HomeDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SubjectService _subjectService;
+	private SymptomLocalService _symptomLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

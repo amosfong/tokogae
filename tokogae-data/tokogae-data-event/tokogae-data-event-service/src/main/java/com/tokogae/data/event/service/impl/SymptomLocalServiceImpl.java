@@ -6,8 +6,13 @@ package com.tokogae.data.event.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import com.tokogae.account.service.SubjectLocalService;
+import com.tokogae.data.event.model.DataEvent;
+import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.base.SymptomLocalServiceBaseImpl;
 
@@ -48,7 +53,21 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);
 
-		return symptomPersistence.update(symptom);
+		symptom = symptomPersistence.update(symptom);
+
+		DataEvent dataEvent = _dataEventFactory.create(symptom);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.reindex(dataEvent);
+
+				return null;
+			});
+
+		return symptom;
 	}
 
 	public Symptom updateSymptom(
@@ -68,8 +87,28 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);
 
-		return symptomPersistence.update(symptom);
+		symptom = symptomPersistence.update(symptom);
+
+		DataEvent dataEvent = _dataEventFactory.create(symptom);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.reindex(dataEvent);
+
+				return null;
+			});
+
+		return symptom;
 	}
+
+	@Reference
+	private DataEventFactory _dataEventFactory;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private SubjectLocalService _subjectLocalService;

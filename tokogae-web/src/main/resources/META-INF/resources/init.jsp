@@ -22,6 +22,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="com.tokogae.account.model.Subject" %><%@
 page import="com.tokogae.constants.DaySegments" %><%@
+page import="com.tokogae.constants.IntensityLevels" %><%@
 page import="com.tokogae.constants.QuantityUnits" %><%@
 page import="com.tokogae.data.event.model.DataEvent" %><%@
 page import="com.tokogae.web.internal.constants.TokogaeWebKeys" %><%@
