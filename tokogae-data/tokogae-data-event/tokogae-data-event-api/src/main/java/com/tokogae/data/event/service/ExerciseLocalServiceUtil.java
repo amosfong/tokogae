@@ -51,6 +51,17 @@ public class ExerciseLocalServiceUtil {
 		return getService().addExercise(exercise);
 	}
 
+	public static Exercise addExercise(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, long duration, double quantity,
+			String quantityUnit)
+		throws PortalException {
+
+		return getService().addExercise(
+			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
+			duration, quantity, quantityUnit);
+	}
+
 	/**
 	 * Creates a new exercise with the primary key. Does not add the exercise to the database.
 	 *
@@ -279,6 +290,16 @@ public class ExerciseLocalServiceUtil {
 	 */
 	public static Exercise updateExercise(Exercise exercise) {
 		return getService().updateExercise(exercise);
+	}
+
+	public static Exercise updateExercise(
+			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws PortalException {
+
+		return getService().updateExercise(
+			exerciseId, occurDay, occurDaySegment, occurTime, name, duration,
+			quantity, quantityUnit);
 	}
 
 	public static ExerciseLocalService getService() {

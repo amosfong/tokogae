@@ -4,14 +4,14 @@ create table TOKOGAEData_Exercise (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
+	subjectId LONG,
 	occurDay LONG,
 	occurDaySegment INTEGER,
 	occurTime LONG,
 	name VARCHAR(75) null,
-	type_ INTEGER,
-	duration INTEGER,
-	intensityLevel INTEGER,
-	quantity INTEGER
+	duration LONG,
+	quantity DOUBLE,
+	quantityUnit VARCHAR(75) null
 );
 
 create table TOKOGAEData_FoodItem (

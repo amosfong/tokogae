@@ -63,11 +63,11 @@ public class ExerciseModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"exerciseId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"occurDay", Types.BIGINT},
-		{"occurDaySegment", Types.INTEGER}, {"occurTime", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"duration", Types.INTEGER}, {"intensityLevel", Types.INTEGER},
-		{"quantity", Types.INTEGER}
+		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
+		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
+		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"duration", Types.BIGINT}, {"quantity", Types.DOUBLE},
+		{"quantityUnit", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,18 +79,18 @@ public class ExerciseModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("duration", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("intensityLevel", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("quantityUnit", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_Exercise (mvccVersion LONG default 0 not null,exerciseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,type_ INTEGER,duration INTEGER,intensityLevel INTEGER,quantity INTEGER)";
+		"create table TOKOGAEData_Exercise (mvccVersion LONG default 0 not null,exerciseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,duration LONG,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_Exercise";
@@ -227,16 +227,16 @@ public class ExerciseModelImpl
 			attributeGetterFunctions.put("companyId", Exercise::getCompanyId);
 			attributeGetterFunctions.put("userId", Exercise::getUserId);
 			attributeGetterFunctions.put("createDate", Exercise::getCreateDate);
+			attributeGetterFunctions.put("subjectId", Exercise::getSubjectId);
 			attributeGetterFunctions.put("occurDay", Exercise::getOccurDay);
 			attributeGetterFunctions.put(
 				"occurDaySegment", Exercise::getOccurDaySegment);
 			attributeGetterFunctions.put("occurTime", Exercise::getOccurTime);
 			attributeGetterFunctions.put("name", Exercise::getName);
-			attributeGetterFunctions.put("type", Exercise::getType);
 			attributeGetterFunctions.put("duration", Exercise::getDuration);
-			attributeGetterFunctions.put(
-				"intensityLevel", Exercise::getIntensityLevel);
 			attributeGetterFunctions.put("quantity", Exercise::getQuantity);
+			attributeGetterFunctions.put(
+				"quantityUnit", Exercise::getQuantityUnit);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -268,6 +268,9 @@ public class ExerciseModelImpl
 				"createDate",
 				(BiConsumer<Exercise, Date>)Exercise::setCreateDate);
 			attributeSetterBiConsumers.put(
+				"subjectId",
+				(BiConsumer<Exercise, Long>)Exercise::setSubjectId);
+			attributeSetterBiConsumers.put(
 				"occurDay", (BiConsumer<Exercise, Long>)Exercise::setOccurDay);
 			attributeSetterBiConsumers.put(
 				"occurDaySegment",
@@ -278,16 +281,13 @@ public class ExerciseModelImpl
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<Exercise, String>)Exercise::setName);
 			attributeSetterBiConsumers.put(
-				"type", (BiConsumer<Exercise, Integer>)Exercise::setType);
-			attributeSetterBiConsumers.put(
-				"duration",
-				(BiConsumer<Exercise, Integer>)Exercise::setDuration);
-			attributeSetterBiConsumers.put(
-				"intensityLevel",
-				(BiConsumer<Exercise, Integer>)Exercise::setIntensityLevel);
+				"duration", (BiConsumer<Exercise, Long>)Exercise::setDuration);
 			attributeSetterBiConsumers.put(
 				"quantity",
-				(BiConsumer<Exercise, Integer>)Exercise::setQuantity);
+				(BiConsumer<Exercise, Double>)Exercise::setQuantity);
+			attributeSetterBiConsumers.put(
+				"quantityUnit",
+				(BiConsumer<Exercise, String>)Exercise::setQuantityUnit);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -388,6 +388,21 @@ public class ExerciseModelImpl
 
 	@JSON
 	@Override
+	public long getSubjectId() {
+		return _subjectId;
+	}
+
+	@Override
+	public void setSubjectId(long subjectId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subjectId = subjectId;
+	}
+
+	@JSON
+	@Override
 	public long getOccurDay() {
 		return _occurDay;
 	}
@@ -453,27 +468,12 @@ public class ExerciseModelImpl
 
 	@JSON
 	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_type = type;
-	}
-
-	@JSON
-	@Override
-	public int getDuration() {
+	public long getDuration() {
 		return _duration;
 	}
 
 	@Override
-	public void setDuration(int duration) {
+	public void setDuration(long duration) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -483,32 +483,37 @@ public class ExerciseModelImpl
 
 	@JSON
 	@Override
-	public int getIntensityLevel() {
-		return _intensityLevel;
-	}
-
-	@Override
-	public void setIntensityLevel(int intensityLevel) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_intensityLevel = intensityLevel;
-	}
-
-	@JSON
-	@Override
-	public int getQuantity() {
+	public double getQuantity() {
 		return _quantity;
 	}
 
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
 		_quantity = quantity;
+	}
+
+	@JSON
+	@Override
+	public String getQuantityUnit() {
+		if (_quantityUnit == null) {
+			return "";
+		}
+		else {
+			return _quantityUnit;
+		}
+	}
+
+	@Override
+	public void setQuantityUnit(String quantityUnit) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_quantityUnit = quantityUnit;
 	}
 
 	public long getColumnBitmask() {
@@ -572,14 +577,14 @@ public class ExerciseModelImpl
 		exerciseImpl.setCompanyId(getCompanyId());
 		exerciseImpl.setUserId(getUserId());
 		exerciseImpl.setCreateDate(getCreateDate());
+		exerciseImpl.setSubjectId(getSubjectId());
 		exerciseImpl.setOccurDay(getOccurDay());
 		exerciseImpl.setOccurDaySegment(getOccurDaySegment());
 		exerciseImpl.setOccurTime(getOccurTime());
 		exerciseImpl.setName(getName());
-		exerciseImpl.setType(getType());
 		exerciseImpl.setDuration(getDuration());
-		exerciseImpl.setIntensityLevel(getIntensityLevel());
 		exerciseImpl.setQuantity(getQuantity());
+		exerciseImpl.setQuantityUnit(getQuantityUnit());
 
 		exerciseImpl.resetOriginalValues();
 
@@ -599,19 +604,19 @@ public class ExerciseModelImpl
 		exerciseImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
 		exerciseImpl.setCreateDate(
 			this.<Date>getColumnOriginalValue("createDate"));
+		exerciseImpl.setSubjectId(
+			this.<Long>getColumnOriginalValue("subjectId"));
 		exerciseImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
 		exerciseImpl.setOccurDaySegment(
 			this.<Integer>getColumnOriginalValue("occurDaySegment"));
 		exerciseImpl.setOccurTime(
 			this.<Long>getColumnOriginalValue("occurTime"));
 		exerciseImpl.setName(this.<String>getColumnOriginalValue("name"));
-		exerciseImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
-		exerciseImpl.setDuration(
-			this.<Integer>getColumnOriginalValue("duration"));
-		exerciseImpl.setIntensityLevel(
-			this.<Integer>getColumnOriginalValue("intensityLevel"));
+		exerciseImpl.setDuration(this.<Long>getColumnOriginalValue("duration"));
 		exerciseImpl.setQuantity(
-			this.<Integer>getColumnOriginalValue("quantity"));
+			this.<Double>getColumnOriginalValue("quantity"));
+		exerciseImpl.setQuantityUnit(
+			this.<String>getColumnOriginalValue("quantityUnit"));
 
 		return exerciseImpl;
 	}
@@ -704,6 +709,8 @@ public class ExerciseModelImpl
 			exerciseCacheModel.createDate = Long.MIN_VALUE;
 		}
 
+		exerciseCacheModel.subjectId = getSubjectId();
+
 		exerciseCacheModel.occurDay = getOccurDay();
 
 		exerciseCacheModel.occurDaySegment = getOccurDaySegment();
@@ -718,13 +725,17 @@ public class ExerciseModelImpl
 			exerciseCacheModel.name = null;
 		}
 
-		exerciseCacheModel.type = getType();
-
 		exerciseCacheModel.duration = getDuration();
 
-		exerciseCacheModel.intensityLevel = getIntensityLevel();
-
 		exerciseCacheModel.quantity = getQuantity();
+
+		exerciseCacheModel.quantityUnit = getQuantityUnit();
+
+		String quantityUnit = exerciseCacheModel.quantityUnit;
+
+		if ((quantityUnit != null) && (quantityUnit.length() == 0)) {
+			exerciseCacheModel.quantityUnit = null;
+		}
 
 		return exerciseCacheModel;
 	}
@@ -792,18 +803,16 @@ public class ExerciseModelImpl
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
+	private long _subjectId;
 	private long _occurDay;
 	private int _occurDaySegment;
 	private long _occurTime;
 	private String _name;
-	private int _type;
-	private int _duration;
-	private int _intensityLevel;
-	private int _quantity;
+	private long _duration;
+	private double _quantity;
+	private String _quantityUnit;
 
 	public <T> T getColumnValue(String columnName) {
-		columnName = _attributeNames.getOrDefault(columnName, columnName);
-
 		Function<Exercise, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -836,24 +845,14 @@ public class ExerciseModelImpl
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("subjectId", _subjectId);
 		_columnOriginalValues.put("occurDay", _occurDay);
 		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
 		_columnOriginalValues.put("occurTime", _occurTime);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("duration", _duration);
-		_columnOriginalValues.put("intensityLevel", _intensityLevel);
 		_columnOriginalValues.put("quantity", _quantity);
-	}
-
-	private static final Map<String, String> _attributeNames;
-
-	static {
-		Map<String, String> attributeNames = new HashMap<>();
-
-		attributeNames.put("type_", "type");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
+		_columnOriginalValues.put("quantityUnit", _quantityUnit);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -877,21 +876,21 @@ public class ExerciseModelImpl
 
 		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("occurDay", 32L);
+		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDaySegment", 64L);
+		columnBitmasks.put("occurDay", 64L);
 
-		columnBitmasks.put("occurTime", 128L);
+		columnBitmasks.put("occurDaySegment", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("occurTime", 256L);
 
-		columnBitmasks.put("type_", 512L);
+		columnBitmasks.put("name", 512L);
 
 		columnBitmasks.put("duration", 1024L);
 
-		columnBitmasks.put("intensityLevel", 2048L);
+		columnBitmasks.put("quantity", 2048L);
 
-		columnBitmasks.put("quantity", 4096L);
+		columnBitmasks.put("quantityUnit", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

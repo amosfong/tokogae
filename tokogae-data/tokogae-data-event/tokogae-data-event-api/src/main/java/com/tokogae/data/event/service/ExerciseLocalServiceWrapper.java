@@ -44,6 +44,18 @@ public class ExerciseLocalServiceWrapper
 		return _exerciseLocalService.addExercise(exercise);
 	}
 
+	@Override
+	public com.tokogae.data.event.model.Exercise addExercise(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, long duration, double quantity,
+			String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exerciseLocalService.addExercise(
+			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
+			duration, quantity, quantityUnit);
+	}
+
 	/**
 	 * Creates a new exercise with the primary key. Does not add the exercise to the database.
 	 *
@@ -315,6 +327,17 @@ public class ExerciseLocalServiceWrapper
 		com.tokogae.data.event.model.Exercise exercise) {
 
 		return _exerciseLocalService.updateExercise(exercise);
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Exercise updateExercise(
+			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exerciseLocalService.updateExercise(
+			exerciseId, occurDay, occurDaySegment, occurTime, name, duration,
+			quantity, quantityUnit);
 	}
 
 	@Override

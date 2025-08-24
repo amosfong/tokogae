@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import com.tokogae.data.event.model.Exercise;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -37,6 +39,12 @@ public interface ExerciseService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.ExerciseServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the exercise remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExerciseServiceUtil} if injection and service tracking are not available.
 	 */
+	public Exercise addExercise(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws PortalException;
+
+	public Exercise deleteExercise(long exerciseId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -44,5 +52,10 @@ public interface ExerciseService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public Exercise updateExercise(
+			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws PortalException;
 
 }

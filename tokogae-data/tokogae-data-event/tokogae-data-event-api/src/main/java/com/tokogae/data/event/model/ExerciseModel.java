@@ -137,6 +137,20 @@ public interface ExerciseModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the subject ID of this exercise.
+	 *
+	 * @return the subject ID of this exercise
+	 */
+	public long getSubjectId();
+
+	/**
+	 * Sets the subject ID of this exercise.
+	 *
+	 * @param subjectId the subject ID of this exercise
+	 */
+	public void setSubjectId(long subjectId);
+
+	/**
 	 * Returns the occur day of this exercise.
 	 *
 	 * @return the occur day of this exercise
@@ -194,60 +208,47 @@ public interface ExerciseModel
 	public void setName(String name);
 
 	/**
-	 * Returns the type of this exercise.
-	 *
-	 * @return the type of this exercise
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this exercise.
-	 *
-	 * @param type the type of this exercise
-	 */
-	public void setType(int type);
-
-	/**
 	 * Returns the duration of this exercise.
 	 *
 	 * @return the duration of this exercise
 	 */
-	public int getDuration();
+	public long getDuration();
 
 	/**
 	 * Sets the duration of this exercise.
 	 *
 	 * @param duration the duration of this exercise
 	 */
-	public void setDuration(int duration);
-
-	/**
-	 * Returns the intensity level of this exercise.
-	 *
-	 * @return the intensity level of this exercise
-	 */
-	public int getIntensityLevel();
-
-	/**
-	 * Sets the intensity level of this exercise.
-	 *
-	 * @param intensityLevel the intensity level of this exercise
-	 */
-	public void setIntensityLevel(int intensityLevel);
+	public void setDuration(long duration);
 
 	/**
 	 * Returns the quantity of this exercise.
 	 *
 	 * @return the quantity of this exercise
 	 */
-	public int getQuantity();
+	public double getQuantity();
 
 	/**
 	 * Sets the quantity of this exercise.
 	 *
 	 * @param quantity the quantity of this exercise
 	 */
-	public void setQuantity(int quantity);
+	public void setQuantity(double quantity);
+
+	/**
+	 * Returns the quantity unit of this exercise.
+	 *
+	 * @return the quantity unit of this exercise
+	 */
+	@AutoEscape
+	public String getQuantityUnit();
+
+	/**
+	 * Sets the quantity unit of this exercise.
+	 *
+	 * @param quantityUnit the quantity unit of this exercise
+	 */
+	public void setQuantityUnit(String quantityUnit);
 
 	@Override
 	public Exercise cloneWithOriginalValues();

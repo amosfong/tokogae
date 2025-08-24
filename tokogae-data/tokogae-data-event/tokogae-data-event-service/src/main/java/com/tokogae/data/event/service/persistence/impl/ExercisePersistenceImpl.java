@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import com.tokogae.data.event.exception.NoSuchExerciseException;
 import com.tokogae.data.event.model.Exercise;
@@ -40,7 +39,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -85,12 +83,6 @@ public class ExercisePersistenceImpl
 	private FinderPath _finderPathCountAll;
 
 	public ExercisePersistenceImpl() {
-		Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-		dbColumnNames.put("type", "type_");
-
-		setDBColumnNames(dbColumnNames);
-
 		setModelClass(Exercise.class);
 
 		setModelImplClass(ExerciseImpl.class);
@@ -574,11 +566,6 @@ public class ExercisePersistenceImpl
 	}
 
 	@Override
-	public Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
-	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -673,9 +660,6 @@ public class ExercisePersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExercisePersistenceImpl.class);
-
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

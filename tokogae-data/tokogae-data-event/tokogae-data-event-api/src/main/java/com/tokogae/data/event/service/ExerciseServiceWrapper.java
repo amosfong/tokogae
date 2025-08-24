@@ -24,6 +24,24 @@ public class ExerciseServiceWrapper
 		_exerciseService = exerciseService;
 	}
 
+	@Override
+	public com.tokogae.data.event.model.Exercise addExercise(
+			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exerciseService.addExercise(
+			subjectId, occurDay, occurDaySegment, occurTime, name, duration,
+			quantity, quantityUnit);
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Exercise deleteExercise(long exerciseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exerciseService.deleteExercise(exerciseId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -32,6 +50,17 @@ public class ExerciseServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _exerciseService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.tokogae.data.event.model.Exercise updateExercise(
+			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exerciseService.updateExercise(
+			exerciseId, occurDay, occurDaySegment, occurTime, name, duration,
+			quantity, quantityUnit);
 	}
 
 	@Override

@@ -37,14 +37,14 @@ public class ExerciseWrapper
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("subjectId", getSubjectId());
 		attributes.put("occurDay", getOccurDay());
 		attributes.put("occurDaySegment", getOccurDaySegment());
 		attributes.put("occurTime", getOccurTime());
 		attributes.put("name", getName());
-		attributes.put("type", getType());
 		attributes.put("duration", getDuration());
-		attributes.put("intensityLevel", getIntensityLevel());
 		attributes.put("quantity", getQuantity());
+		attributes.put("quantityUnit", getQuantityUnit());
 
 		return attributes;
 	}
@@ -81,6 +81,12 @@ public class ExerciseWrapper
 			setCreateDate(createDate);
 		}
 
+		Long subjectId = (Long)attributes.get("subjectId");
+
+		if (subjectId != null) {
+			setSubjectId(subjectId);
+		}
+
 		Long occurDay = (Long)attributes.get("occurDay");
 
 		if (occurDay != null) {
@@ -105,28 +111,22 @@ public class ExerciseWrapper
 			setName(name);
 		}
 
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Integer duration = (Integer)attributes.get("duration");
+		Long duration = (Long)attributes.get("duration");
 
 		if (duration != null) {
 			setDuration(duration);
 		}
 
-		Integer intensityLevel = (Integer)attributes.get("intensityLevel");
-
-		if (intensityLevel != null) {
-			setIntensityLevel(intensityLevel);
-		}
-
-		Integer quantity = (Integer)attributes.get("quantity");
+		Double quantity = (Double)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		String quantityUnit = (String)attributes.get("quantityUnit");
+
+		if (quantityUnit != null) {
+			setQuantityUnit(quantityUnit);
 		}
 	}
 
@@ -161,7 +161,7 @@ public class ExerciseWrapper
 	 * @return the duration of this exercise
 	 */
 	@Override
-	public int getDuration() {
+	public long getDuration() {
 		return model.getDuration();
 	}
 
@@ -173,16 +173,6 @@ public class ExerciseWrapper
 	@Override
 	public long getExerciseId() {
 		return model.getExerciseId();
-	}
-
-	/**
-	 * Returns the intensity level of this exercise.
-	 *
-	 * @return the intensity level of this exercise
-	 */
-	@Override
-	public int getIntensityLevel() {
-		return model.getIntensityLevel();
 	}
 
 	/**
@@ -251,18 +241,33 @@ public class ExerciseWrapper
 	 * @return the quantity of this exercise
 	 */
 	@Override
-	public int getQuantity() {
+	public double getQuantity() {
 		return model.getQuantity();
 	}
 
+	@Override
+	public String getQuantityLabel() {
+		return model.getQuantityLabel();
+	}
+
 	/**
-	 * Returns the type of this exercise.
+	 * Returns the quantity unit of this exercise.
 	 *
-	 * @return the type of this exercise
+	 * @return the quantity unit of this exercise
 	 */
 	@Override
-	public int getType() {
-		return model.getType();
+	public String getQuantityUnit() {
+		return model.getQuantityUnit();
+	}
+
+	/**
+	 * Returns the subject ID of this exercise.
+	 *
+	 * @return the subject ID of this exercise
+	 */
+	@Override
+	public long getSubjectId() {
+		return model.getSubjectId();
 	}
 
 	/**
@@ -316,7 +321,7 @@ public class ExerciseWrapper
 	 * @param duration the duration of this exercise
 	 */
 	@Override
-	public void setDuration(int duration) {
+	public void setDuration(long duration) {
 		model.setDuration(duration);
 	}
 
@@ -328,16 +333,6 @@ public class ExerciseWrapper
 	@Override
 	public void setExerciseId(long exerciseId) {
 		model.setExerciseId(exerciseId);
-	}
-
-	/**
-	 * Sets the intensity level of this exercise.
-	 *
-	 * @param intensityLevel the intensity level of this exercise
-	 */
-	@Override
-	public void setIntensityLevel(int intensityLevel) {
-		model.setIntensityLevel(intensityLevel);
 	}
 
 	/**
@@ -406,18 +401,28 @@ public class ExerciseWrapper
 	 * @param quantity the quantity of this exercise
 	 */
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		model.setQuantity(quantity);
 	}
 
 	/**
-	 * Sets the type of this exercise.
+	 * Sets the quantity unit of this exercise.
 	 *
-	 * @param type the type of this exercise
+	 * @param quantityUnit the quantity unit of this exercise
 	 */
 	@Override
-	public void setType(int type) {
-		model.setType(type);
+	public void setQuantityUnit(String quantityUnit) {
+		model.setQuantityUnit(quantityUnit);
+	}
+
+	/**
+	 * Sets the subject ID of this exercise.
+	 *
+	 * @param subjectId the subject ID of this exercise
+	 */
+	@Override
+	public void setSubjectId(long subjectId) {
+		model.setSubjectId(subjectId);
 	}
 
 	/**

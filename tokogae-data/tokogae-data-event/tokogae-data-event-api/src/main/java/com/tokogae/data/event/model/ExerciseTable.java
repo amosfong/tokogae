@@ -32,6 +32,8 @@ public class ExerciseTable extends BaseTable<ExerciseTable> {
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, Long> subjectId = createColumn(
+		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, Long> occurDay = createColumn(
 		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, Integer> occurDaySegment = createColumn(
@@ -40,14 +42,12 @@ public class ExerciseTable extends BaseTable<ExerciseTable> {
 		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Integer> type = createColumn(
-		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Integer> duration = createColumn(
-		"duration", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Integer> intensityLevel = createColumn(
-		"intensityLevel", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Integer> quantity = createColumn(
-		"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, Long> duration = createColumn(
+		"duration", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, Double> quantity = createColumn(
+		"quantity", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, String> quantityUnit = createColumn(
+		"quantityUnit", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ExerciseTable() {
 		super("TOKOGAEData_Exercise", ExerciseTable::new);

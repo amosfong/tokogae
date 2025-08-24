@@ -66,6 +66,12 @@ public interface ExerciseLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Exercise addExercise(Exercise exercise);
 
+	public Exercise addExercise(
+			long userId, long subjectId, long occurDay, int occurDaySegment,
+			long occurTime, String name, long duration, double quantity,
+			String quantityUnit)
+		throws PortalException;
+
 	/**
 	 * Creates a new exercise with the primary key. Does not add the exercise to the database.
 	 *
@@ -255,5 +261,10 @@ public interface ExerciseLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Exercise updateExercise(Exercise exercise);
+
+	public Exercise updateExercise(
+			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			String name, long duration, double quantity, String quantityUnit)
+		throws PortalException;
 
 }

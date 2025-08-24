@@ -79,6 +79,8 @@ public class ExerciseCacheModel
 		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", subjectId=");
+		sb.append(subjectId);
 		sb.append(", occurDay=");
 		sb.append(occurDay);
 		sb.append(", occurDaySegment=");
@@ -87,14 +89,12 @@ public class ExerciseCacheModel
 		sb.append(occurTime);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", duration=");
 		sb.append(duration);
-		sb.append(", intensityLevel=");
-		sb.append(intensityLevel);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", quantityUnit=");
+		sb.append(quantityUnit);
 		sb.append("}");
 
 		return sb.toString();
@@ -116,6 +116,7 @@ public class ExerciseCacheModel
 			exerciseImpl.setCreateDate(new Date(createDate));
 		}
 
+		exerciseImpl.setSubjectId(subjectId);
 		exerciseImpl.setOccurDay(occurDay);
 		exerciseImpl.setOccurDaySegment(occurDaySegment);
 		exerciseImpl.setOccurTime(occurTime);
@@ -127,10 +128,15 @@ public class ExerciseCacheModel
 			exerciseImpl.setName(name);
 		}
 
-		exerciseImpl.setType(type);
 		exerciseImpl.setDuration(duration);
-		exerciseImpl.setIntensityLevel(intensityLevel);
 		exerciseImpl.setQuantity(quantity);
+
+		if (quantityUnit == null) {
+			exerciseImpl.setQuantityUnit("");
+		}
+		else {
+			exerciseImpl.setQuantityUnit(quantityUnit);
+		}
 
 		exerciseImpl.resetOriginalValues();
 
@@ -148,6 +154,8 @@ public class ExerciseCacheModel
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 
+		subjectId = objectInput.readLong();
+
 		occurDay = objectInput.readLong();
 
 		occurDaySegment = objectInput.readInt();
@@ -155,13 +163,10 @@ public class ExerciseCacheModel
 		occurTime = objectInput.readLong();
 		name = objectInput.readUTF();
 
-		type = objectInput.readInt();
+		duration = objectInput.readLong();
 
-		duration = objectInput.readInt();
-
-		intensityLevel = objectInput.readInt();
-
-		quantity = objectInput.readInt();
+		quantity = objectInput.readDouble();
+		quantityUnit = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +179,8 @@ public class ExerciseCacheModel
 
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
+
+		objectOutput.writeLong(subjectId);
 
 		objectOutput.writeLong(occurDay);
 
@@ -188,13 +195,16 @@ public class ExerciseCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeInt(type);
+		objectOutput.writeLong(duration);
 
-		objectOutput.writeInt(duration);
+		objectOutput.writeDouble(quantity);
 
-		objectOutput.writeInt(intensityLevel);
-
-		objectOutput.writeInt(quantity);
+		if (quantityUnit == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(quantityUnit);
+		}
 	}
 
 	public long mvccVersion;
@@ -202,13 +212,13 @@ public class ExerciseCacheModel
 	public long companyId;
 	public long userId;
 	public long createDate;
+	public long subjectId;
 	public long occurDay;
 	public int occurDaySegment;
 	public long occurTime;
 	public String name;
-	public int type;
-	public int duration;
-	public int intensityLevel;
-	public int quantity;
+	public long duration;
+	public double quantity;
+	public String quantityUnit;
 
 }

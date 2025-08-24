@@ -46,4 +46,6 @@ public interface Exercise extends ExerciseModel, PersistedModel {
 
 		};
 
+	public String getQuantityLabel();
+
 }
