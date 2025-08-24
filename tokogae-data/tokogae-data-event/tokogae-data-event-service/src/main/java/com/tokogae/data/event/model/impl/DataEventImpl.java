@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.tokogae.data.event.model.DataEvent;
+import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
 import com.tokogae.data.event.model.Symptom;
 
@@ -48,7 +49,20 @@ public class DataEventImpl implements DataEvent {
 	}
 
 	public String getSummary() {
-		if (_className.equals(FoodItem.class.getName())) {
+		if (_className.equals(Exercise.class.getName())) {
+			Exercise exercise = (Exercise)_originalObject;
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(exercise.getQuantityLabel());
+			sb.append(StringPool.SPACE);
+			sb.append(exercise.getQuantityUnit());
+			sb.append(StringPool.SPACE);
+			sb.append(exercise.getName());
+
+			return sb.toString();
+		}
+		else if (_className.equals(FoodItem.class.getName())) {
 			FoodItem foodItem = (FoodItem)_originalObject;
 
 			StringBundler sb = new StringBundler();

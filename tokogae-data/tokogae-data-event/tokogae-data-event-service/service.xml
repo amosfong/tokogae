@@ -18,14 +18,14 @@
 
 		<!-- Other fields -->
 
+		<column name="subjectId" type="long" />
 		<column name="occurDay" type="long" />
 		<column name="occurDaySegment" type="int" />
 		<column name="occurTime" type="long" />
 		<column name="name" type="String" />
-		<column name="type" type="int" />
-		<column name="duration" type="int" />
-		<column name="intensityLevel" type="int" />
-		<column name="quantity" type="int" />
+		<column name="duration" type="long" />
+		<column name="quantity" type="double" />
+		<column name="quantityUnit" type="String" />
 	</entity>
 	<entity local-service="true" name="FoodItem" remote-service="true">
 

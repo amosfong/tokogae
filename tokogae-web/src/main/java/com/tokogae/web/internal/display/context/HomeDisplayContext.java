@@ -30,8 +30,10 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
+import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
 import com.tokogae.data.event.model.Symptom;
+import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 
@@ -56,11 +58,13 @@ public class HomeDisplayContext {
 
 	public HomeDisplayContext(
 		DataEventFactory dataEventFactory,
+		ExerciseLocalService exerciseLocalService,
 		FoodItemLocalService foodItemLocalService, RenderRequest renderRequest,
 		RenderResponse renderResponse, SubjectService subjectService,
 		SymptomLocalService symptomLocalService) {
 
 		_dataEventFactory = dataEventFactory;
+		_exerciseLocalService = exerciseLocalService;
 		_foodItemLocalService = foodItemLocalService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -95,6 +99,9 @@ public class HomeDisplayContext {
 		).add(
 			tabsItem -> tabsItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "symptoms"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "exercise"))
 		).build();
 	}
 
@@ -153,7 +160,12 @@ public class HomeDisplayContext {
 			String className = primaryKeyArray[0];
 			long classPK = GetterUtil.getLong(primaryKeyArray[1]);
 
-			if (className.equals(FoodItem.class.getName())) {
+			if (className.equals(Exercise.class.getName())) {
+				Exercise exercise = _exerciseLocalService.getExercise(classPK);
+
+				dataEvent = _dataEventFactory.create(exercise);
+			}
+			else if (className.equals(FoodItem.class.getName())) {
 				FoodItem foodItem = _foodItemLocalService.getFoodItem(classPK);
 
 				dataEvent = _dataEventFactory.create(foodItem);
@@ -192,6 +204,7 @@ public class HomeDisplayContext {
 	}
 
 	private DataEventFactory _dataEventFactory;
+	private ExerciseLocalService _exerciseLocalService;
 	private FoodItemLocalService _foodItemLocalService;
 	private Format _format;
 	private final HttpServletRequest _httpServletRequest;

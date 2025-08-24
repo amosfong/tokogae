@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import com.tokogae.account.service.SubjectService;
 import com.tokogae.data.event.model.DataEventFactory;
+import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
@@ -39,8 +40,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		HomeDisplayContext homeDisplayContext = new HomeDisplayContext(
-			_dataEventFactory, _foodItemLocalService, renderRequest,
-			renderResponse, _subjectService, _symptomLocalService);
+			_dataEventFactory, _exerciseLocalService, _foodItemLocalService,
+			renderRequest, renderResponse, _subjectService,
+			_symptomLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, homeDisplayContext);
@@ -50,6 +52,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private DataEventFactory _dataEventFactory;
+
+	@Reference
+	private ExerciseLocalService _exerciseLocalService;
 
 	@Reference
 	private FoodItemLocalService _foodItemLocalService;

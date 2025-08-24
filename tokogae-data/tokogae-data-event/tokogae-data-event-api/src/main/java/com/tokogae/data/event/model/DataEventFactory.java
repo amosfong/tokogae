@@ -9,6 +9,8 @@ package com.tokogae.data.event.model;
  */
 public interface DataEventFactory {
 
+	public DataEvent create(Exercise exercise);
+
 	public DataEvent create(FoodItem foodItem);
 
 	public DataEvent create(Symptom symptom);
