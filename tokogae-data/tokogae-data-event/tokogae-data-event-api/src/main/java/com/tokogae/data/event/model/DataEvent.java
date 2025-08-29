@@ -39,4 +39,6 @@ public interface DataEvent {
 
 	public void setSubjectId(long subjectId);
 
+	public void setSummary(String summary);
+
 }

@@ -4,15 +4,11 @@
 
 package com.tokogae.data.event.model.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.tokogae.data.event.model.DataEvent;
-import com.tokogae.data.event.model.Exercise;
-import com.tokogae.data.event.model.FoodItem;
-import com.tokogae.data.event.model.Symptom;
 
 import java.util.Date;
 
@@ -49,49 +45,7 @@ public class DataEventImpl implements DataEvent {
 	}
 
 	public String getSummary() {
-		if (_className.equals(Exercise.class.getName())) {
-			Exercise exercise = (Exercise)_originalObject;
-
-			StringBundler sb = new StringBundler();
-
-			sb.append(exercise.getQuantityLabel());
-			sb.append(StringPool.SPACE);
-			sb.append(exercise.getQuantityUnit());
-			sb.append(StringPool.SPACE);
-			sb.append(exercise.getName());
-
-			return sb.toString();
-		}
-		else if (_className.equals(FoodItem.class.getName())) {
-			FoodItem foodItem = (FoodItem)_originalObject;
-
-			StringBundler sb = new StringBundler();
-
-			sb.append(foodItem.getQuantityLabel());
-			sb.append(StringPool.SPACE);
-			sb.append(foodItem.getQuantityUnit());
-			sb.append(StringPool.SPACE);
-			sb.append(foodItem.getName());
-
-			return sb.toString();
-		}
-		else if (_className.equals(Symptom.class.getName())) {
-			Symptom symptom = (Symptom)_originalObject;
-
-			StringBundler sb = new StringBundler();
-
-			sb.append(symptom.getIntensityLevelLabel());
-			sb.append(StringPool.SPACE);
-			sb.append(symptom.getName());
-			sb.append(StringPool.SPACE);
-			sb.append(" on ");
-			sb.append(StringPool.SPACE);
-			sb.append(symptom.getAffectedArea());
-
-			return sb.toString();
-		}
-
-		return StringPool.BLANK;
+		return _summary;
 	}
 
 	public void setClassName(String className) {
@@ -126,11 +80,16 @@ public class DataEventImpl implements DataEvent {
 		_subjectId = subjectId;
 	}
 
+	public void setSummary(String summary) {
+		_summary = summary;
+	}
+
 	private String _className;
 	private long _classPK;
 	private long _companyId;
 	private Date _occurDate;
 	private Object _originalObject;
 	private long _subjectId;
+	private String _summary;
 
 }

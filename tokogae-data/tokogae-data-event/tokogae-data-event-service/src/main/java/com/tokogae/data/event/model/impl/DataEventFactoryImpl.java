@@ -4,6 +4,13 @@
 
 package com.tokogae.data.event.model.impl;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
@@ -20,30 +27,23 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = DataEventFactory.class)
 public class DataEventFactoryImpl implements DataEventFactory {
-	/*
-		public DataEvent create(Document document) throws Exception {
-			DataEvent dataEvent = new DataEventImpl();
 
-			dataEvent.setCompanyId(
-				GetterUtil.getLong(document.get(Field.COMPANY_ID)));
-			dataEvent.setPrimaryKey(document.get(Field.ENTRY_CLASS_PK));
+	public DataEvent create(Document document) throws Exception {
+		DataEvent dataEvent = new DataEventImpl();
 
-			if (Validator.isNotNull(document.get("occurDate"))) {
-				dataEvent.setOccurDate(document.getDate("occurDate"));
-			}
+		dataEvent.setCompanyId(
+			GetterUtil.getLong(document.get(Field.COMPANY_ID)));
+		dataEvent.setPrimaryKey(document.get(Field.ENTRY_CLASS_PK));
 
-			String className = dataEvent.getClassName();
-
-			if (className.equals(FoodItem.class.getName())) {
-				FoodItem foodItem = _foodItemLocalService.getFoodItem(dataEvent.getClassPK());
-
-				dataEvent.setOriginalObject(foodItem);
-			}
-
-			return dataEvent;
+		if (Validator.isNotNull(document.get("occurDate"))) {
+			dataEvent.setOccurDate(document.getDate("occurDate"));
 		}
 
-	*/
+		dataEvent.setSubjectId(GetterUtil.getLong(document.get("subjectId")));
+		dataEvent.setSummary(document.get("summary"));
+
+		return dataEvent;
+	}
 
 	public DataEvent create(Exercise exercise) {
 		DataEvent dataEvent = new DataEventImpl();
@@ -65,6 +65,16 @@ public class DataEventFactoryImpl implements DataEventFactory {
 
 		dataEvent.setOriginalObject(exercise);
 		dataEvent.setSubjectId(exercise.getSubjectId());
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(exercise.getQuantityLabel());
+		sb.append(StringPool.SPACE);
+		sb.append(exercise.getQuantityUnit());
+		sb.append(StringPool.SPACE);
+		sb.append(exercise.getName());
+
+		dataEvent.setSummary(sb.toString());
 
 		return dataEvent;
 	}
@@ -90,6 +100,16 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setOriginalObject(foodItem);
 		dataEvent.setSubjectId(foodItem.getSubjectId());
 
+		StringBundler sb = new StringBundler();
+
+		sb.append(foodItem.getQuantityLabel());
+		sb.append(StringPool.SPACE);
+		sb.append(foodItem.getQuantityUnit());
+		sb.append(StringPool.SPACE);
+		sb.append(foodItem.getName());
+
+		dataEvent.setSummary(sb.toString());
+
 		return dataEvent;
 	}
 
@@ -113,6 +133,16 @@ public class DataEventFactoryImpl implements DataEventFactory {
 
 		dataEvent.setOriginalObject(symptom);
 		dataEvent.setSubjectId(symptom.getSubjectId());
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(symptom.getIntensityLevelLabel());
+		sb.append(StringPool.SPACE);
+		sb.append(symptom.getName());
+		sb.append(" on ");
+		sb.append(symptom.getAffectedArea());
+
+		dataEvent.setSummary(sb.toString());
 
 		return dataEvent;
 	}

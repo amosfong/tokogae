@@ -6,22 +6,23 @@ package com.tokogae.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -30,9 +31,6 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
-import com.tokogae.data.event.model.Exercise;
-import com.tokogae.data.event.model.FoodItem;
-import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
@@ -84,6 +82,80 @@ public class HomeDisplayContext {
 		return _format.format(new Date());
 	}
 
+	public SearchContainer<DataEvent> getDataEventsSearchContainer()
+		throws Exception {
+
+		SearchContainer<DataEvent> dataEventsSearchContainer =
+			new SearchContainer(
+				_renderRequest,
+				PortletURLUtil.getCurrent(_renderRequest, _renderResponse),
+				null, "no-data-events-were-found");
+
+		dataEventsSearchContainer.setId("dataEvents");
+
+		String orderByCol = ParamUtil.getString(
+			_renderRequest, "orderByCol", "occurDate");
+
+		dataEventsSearchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
+
+		dataEventsSearchContainer.setOrderByType(orderByType);
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+
+		List<Subject> subjects = getSubjects();
+
+		long[] subjectIds = new long[subjects.size()];
+
+		for (int i = 0; i < subjects.size(); i++) {
+			Subject subject = subjects.get(0);
+
+			subjectIds[i] = subject.getSubjectId();
+		}
+
+		searchContext.setAttribute("subjectIds", subjectIds);
+
+		searchContext.setEnd(dataEventsSearchContainer.getEnd());
+		searchContext.setStart(dataEventsSearchContainer.getStart());
+
+		boolean ascending = false;
+
+		if (orderByType.equals("asc")) {
+			ascending = true;
+		}
+
+		Sort sort = new Sort(Field.getSortableFieldName(orderByCol), ascending);
+
+		searchContext.setSorts(sort);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.addSelectedFieldNames("occurDate", "summary");
+
+		Indexer<DataEvent> indexer = IndexerRegistryUtil.getIndexer(
+			DataEvent.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		dataEventsSearchContainer.setResultsAndTotal(
+			() -> {
+				List<DataEvent> dataEvents = new ArrayList<>();
+
+				for (Document document : hits.getDocs()) {
+					dataEvents.add(_dataEventFactory.create(document));
+				}
+
+				return dataEvents;
+			},
+			hits.getLength());
+
+		return dataEventsSearchContainer;
+	}
+
 	public List<Subject> getSubjects() throws PortalException {
 		return _subjectService.getSubjects(
 			_themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -107,9 +179,6 @@ public class HomeDisplayContext {
 
 	public Map<Integer, List<DataEvent>> getTodaysDataEventsMap()
 		throws Exception {
-
-		Indexer<DataEvent> indexer = IndexerRegistryUtil.getIndexer(
-			DataEvent.class);
 
 		SearchContext searchContext = new SearchContext();
 
@@ -143,38 +212,23 @@ public class HomeDisplayContext {
 		searchContext.setEnd(1000);
 		searchContext.setStart(0);
 
-		Sort sort = new Sort("occurDay", false);
+		Sort sort = new Sort(Field.getSortableFieldName("occurDate"), false);
 
 		searchContext.setSorts(sort);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.addSelectedFieldNames("occurDate", "summary");
+
+		Indexer<DataEvent> indexer = IndexerRegistryUtil.getIndexer(
+			DataEvent.class);
 
 		Hits hits = indexer.search(searchContext);
 
 		Map<Integer, List<DataEvent>> dataEventsMap = new HashMap<>();
 
 		for (Document document : hits.getDocs()) {
-			DataEvent dataEvent = null;
-
-			String[] primaryKeyArray = StringUtil.split(
-				document.get(Field.ENTRY_CLASS_PK), StringPool.POUND);
-
-			String className = primaryKeyArray[0];
-			long classPK = GetterUtil.getLong(primaryKeyArray[1]);
-
-			if (className.equals(Exercise.class.getName())) {
-				Exercise exercise = _exerciseLocalService.getExercise(classPK);
-
-				dataEvent = _dataEventFactory.create(exercise);
-			}
-			else if (className.equals(FoodItem.class.getName())) {
-				FoodItem foodItem = _foodItemLocalService.getFoodItem(classPK);
-
-				dataEvent = _dataEventFactory.create(foodItem);
-			}
-			else if (className.equals(Symptom.class.getName())) {
-				Symptom symptom = _symptomLocalService.getSymptom(classPK);
-
-				dataEvent = _dataEventFactory.create(symptom);
-			}
+			DataEvent dataEvent = _dataEventFactory.create(document);
 
 			Calendar dataEventCalendar = Calendar.getInstance(
 				_themeDisplay.getTimeZone());

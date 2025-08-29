@@ -70,6 +70,25 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		return symptom;
 	}
 
+	@Override
+	public Symptom deleteSymptom(long symptomId) throws PortalException {
+		Symptom symptom = symptomPersistence.remove(symptomId);
+
+		DataEvent dataEvent = _dataEventFactory.create(symptom);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
+					DataEvent.class);
+
+				indexer.delete(dataEvent);
+
+				return null;
+			});
+
+		return symptom;
+	}
+
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
 			String name, String affectedArea, Date startDate, Date endDate,

@@ -24,8 +24,12 @@ import com.liferay.portal.search.filter.FilterBuilders;
 
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
+import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Symptom;
+import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SymptomLocalService;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletResponse;
@@ -79,12 +83,14 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 		Date minOccurDate = (Date)searchContext.getAttribute("minOccurDate");
 		Date maxOccurDate = (Date)searchContext.getAttribute("maxOccurDate");
 
-		RangeTermFilter rangeTermFilter = new RangeTermFilter(
-			"occurDate_sortable", true, true,
-			String.valueOf(minOccurDate.getTime()),
-			String.valueOf(maxOccurDate.getTime()));
+		if ((minOccurDate != null) && (maxOccurDate != null)) {
+			RangeTermFilter rangeTermFilter = new RangeTermFilter(
+				Field.getSortableFieldName("occurDate"), true, true,
+				String.valueOf(minOccurDate.getTime()),
+				String.valueOf(maxOccurDate.getTime()));
 
-		contextBooleanFilter.add(rangeTermFilter, BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(rangeTermFilter, BooleanClauseOccur.MUST);
+		}
 
 		long[] subjectIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("subjectIds"), null);
@@ -125,11 +131,14 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 		Document document = newDocument();
 
 		document.addUID(DataEvent.class.getName(), dataEvent.getPrimaryKey());
+
 		document.addKeyword(Field.ENTRY_CLASS_NAME, DataEvent.class.getName());
 		document.addKeyword(Field.ENTRY_CLASS_PK, dataEvent.getPrimaryKey());
+
 		document.addKeyword("companyId", dataEvent.getCompanyId());
-		document.addKeyword("subjectId", dataEvent.getSubjectId());
 		document.addDate("occurDate", dataEvent.getOccurDate());
+		document.addKeyword("subjectId", dataEvent.getSubjectId());
+		document.addText("summary", dataEvent.getSummary());
 
 		return document;
 	}
@@ -164,10 +173,22 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
+		List<Exercise> exercises = _exerciseLocalService.getExercises(-1, -1);
+
+		for (Exercise exercise : exercises) {
+			doReindex(_dataEventFactory.create(exercise));
+		}
+
 		List<FoodItem> foodItems = _foodItemLocalService.getFoodItems(-1, -1);
 
 		for (FoodItem foodItem : foodItems) {
 			doReindex(_dataEventFactory.create(foodItem));
+		}
+
+		List<Symptom> symptoms = _symptomLocalService.getSymptoms(-1, -1);
+
+		for (Symptom symptom : symptoms) {
+			doReindex(_dataEventFactory.create(symptom));
 		}
 	}
 
@@ -178,6 +199,9 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 	private DataEventFactory _dataEventFactory;
 
 	@Reference
+	private ExerciseLocalService _exerciseLocalService;
+
+	@Reference
 	private FilterBuilders _filterBuilders;
 
 	@Reference
@@ -185,5 +209,8 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private SymptomLocalService _symptomLocalService;
 
 }

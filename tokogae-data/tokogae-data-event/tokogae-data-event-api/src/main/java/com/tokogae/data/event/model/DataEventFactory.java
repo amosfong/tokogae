@@ -4,10 +4,14 @@
 
 package com.tokogae.data.event.model;
 
+import com.liferay.portal.kernel.search.Document;
+
 /**
  * @author Amos Fong
  */
 public interface DataEventFactory {
+
+	public DataEvent create(Document document) throws Exception;
 
 	public DataEvent create(Exercise exercise);
 
