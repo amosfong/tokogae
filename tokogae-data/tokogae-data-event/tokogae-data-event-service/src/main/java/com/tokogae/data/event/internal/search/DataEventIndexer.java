@@ -16,10 +16,13 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.MissingFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.filter.FilterBuilders;
 
 import com.tokogae.data.event.model.DataEvent;
@@ -84,12 +87,51 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 		Date maxOccurDate = (Date)searchContext.getAttribute("maxOccurDate");
 
 		if ((minOccurDate != null) && (maxOccurDate != null)) {
+			BooleanFilter rangeFilter = new BooleanFilter();
+
 			RangeTermFilter rangeTermFilter = new RangeTermFilter(
 				Field.getSortableFieldName("occurDate"), true, true,
 				String.valueOf(minOccurDate.getTime()),
 				String.valueOf(maxOccurDate.getTime()));
 
-			contextBooleanFilter.add(rangeTermFilter, BooleanClauseOccur.MUST);
+			rangeFilter.add(rangeTermFilter, BooleanClauseOccur.SHOULD);
+
+			BooleanFilter extendedFilter = new BooleanFilter();
+
+			extendedFilter.add(
+				new TermFilter("extended", Boolean.TRUE.toString()),
+				BooleanClauseOccur.MUST);
+
+			BooleanFilter startDateFilter = new BooleanFilter();
+
+			RangeTermFilter startDateRangeTermFilter = new RangeTermFilter(
+				Field.getSortableFieldName("startDate"), true, true, "0",
+				String.valueOf(maxOccurDate.getTime()));
+
+			startDateFilter.add(
+				new MissingFilter("startDate"), BooleanClauseOccur.SHOULD);
+			startDateFilter.add(
+				startDateRangeTermFilter, BooleanClauseOccur.SHOULD);
+
+			extendedFilter.add(startDateFilter, BooleanClauseOccur.MUST);
+
+			BooleanFilter endDateFilter = new BooleanFilter();
+
+			RangeTermFilter endDateRangeTermFilter = new RangeTermFilter(
+				Field.getSortableFieldName("endDate"), true, true,
+				String.valueOf(maxOccurDate.getTime()),
+				String.valueOf(maxOccurDate.getTime() + (Time.YEAR * 1000)));
+
+			endDateFilter.add(
+				new MissingFilter("endDate"), BooleanClauseOccur.SHOULD);
+			endDateFilter.add(
+				endDateRangeTermFilter, BooleanClauseOccur.SHOULD);
+
+			extendedFilter.add(endDateFilter, BooleanClauseOccur.MUST);
+
+			rangeFilter.add(extendedFilter, BooleanClauseOccur.SHOULD);
+
+			contextBooleanFilter.add(rangeFilter, BooleanClauseOccur.MUST);
 		}
 
 		long[] subjectIds = GetterUtil.getLongValues(
@@ -136,7 +178,34 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 		document.addKeyword(Field.ENTRY_CLASS_PK, dataEvent.getPrimaryKey());
 
 		document.addKeyword("companyId", dataEvent.getCompanyId());
-		document.addDate("occurDate", dataEvent.getOccurDate());
+
+		if (dataEvent.getEndDate() != null) {
+			document.addDate("endDate", dataEvent.getEndDate());
+		}
+
+		document.addKeyword("extended", dataEvent.getExtended());
+
+		if (dataEvent.getOccurDate() != null) {
+			document.addDate("occurDate", dataEvent.getOccurDate());
+		}
+
+		if (dataEvent.getStartDate() != null) {
+			document.addDate("startDate", dataEvent.getStartDate());
+		}
+
+		Date sortDate = null;
+
+		if (dataEvent.getEndDate() != null) {
+			sortDate = dataEvent.getOccurDate();
+		}
+		else if (dataEvent.getOccurDate() != null) {
+			sortDate = dataEvent.getOccurDate();
+		}
+
+		if (sortDate != null) {
+			document.addDate("sortDate", sortDate);
+		}
+
 		document.addKeyword("subjectId", dataEvent.getSubjectId());
 		document.addText("summary", dataEvent.getSummary());
 

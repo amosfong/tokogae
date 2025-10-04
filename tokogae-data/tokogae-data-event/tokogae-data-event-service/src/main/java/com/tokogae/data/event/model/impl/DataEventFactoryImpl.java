@@ -35,8 +35,18 @@ public class DataEventFactoryImpl implements DataEventFactory {
 			GetterUtil.getLong(document.get(Field.COMPANY_ID)));
 		dataEvent.setPrimaryKey(document.get(Field.ENTRY_CLASS_PK));
 
+		if (Validator.isNotNull(document.get("endDate"))) {
+			dataEvent.setEndDate(document.getDate("endDate"));
+		}
+
+		dataEvent.setExtended(GetterUtil.getBoolean(document.get("extended")));
+
 		if (Validator.isNotNull(document.get("occurDate"))) {
 			dataEvent.setOccurDate(document.getDate("occurDate"));
+		}
+
+		if (Validator.isNotNull(document.get("startDate"))) {
+			dataEvent.setStartDate(document.getDate("startDate"));
 		}
 
 		dataEvent.setSubjectId(GetterUtil.getLong(document.get("subjectId")));
@@ -119,19 +129,25 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setCompanyId(symptom.getCompanyId());
 		dataEvent.setClassName(Symptom.class.getName());
 		dataEvent.setClassPK(symptom.getSymptomId());
+		dataEvent.setEndDate(symptom.getEndDate());
+		dataEvent.setExtended(symptom.getExtended());
 
-		long occurTime = 0;
+		if (symptom.getOccurDay() > 0) {
+			long occurTime = 0;
 
-		if (symptom.getOccurTime() > 0) {
-			occurTime = symptom.getOccurTime();
+			if (symptom.getOccurTime() > 0) {
+				occurTime = symptom.getOccurTime();
+			}
+			else {
+				occurTime = DaySegments.getDayTime(
+					symptom.getOccurDaySegment());
+			}
+
+			dataEvent.setOccurDate(new Date(symptom.getOccurDay() + occurTime));
 		}
-		else {
-			occurTime = DaySegments.getDayTime(symptom.getOccurDaySegment());
-		}
-
-		dataEvent.setOccurDate(new Date(symptom.getOccurDay() + occurTime));
 
 		dataEvent.setOriginalObject(symptom);
+		dataEvent.setStartDate(symptom.getStartDate());
 		dataEvent.setSubjectId(symptom.getSubjectId());
 
 		StringBundler sb = new StringBundler();

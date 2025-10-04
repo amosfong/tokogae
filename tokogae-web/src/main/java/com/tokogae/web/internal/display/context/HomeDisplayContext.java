@@ -94,7 +94,7 @@ public class HomeDisplayContext {
 		dataEventsSearchContainer.setId("dataEvents");
 
 		String orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "occurDate");
+			_renderRequest, "orderByCol", "sortDate");
 
 		dataEventsSearchContainer.setOrderByCol(orderByCol);
 
@@ -134,7 +134,8 @@ public class HomeDisplayContext {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.addSelectedFieldNames("occurDate", "summary");
+		queryConfig.addSelectedFieldNames(
+			"endDate", "extended", "occurDate", "startDate", "summary");
 
 		Indexer<DataEvent> indexer = IndexerRegistryUtil.getIndexer(
 			DataEvent.class);
@@ -230,18 +231,19 @@ public class HomeDisplayContext {
 		for (Document document : hits.getDocs()) {
 			DataEvent dataEvent = _dataEventFactory.create(document);
 
-			Calendar dataEventCalendar = Calendar.getInstance(
-				_themeDisplay.getTimeZone());
+			int daySegment = DaySegments.NONE;
 
-			dataEventCalendar.setTime(dataEvent.getOccurDate());
+			if (dataEvent.getOccurDate() != null) {
+				Calendar dataEventCalendar = Calendar.getInstance(
+					_themeDisplay.getTimeZone());
 
-			long dataEventDayTime =
-				(dataEventCalendar.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
-					(dataEventCalendar.get(Calendar.MINUTE) * Time.MINUTE) +
-						(dataEventCalendar.get(Calendar.SECOND) * Time.SECOND) +
-							dataEventCalendar.get(Calendar.MILLISECOND);
+				dataEventCalendar.setTime(dataEvent.getOccurDate());
 
-			int daySegment = DaySegments.getDaySegment(dataEventDayTime);
+				long dataEventDayTime = _getTimeinMilliseconds(
+					dataEventCalendar);
+
+				daySegment = DaySegments.getDaySegment(dataEventDayTime);
+			}
 
 			List<DataEvent> dataEvents = dataEventsMap.get(daySegment);
 
@@ -255,6 +257,13 @@ public class HomeDisplayContext {
 		}
 
 		return dataEventsMap;
+	}
+
+	private long _getTimeinMilliseconds(Calendar cal) {
+		return (cal.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
+			(cal.get(Calendar.MINUTE) * Time.MINUTE) +
+				(cal.get(Calendar.SECOND) * Time.SECOND) +
+					cal.get(Calendar.MILLISECOND);
 	}
 
 	private DataEventFactory _dataEventFactory;

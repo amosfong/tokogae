@@ -25,6 +25,8 @@ public interface DaySegments {
 
 	public static final long NIGHT_TIME = 86400000;
 
+	public static int NONE = -1;
+
 	public static int[] VALUES = {EARLY_MORNING, MORNING, AFTERNOON, NIGHT};
 
 	public static int getDaySegment(long dayTime) {

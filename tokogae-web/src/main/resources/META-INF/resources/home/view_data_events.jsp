@@ -24,10 +24,11 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 				escapedModel="<%= true %>"
 				modelVar="dataEvent"
 			>
-				<liferay-ui:search-container-column-date
+				<liferay-ui:search-container-column-text
 					name="occur-date"
-					value="<%= dataEvent.getOccurDate() %>"
-				/>
+				>
+					<%= dataEvent.getOccurDateLabel(locale) %>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					name="summary"

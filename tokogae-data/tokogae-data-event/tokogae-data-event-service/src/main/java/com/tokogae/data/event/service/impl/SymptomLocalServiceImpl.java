@@ -32,8 +32,8 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom addSymptom(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String affectedArea, Date startDate,
-			Date endDate, int intensityLevel)
+			long occurTime, String name, String affectedArea, boolean extended,
+			Date startDate, Date endDate, int intensityLevel)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -49,6 +49,7 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setOccurTime(occurTime);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);
+		symptom.setExtended(extended);
 		symptom.setStartDate(startDate);
 		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);
@@ -91,8 +92,8 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException {
 
 		Symptom symptom = symptomPersistence.findByPrimaryKey(symptomId);
@@ -102,6 +103,7 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setOccurTime(occurTime);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);
+		symptom.setExtended(extended);
 		symptom.setStartDate(startDate);
 		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);

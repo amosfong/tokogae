@@ -31,8 +31,8 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom addSymptom(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException {
 
 		_subjectPermission.check(
@@ -40,7 +40,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 		return symptomLocalService.addSymptom(
 			getUserId(), subjectId, occurDay, occurDaySegment, occurTime, name,
-			affectedArea, startDate, endDate, intensityLevel);
+			affectedArea, extended, startDate, endDate, intensityLevel);
 	}
 
 	public Symptom deleteSymptom(long symptomId) throws PortalException {
@@ -54,8 +54,8 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException {
 
 		Symptom symptom = symptomLocalService.getSymptom(symptomId);
@@ -65,7 +65,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 		return symptomLocalService.updateSymptom(
 			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	@Reference

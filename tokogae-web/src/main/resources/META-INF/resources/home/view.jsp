@@ -24,6 +24,31 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 			<%
 			Map<Integer, List<DataEvent>> dataEventsMap = homeDisplayContext.getTodaysDataEventsMap();
 
+			List<DataEvent> ongoingDataEvents = dataEventsMap.get(DaySegments.NONE);
+			%>
+
+			<c:if test="<%= ongoingDataEvents != null %>">
+				<ul class="list-group">
+					<li class="list-group-header">
+						<liferay-ui:message key="ongoing-events" />
+					</li>
+
+					<%
+					for (DataEvent dataEvent : ongoingDataEvents) {
+					%>
+
+						<li class="list-group-item py-0">
+							<%= dataEvent.getSummary() %>
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</c:if>
+
+			<%
 			for (int daySegment : DaySegments.VALUES) {
 			%>
 
@@ -163,9 +188,9 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 							collapsible="<%= true %>"
 							label="details"
 						>
-							<aui:input name="occurDay" value="<%= homeDisplayContext.getCurrentOccurDay() %>" />
+							<aui:input id="symptomOccurDay" name="occurDay" type="date" value="<%= homeDisplayContext.getCurrentOccurDay() %>" />
 
-							<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="occurDaySegment" label="day-segment" name="occurDaySegment">
+							<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="symptomOccurDaySegment" label="day-segment" name="occurDaySegment">
 
 								<%
 								for (int daySegment : DaySegments.VALUES) {
@@ -178,6 +203,12 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 								%>
 
 							</aui:select>
+
+							<aui:input name="extended" onClick='<%= liferayPortletResponse.getNamespace() + "toggleExtended(this.checked);" %>' type="checkbox" />
+
+							<aui:input disabled="<%= true %>" name="startDate" type="date" />
+
+							<aui:input disabled="<%= true %>" name="endDate" type="date" />
 
 							<aui:input name="name" />
 
@@ -283,3 +314,47 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 		</clay:tabs>
 	</div>
 </div>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleField',
+		function(fieldId, disabled) {
+			var field = AUI().one('#<portlet:namespace />' + fieldId);
+
+			field.attr('disabled', disabled);
+
+			if (disabled) {
+				field.addClass('disabled');
+			}
+			else {
+				field.removeClass('disabled');
+			}
+
+			var label = field.attr('labels').first();
+
+			if (label) {
+				if (disabled) {
+					label.addClass('disabled');
+				}
+				else {
+					label.removeClass('disabled');
+				}
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleExtended',
+		function(checked) {
+			<portlet:namespace />toggleField('symptomOccurDay', checked);
+			<portlet:namespace />toggleField('symptomOccurDaySegment', checked);
+
+			<portlet:namespace />toggleField('startDate', !checked);
+			<portlet:namespace />toggleField('endDate', !checked);
+		},
+		['aui-base']
+	);
+</aui:script>
