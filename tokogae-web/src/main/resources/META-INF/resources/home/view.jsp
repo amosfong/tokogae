@@ -94,20 +94,6 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
 
-					<aui:select id="subjectId" label="subject" name="subjectId">
-
-						<%
-						for (Subject subject : homeDisplayContext.getSubjects()) {
-						%>
-
-							<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
 					<liferay-frontend:edit-form-body>
 						<liferay-frontend:fieldset
 							collapsed="<%= false %>"
@@ -167,20 +153,6 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 				>
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
-
-					<aui:select id="subjectId" label="subject" name="subjectId">
-
-						<%
-						for (Subject subject : homeDisplayContext.getSubjects()) {
-						%>
-
-							<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
 
 					<liferay-frontend:edit-form-body>
 						<liferay-frontend:fieldset
@@ -244,20 +216,6 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
 
-					<aui:select id="subjectId" label="subject" name="subjectId">
-
-						<%
-						for (Subject subject : homeDisplayContext.getSubjects()) {
-						%>
-
-							<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
 					<liferay-frontend:edit-form-body>
 						<liferay-frontend:fieldset
 							collapsed="<%= false %>"
@@ -301,20 +259,6 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 				>
 					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 					<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
-
-					<aui:select id="subjectId" label="subject" name="subjectId">
-
-						<%
-						for (Subject subject : homeDisplayContext.getSubjects()) {
-						%>
-
-							<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
 
 					<liferay-frontend:edit-form-body>
 						<liferay-frontend:fieldset

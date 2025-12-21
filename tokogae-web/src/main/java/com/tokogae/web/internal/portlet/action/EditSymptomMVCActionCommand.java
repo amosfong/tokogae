@@ -4,14 +4,12 @@
 
 package com.tokogae.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import com.tokogae.data.event.exception.NoSuchSymptomException;
@@ -66,7 +64,6 @@ public class EditSymptomMVCActionCommand extends BaseMVCActionCommand {
 
 		long symptomId = ParamUtil.getLong(actionRequest, "symptomId");
 
-		long subjectId = ParamUtil.getLong(actionRequest, "subjectId");
 		Date occurDayDate = ParamUtil.getDate(
 			actionRequest, "occurDay", dateFormat, null);
 		int occurDaySegment = ParamUtil.getInteger(
@@ -87,8 +84,8 @@ public class EditSymptomMVCActionCommand extends BaseMVCActionCommand {
 
 		if (symptomId <= 0) {
 			_symptomService.addSymptom(
-				subjectId, occurDayTime, occurDaySegment, occurTime, duration,
-				name, affectedArea, intensityLevel);
+				getSubjectId(actionRequest), occurDayTime, occurDaySegment,
+				occurTime, duration, name, affectedArea, intensityLevel);
 		}
 		else {
 			_symptomService.updateSymptom(
@@ -96,9 +93,6 @@ public class EditSymptomMVCActionCommand extends BaseMVCActionCommand {
 				name, affectedArea, intensityLevel);
 		}
 	}
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SymptomService _symptomService;

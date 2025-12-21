@@ -4,7 +4,6 @@
 
 package com.tokogae.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,8 +62,6 @@ public class EditExerciseMVCActionCommand extends BaseMVCActionCommand {
 
 		long exerciseId = ParamUtil.getLong(actionRequest, "exerciseId");
 
-		long subjectId = ParamUtil.getLong(actionRequest, "subjectId");
-
 		String occurDayString = ParamUtil.getString(actionRequest, "occurDay");
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -84,8 +81,9 @@ public class EditExerciseMVCActionCommand extends BaseMVCActionCommand {
 
 		if (exerciseId <= 0) {
 			_exerciseService.addExercise(
-				subjectId, occurDayDate.getTime(), occurDaySegment, occurTime,
-				name, duration, quantity, quantityUnit);
+				getSubjectId(actionRequest), occurDayDate.getTime(),
+				occurDaySegment, occurTime, name, duration, quantity,
+				quantityUnit);
 		}
 		else {
 			_exerciseService.updateExercise(

@@ -4,7 +4,6 @@
 
 package com.tokogae.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,8 +62,6 @@ public class EditFoodItemMVCActionCommand extends BaseMVCActionCommand {
 
 		long foodItemId = ParamUtil.getLong(actionRequest, "foodItemId");
 
-		long subjectId = ParamUtil.getLong(actionRequest, "subjectId");
-
 		String occurDayString = ParamUtil.getString(actionRequest, "occurDay");
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
@@ -85,8 +82,9 @@ public class EditFoodItemMVCActionCommand extends BaseMVCActionCommand {
 
 		if (foodItemId <= 0) {
 			_foodItemService.addFoodItem(
-				subjectId, occurDayDate.getTime(), occurDaySegment, occurTime,
-				name, locationOfOrigin, brand, quantity, quantityUnit);
+				getSubjectId(actionRequest), occurDayDate.getTime(),
+				occurDaySegment, occurTime, name, locationOfOrigin, brand,
+				quantity, quantityUnit);
 		}
 		else {
 			_foodItemService.addFoodItem(

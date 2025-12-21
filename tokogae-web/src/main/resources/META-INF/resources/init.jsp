@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
@@ -42,3 +43,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+long selectedSubjectId = GetterUtil.getLong(request.getAttribute(TokogaeWebKeys.SELECTED_SUBJECT_ID));
+%>

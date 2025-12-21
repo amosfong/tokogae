@@ -4,7 +4,6 @@
 
 package com.tokogae.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,7 +64,6 @@ public class EditSleepMVCActionCommand extends BaseMVCActionCommand {
 
 		long sleepId = ParamUtil.getLong(actionRequest, "sleepId");
 
-		long subjectId = ParamUtil.getLong(actionRequest, "subjectId");
 		Date occurDayDate = ParamUtil.getDate(
 			actionRequest, "occurDay", dateFormat, null);
 		int occurDaySegment = ParamUtil.getInteger(
@@ -81,7 +79,8 @@ public class EditSleepMVCActionCommand extends BaseMVCActionCommand {
 
 		if (sleepId <= 0) {
 			_sleepService.addSleep(
-				subjectId, occurDayTime, occurDaySegment, occurTime, duration);
+				getSubjectId(actionRequest), occurDayTime, occurDaySegment,
+				occurTime, duration);
 		}
 		else {
 			_sleepService.updateSleep(

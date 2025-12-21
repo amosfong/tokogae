@@ -9,6 +9,8 @@ package com.tokogae.web.internal.constants;
  */
 public class TokogaeWebKeys {
 
+	public static final String SELECTED_SUBJECT_ID = "SELECTED_SUBJECT_ID";
+
 	public static final String SUBJECT = "SUBJECT";
 
 }
