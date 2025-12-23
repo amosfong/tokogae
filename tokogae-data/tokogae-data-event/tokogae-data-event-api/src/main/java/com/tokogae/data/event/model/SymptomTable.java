@@ -44,6 +44,8 @@ public class SymptomTable extends BaseTable<SymptomTable> {
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, String> affectedArea = createColumn(
 		"affectedArea", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SymptomTable, Boolean> extended = createColumn(
+		"extended", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Date> startDate = createColumn(
 		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Date> endDate = createColumn(

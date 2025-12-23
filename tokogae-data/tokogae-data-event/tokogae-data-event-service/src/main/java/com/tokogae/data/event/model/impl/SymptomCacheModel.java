@@ -67,7 +67,7 @@ public class SymptomCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class SymptomCacheModel
 		sb.append(name);
 		sb.append(", affectedArea=");
 		sb.append(affectedArea);
+		sb.append(", extended=");
+		sb.append(extended);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", endDate=");
@@ -137,6 +139,8 @@ public class SymptomCacheModel
 			symptomImpl.setAffectedArea(affectedArea);
 		}
 
+		symptomImpl.setExtended(extended);
+
 		if (startDate == Long.MIN_VALUE) {
 			symptomImpl.setStartDate(null);
 		}
@@ -178,6 +182,8 @@ public class SymptomCacheModel
 		occurTime = objectInput.readLong();
 		name = objectInput.readUTF();
 		affectedArea = objectInput.readUTF();
+
+		extended = objectInput.readBoolean();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 
@@ -217,6 +223,7 @@ public class SymptomCacheModel
 			objectOutput.writeUTF(affectedArea);
 		}
 
+		objectOutput.writeBoolean(extended);
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
 
@@ -234,6 +241,7 @@ public class SymptomCacheModel
 	public long occurTime;
 	public String name;
 	public String affectedArea;
+	public boolean extended;
 	public long startDate;
 	public long endDate;
 	public int intensityLevel;

@@ -223,6 +223,27 @@ public interface SymptomModel
 	public void setAffectedArea(String affectedArea);
 
 	/**
+	 * Returns the extended of this symptom.
+	 *
+	 * @return the extended of this symptom
+	 */
+	public boolean getExtended();
+
+	/**
+	 * Returns <code>true</code> if this symptom is extended.
+	 *
+	 * @return <code>true</code> if this symptom is extended; <code>false</code> otherwise
+	 */
+	public boolean isExtended();
+
+	/**
+	 * Sets whether this symptom is extended.
+	 *
+	 * @param extended the extended of this symptom
+	 */
+	public void setExtended(boolean extended);
+
+	/**
 	 * Returns the start date of this symptom.
 	 *
 	 * @return the start date of this symptom

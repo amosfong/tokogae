@@ -43,6 +43,7 @@ public class SymptomWrapper
 		attributes.put("occurTime", getOccurTime());
 		attributes.put("name", getName());
 		attributes.put("affectedArea", getAffectedArea());
+		attributes.put("extended", isExtended());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("intensityLevel", getIntensityLevel());
@@ -118,6 +119,12 @@ public class SymptomWrapper
 			setAffectedArea(affectedArea);
 		}
 
+		Boolean extended = (Boolean)attributes.get("extended");
+
+		if (extended != null) {
+			setExtended(extended);
+		}
+
 		Date startDate = (Date)attributes.get("startDate");
 
 		if (startDate != null) {
@@ -180,6 +187,16 @@ public class SymptomWrapper
 	@Override
 	public Date getEndDate() {
 		return model.getEndDate();
+	}
+
+	/**
+	 * Returns the extended of this symptom.
+	 *
+	 * @return the extended of this symptom
+	 */
+	@Override
+	public boolean getExtended() {
+		return model.getExtended();
 	}
 
 	/**
@@ -307,6 +324,16 @@ public class SymptomWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this symptom is extended.
+	 *
+	 * @return <code>true</code> if this symptom is extended; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExtended() {
+		return model.isExtended();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -350,6 +377,16 @@ public class SymptomWrapper
 	@Override
 	public void setEndDate(Date endDate) {
 		model.setEndDate(endDate);
+	}
+
+	/**
+	 * Sets whether this symptom is extended.
+	 *
+	 * @param extended the extended of this symptom
+	 */
+	@Override
+	public void setExtended(boolean extended) {
+		model.setExtended(extended);
 	}
 
 	/**

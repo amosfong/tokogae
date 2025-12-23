@@ -38,14 +38,14 @@ public class SymptomLocalServiceUtil {
 	 */
 	public static Symptom addSymptom(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String affectedArea,
+			long occurTime, String name, String affectedArea, boolean extended,
 			java.util.Date startDate, java.util.Date endDate,
 			int intensityLevel)
 		throws PortalException {
 
 		return getService().addSymptom(
 			userId, subjectId, occurDay, occurDaySegment, occurTime, name,
-			affectedArea, startDate, endDate, intensityLevel);
+			affectedArea, extended, startDate, endDate, intensityLevel);
 	}
 
 	/**
@@ -278,13 +278,14 @@ public class SymptomLocalServiceUtil {
 
 	public static Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			String name, String affectedArea, boolean extended,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
 		throws PortalException {
 
 		return getService().updateSymptom(
 			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	/**

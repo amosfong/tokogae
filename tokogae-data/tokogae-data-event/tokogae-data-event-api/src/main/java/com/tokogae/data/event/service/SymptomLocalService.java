@@ -55,8 +55,8 @@ public interface SymptomLocalService
 	 */
 	public Symptom addSymptom(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String affectedArea, Date startDate,
-			Date endDate, int intensityLevel)
+			long occurTime, String name, String affectedArea, boolean extended,
+			Date startDate, Date endDate, int intensityLevel)
 		throws PortalException;
 
 	/**
@@ -251,8 +251,8 @@ public interface SymptomLocalService
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException;
 
 	/**

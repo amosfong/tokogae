@@ -30,13 +30,14 @@ public class SymptomServiceUtil {
 	 */
 	public static Symptom addSymptom(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			String name, String affectedArea, boolean extended,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
 		throws PortalException {
 
 		return getService().addSymptom(
 			subjectId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	public static Symptom deleteSymptom(long symptomId) throws PortalException {
@@ -54,13 +55,14 @@ public class SymptomServiceUtil {
 
 	public static Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			String name, String affectedArea, boolean extended,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
 		throws PortalException {
 
 		return getService().updateSymptom(
 			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	public static SymptomService getService() {

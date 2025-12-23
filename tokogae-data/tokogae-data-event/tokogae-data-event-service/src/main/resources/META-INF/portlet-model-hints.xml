@@ -44,6 +44,7 @@
 		<field name="occurTime" type="long" />
 		<field name="name" type="String" />
 		<field name="affectedArea" type="String" />
+		<field name="extended" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="intensityLevel" type="int" />

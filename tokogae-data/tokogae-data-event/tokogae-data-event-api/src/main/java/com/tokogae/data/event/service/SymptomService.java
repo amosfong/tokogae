@@ -43,8 +43,8 @@ public interface SymptomService extends BaseService {
 	 */
 	public Symptom addSymptom(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException;
 
 	public Symptom deleteSymptom(long symptomId) throws PortalException;
@@ -58,8 +58,8 @@ public interface SymptomService extends BaseService {
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, Date startDate, Date endDate,
-			int intensityLevel)
+			String name, String affectedArea, boolean extended, Date startDate,
+			Date endDate, int intensityLevel)
 		throws PortalException;
 
 }

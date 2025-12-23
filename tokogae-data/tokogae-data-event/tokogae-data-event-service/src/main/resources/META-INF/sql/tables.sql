@@ -43,6 +43,7 @@ create table TOKOGAEData_Symptom (
 	occurTime LONG,
 	name VARCHAR(75) null,
 	affectedArea VARCHAR(75) null,
+	extended BOOLEAN,
 	startDate DATE null,
 	endDate DATE null,
 	intensityLevel INTEGER

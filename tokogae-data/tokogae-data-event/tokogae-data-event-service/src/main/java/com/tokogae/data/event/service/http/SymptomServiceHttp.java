@@ -44,7 +44,7 @@ public class SymptomServiceHttp {
 	public static com.tokogae.data.event.model.Symptom addSymptom(
 			HttpPrincipal httpPrincipal, long subjectId, long occurDay,
 			int occurDaySegment, long occurTime, String name,
-			String affectedArea, java.util.Date startDate,
+			String affectedArea, boolean extended, java.util.Date startDate,
 			java.util.Date endDate, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -55,7 +55,8 @@ public class SymptomServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, subjectId, occurDay, occurDaySegment, occurTime,
-				name, affectedArea, startDate, endDate, intensityLevel);
+				name, affectedArea, extended, startDate, endDate,
+				intensityLevel);
 
 			Object returnObj = null;
 
@@ -128,7 +129,7 @@ public class SymptomServiceHttp {
 	public static com.tokogae.data.event.model.Symptom updateSymptom(
 			HttpPrincipal httpPrincipal, long symptomId, long occurDay,
 			int occurDaySegment, long occurTime, String name,
-			String affectedArea, java.util.Date startDate,
+			String affectedArea, boolean extended, java.util.Date startDate,
 			java.util.Date endDate, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -139,7 +140,8 @@ public class SymptomServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, symptomId, occurDay, occurDaySegment, occurTime,
-				name, affectedArea, startDate, endDate, intensityLevel);
+				name, affectedArea, extended, startDate, endDate,
+				intensityLevel);
 
 			Object returnObj = null;
 
@@ -173,14 +175,16 @@ public class SymptomServiceHttp {
 
 	private static final Class<?>[] _addSymptomParameterTypes0 = new Class[] {
 		long.class, long.class, int.class, long.class, String.class,
-		String.class, java.util.Date.class, java.util.Date.class, int.class
+		String.class, boolean.class, java.util.Date.class, java.util.Date.class,
+		int.class
 	};
 	private static final Class<?>[] _deleteSymptomParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateSymptomParameterTypes2 =
 		new Class[] {
 			long.class, long.class, int.class, long.class, String.class,
-			String.class, java.util.Date.class, java.util.Date.class, int.class
+			String.class, boolean.class, java.util.Date.class,
+			java.util.Date.class, int.class
 		};
 
 }

@@ -66,8 +66,9 @@ public class SymptomModelImpl
 		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
 		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
 		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"affectedArea", Types.VARCHAR}, {"startDate", Types.TIMESTAMP},
-		{"endDate", Types.TIMESTAMP}, {"intensityLevel", Types.INTEGER}
+		{"affectedArea", Types.VARCHAR}, {"extended", Types.BOOLEAN},
+		{"startDate", Types.TIMESTAMP}, {"endDate", Types.TIMESTAMP},
+		{"intensityLevel", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,13 +86,14 @@ public class SymptomModelImpl
 		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("affectedArea", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("extended", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("endDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("intensityLevel", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,affectedArea VARCHAR(75) null,startDate DATE null,endDate DATE null,intensityLevel INTEGER)";
+		"create table TOKOGAEData_Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,affectedArea VARCHAR(75) null,extended BOOLEAN,startDate DATE null,endDate DATE null,intensityLevel INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_Symptom";
@@ -236,6 +238,7 @@ public class SymptomModelImpl
 			attributeGetterFunctions.put("name", Symptom::getName);
 			attributeGetterFunctions.put(
 				"affectedArea", Symptom::getAffectedArea);
+			attributeGetterFunctions.put("extended", Symptom::getExtended);
 			attributeGetterFunctions.put("startDate", Symptom::getStartDate);
 			attributeGetterFunctions.put("endDate", Symptom::getEndDate);
 			attributeGetterFunctions.put(
@@ -282,6 +285,8 @@ public class SymptomModelImpl
 			attributeSetterBiConsumers.put(
 				"affectedArea",
 				(BiConsumer<Symptom, String>)Symptom::setAffectedArea);
+			attributeSetterBiConsumers.put(
+				"extended", (BiConsumer<Symptom, Boolean>)Symptom::setExtended);
 			attributeSetterBiConsumers.put(
 				"startDate", (BiConsumer<Symptom, Date>)Symptom::setStartDate);
 			attributeSetterBiConsumers.put(
@@ -489,6 +494,27 @@ public class SymptomModelImpl
 
 	@JSON
 	@Override
+	public boolean getExtended() {
+		return _extended;
+	}
+
+	@JSON
+	@Override
+	public boolean isExtended() {
+		return _extended;
+	}
+
+	@Override
+	public void setExtended(boolean extended) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_extended = extended;
+	}
+
+	@JSON
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -599,6 +625,7 @@ public class SymptomModelImpl
 		symptomImpl.setOccurTime(getOccurTime());
 		symptomImpl.setName(getName());
 		symptomImpl.setAffectedArea(getAffectedArea());
+		symptomImpl.setExtended(isExtended());
 		symptomImpl.setStartDate(getStartDate());
 		symptomImpl.setEndDate(getEndDate());
 		symptomImpl.setIntensityLevel(getIntensityLevel());
@@ -631,6 +658,8 @@ public class SymptomModelImpl
 		symptomImpl.setName(this.<String>getColumnOriginalValue("name"));
 		symptomImpl.setAffectedArea(
 			this.<String>getColumnOriginalValue("affectedArea"));
+		symptomImpl.setExtended(
+			this.<Boolean>getColumnOriginalValue("extended"));
 		symptomImpl.setStartDate(
 			this.<Date>getColumnOriginalValue("startDate"));
 		symptomImpl.setEndDate(this.<Date>getColumnOriginalValue("endDate"));
@@ -752,6 +781,8 @@ public class SymptomModelImpl
 			symptomCacheModel.affectedArea = null;
 		}
 
+		symptomCacheModel.extended = isExtended();
+
 		Date startDate = getStartDate();
 
 		if (startDate != null) {
@@ -844,6 +875,7 @@ public class SymptomModelImpl
 	private long _occurTime;
 	private String _name;
 	private String _affectedArea;
+	private boolean _extended;
 	private Date _startDate;
 	private Date _endDate;
 	private int _intensityLevel;
@@ -887,6 +919,7 @@ public class SymptomModelImpl
 		_columnOriginalValues.put("occurTime", _occurTime);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("affectedArea", _affectedArea);
+		_columnOriginalValues.put("extended", _extended);
 		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("endDate", _endDate);
 		_columnOriginalValues.put("intensityLevel", _intensityLevel);
@@ -925,11 +958,13 @@ public class SymptomModelImpl
 
 		columnBitmasks.put("affectedArea", 1024L);
 
-		columnBitmasks.put("startDate", 2048L);
+		columnBitmasks.put("extended", 2048L);
 
-		columnBitmasks.put("endDate", 4096L);
+		columnBitmasks.put("startDate", 4096L);
 
-		columnBitmasks.put("intensityLevel", 8192L);
+		columnBitmasks.put("endDate", 8192L);
+
+		columnBitmasks.put("intensityLevel", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

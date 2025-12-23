@@ -27,13 +27,14 @@ public class SymptomServiceWrapper
 	@Override
 	public com.tokogae.data.event.model.Symptom addSymptom(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			String name, String affectedArea, boolean extended,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _symptomService.addSymptom(
 			subjectId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	@Override
@@ -56,13 +57,14 @@ public class SymptomServiceWrapper
 	@Override
 	public com.tokogae.data.event.model.Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			String name, String affectedArea, boolean extended,
+			java.util.Date startDate, java.util.Date endDate,
+			int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _symptomService.updateSymptom(
 			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			startDate, endDate, intensityLevel);
+			extended, startDate, endDate, intensityLevel);
 	}
 
 	@Override
