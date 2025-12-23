@@ -51,6 +51,26 @@
 		<column name="quantity" type="double" />
 		<column name="quantityUnit" type="String" />
 	</entity>
+	<entity local-service="true" name="Sleep" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="sleepId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="subjectId" type="long" />
+		<column name="occurDay" type="long" />
+		<column name="occurDaySegment" type="int" />
+		<column name="occurTime" type="long" />
+		<column name="duration" type="long" />
+	</entity>
 	<entity local-service="true" name="Symptom" remote-service="true">
 
 		<!-- PK fields -->

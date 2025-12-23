@@ -233,6 +233,64 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 			</clay:tabs-panel>
 
 			<clay:tabs-panel>
+				<portlet:actionURL name="/tokogae/edit_sleep" var="editSleepURL" />
+
+				<liferay-frontend:edit-form
+					action="<%= editSleepURL %>"
+					enctype="multipart/form-data"
+					method="post"
+					name="fm1"
+				>
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+					<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
+
+					<aui:select id="subjectId" label="subject" name="subjectId">
+
+						<%
+						for (Subject subject : homeDisplayContext.getSubjects()) {
+						%>
+
+							<aui:option label="<%= subject.getDisplayName() %>" value="<%= subject.getSubjectId() %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<liferay-frontend:edit-form-body>
+						<liferay-frontend:fieldset
+							collapsed="<%= false %>"
+							collapsible="<%= true %>"
+							label="details"
+						>
+							<aui:input id="sleepOccurDay" name="occurDay" type="date" value="<%= homeDisplayContext.getCurrentOccurDay() %>" />
+
+							<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="sleepOccurDaySegment" label="day-segment" name="occurDaySegment">
+
+								<%
+								for (int daySegment : DaySegments.VALUES) {
+								%>
+
+									<aui:option label="<%= DaySegments.getLabel(daySegment) %>" value="<%= daySegment %>" />
+
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<aui:input name="duration" />
+						</liferay-frontend:fieldset>
+					</liferay-frontend:edit-form-body>
+
+					<liferay-frontend:edit-form-footer>
+						<liferay-frontend:edit-form-buttons />
+					</liferay-frontend:edit-form-footer>
+				</liferay-frontend:edit-form>
+			</clay:tabs-panel>
+
+			<clay:tabs-panel>
 				<portlet:actionURL name="/tokogae/edit_exercise" var="editExerciseURL" />
 
 				<liferay-frontend:edit-form

@@ -174,6 +174,9 @@ public class HomeDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "symptoms"))
 		).add(
 			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "sleep"))
+		).add(
+			tabsItem -> tabsItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "exercise"))
 		).build();
 	}

@@ -16,6 +16,7 @@ import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Sleep;
 import com.tokogae.data.event.model.Symptom;
 
 import java.util.Date;
@@ -115,6 +116,37 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		sb.append(foodItem.getQuantityUnit());
 		sb.append(StringPool.SPACE);
 		sb.append(foodItem.getName());
+
+		dataEvent.setSummary(sb.toString());
+
+		return dataEvent;
+	}
+
+	public DataEvent create(Sleep sleep) {
+		DataEvent dataEvent = new DataEventImpl();
+
+		dataEvent.setCompanyId(sleep.getCompanyId());
+		dataEvent.setClassName(Sleep.class.getName());
+		dataEvent.setClassPK(sleep.getSleepId());
+
+		long occurTime = 0;
+
+		if (sleep.getOccurTime() > 0) {
+			occurTime = sleep.getOccurTime();
+		}
+		else {
+			occurTime = DaySegments.getDayTime(sleep.getOccurDaySegment());
+		}
+
+		dataEvent.setOccurDate(new Date(sleep.getOccurDay() + occurTime));
+
+		dataEvent.setOriginalObject(sleep);
+		dataEvent.setSubjectId(sleep.getSubjectId());
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("Sleep for ");
+		sb.append(sleep.getDuration());
 
 		dataEvent.setSummary(sb.toString());
 

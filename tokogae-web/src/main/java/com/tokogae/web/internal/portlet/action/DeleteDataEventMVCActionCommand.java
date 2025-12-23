@@ -11,12 +11,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import com.tokogae.data.event.exception.NoSuchExerciseException;
 import com.tokogae.data.event.exception.NoSuchFoodItemException;
+import com.tokogae.data.event.exception.NoSuchSleepException;
 import com.tokogae.data.event.exception.NoSuchSymptomException;
 import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Sleep;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.ExerciseService;
 import com.tokogae.data.event.service.FoodItemService;
+import com.tokogae.data.event.service.SleepService;
 import com.tokogae.data.event.service.SymptomService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
 
@@ -53,6 +56,9 @@ public class DeleteDataEventMVCActionCommand extends BaseMVCActionCommand {
 			else if (className.equals(FoodItem.class.getName())) {
 				_foodItemService.deleteFoodItem(classPK);
 			}
+			else if (className.equals(Sleep.class.getName())) {
+				_sleepService.deleteSleep(classPK);
+			}
 			else if (className.equals(Symptom.class.getName())) {
 				_symptomService.deleteSymptom(classPK);
 			}
@@ -60,6 +66,7 @@ public class DeleteDataEventMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable throwable) {
 			if (throwable instanceof NoSuchExerciseException ||
 				throwable instanceof NoSuchFoodItemException ||
+				throwable instanceof NoSuchSleepException ||
 				throwable instanceof NoSuchSymptomException) {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
@@ -75,6 +82,9 @@ public class DeleteDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FoodItemService _foodItemService;
+
+	@Reference
+	private SleepService _sleepService;
 
 	@Reference
 	private SymptomService _symptomService;
