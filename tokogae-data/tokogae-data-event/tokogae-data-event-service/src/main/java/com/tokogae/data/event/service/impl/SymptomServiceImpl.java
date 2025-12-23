@@ -12,8 +12,6 @@ import com.tokogae.account.permission.SubjectPermission;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.base.SymptomServiceBaseImpl;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,16 +29,15 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom addSymptom(
 			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, boolean extended, Date startDate,
-			Date endDate, int intensityLevel)
+			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		_subjectPermission.check(
 			getPermissionChecker(), subjectId, ActionKeys.UPDATE);
 
 		return symptomLocalService.addSymptom(
-			getUserId(), subjectId, occurDay, occurDaySegment, occurTime, name,
-			affectedArea, extended, startDate, endDate, intensityLevel);
+			getUserId(), subjectId, occurDay, occurDaySegment, occurTime,
+			duration, name, affectedArea, intensityLevel);
 	}
 
 	public Symptom deleteSymptom(long symptomId) throws PortalException {
@@ -54,8 +51,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, boolean extended, Date startDate,
-			Date endDate, int intensityLevel)
+			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		Symptom symptom = symptomLocalService.getSymptom(symptomId);
@@ -64,8 +60,8 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 			getPermissionChecker(), symptom.getSubjectId(), ActionKeys.UPDATE);
 
 		return symptomLocalService.updateSymptom(
-			symptomId, occurDay, occurDaySegment, occurTime, name, affectedArea,
-			extended, startDate, endDate, intensityLevel);
+			symptomId, occurDay, occurDaySegment, occurTime, duration, name,
+			affectedArea, intensityLevel);
 	}
 
 	@Reference

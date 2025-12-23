@@ -204,11 +204,7 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 
 							</aui:select>
 
-							<aui:input name="extended" onClick='<%= liferayPortletResponse.getNamespace() + "toggleExtended(this.checked);" %>' type="checkbox" />
-
-							<aui:input disabled="<%= true %>" name="startDate" type="date" />
-
-							<aui:input disabled="<%= true %>" name="endDate" type="date" />
+							<aui:input name="duration" />
 
 							<aui:input name="name" />
 

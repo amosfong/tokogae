@@ -16,8 +16,6 @@ import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.base.SymptomLocalServiceBaseImpl;
 
-import java.util.Date;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,8 +30,8 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom addSymptom(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String affectedArea, boolean extended,
-			Date startDate, Date endDate, int intensityLevel)
+			long occurTime, long duration, String name, String affectedArea,
+			int intensityLevel)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -47,11 +45,9 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setOccurDay(occurDay);
 		symptom.setOccurDaySegment(occurDaySegment);
 		symptom.setOccurTime(occurTime);
+		symptom.setDuration(duration);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);
-		symptom.setExtended(extended);
-		symptom.setStartDate(startDate);
-		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);
 
 		symptom = symptomPersistence.update(symptom);
@@ -92,8 +88,7 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, boolean extended, Date startDate,
-			Date endDate, int intensityLevel)
+			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		Symptom symptom = symptomPersistence.findByPrimaryKey(symptomId);
@@ -101,11 +96,9 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom.setOccurDay(occurDay);
 		symptom.setOccurDaySegment(occurDaySegment);
 		symptom.setOccurTime(occurTime);
+		symptom.setDuration(duration);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);
-		symptom.setExtended(extended);
-		symptom.setStartDate(startDate);
-		symptom.setEndDate(endDate);
 		symptom.setIntensityLevel(intensityLevel);
 
 		symptom = symptomPersistence.update(symptom);

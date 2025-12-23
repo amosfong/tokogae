@@ -75,11 +75,7 @@ public class EditSymptomMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String affectedArea = ParamUtil.getString(
 			actionRequest, "affectedArea");
-		boolean extended = ParamUtil.getBoolean(actionRequest, "extended");
-		Date startDate = ParamUtil.getDate(
-			actionRequest, "startDate", dateFormat, null);
-		Date endDate = ParamUtil.getDate(
-			actionRequest, "endDate", dateFormat, null);
+		long duration = ParamUtil.getLong(actionRequest, "duration");
 		int intensityLevel = ParamUtil.getInteger(
 			actionRequest, "intensityLevel");
 
@@ -91,13 +87,13 @@ public class EditSymptomMVCActionCommand extends BaseMVCActionCommand {
 
 		if (symptomId <= 0) {
 			_symptomService.addSymptom(
-				subjectId, occurDayTime, occurDaySegment, occurTime, name,
-				affectedArea, extended, startDate, endDate, intensityLevel);
+				subjectId, occurDayTime, occurDaySegment, occurTime, duration,
+				name, affectedArea, intensityLevel);
 		}
 		else {
 			_symptomService.updateSymptom(
-				symptomId, occurDayTime, occurDaySegment, occurTime, name,
-				affectedArea, extended, startDate, endDate, intensityLevel);
+				symptomId, occurDayTime, occurDaySegment, occurTime, duration,
+				name, affectedArea, intensityLevel);
 		}
 	}
 

@@ -183,8 +183,6 @@ public class DataEventIndexer extends BaseIndexer<DataEvent> {
 			document.addDate("endDate", dataEvent.getEndDate());
 		}
 
-		document.addKeyword("extended", dataEvent.getExtended());
-
 		if (dataEvent.getOccurDate() != null) {
 			document.addDate("occurDate", dataEvent.getOccurDate());
 		}

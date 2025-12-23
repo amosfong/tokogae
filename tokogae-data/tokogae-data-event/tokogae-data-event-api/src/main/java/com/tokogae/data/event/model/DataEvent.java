@@ -20,8 +20,6 @@ public interface DataEvent {
 
 	public Date getEndDate();
 
-	public boolean getExtended();
-
 	public Date getOccurDate();
 
 	public String getOccurDateLabel(Locale locale);
@@ -41,8 +39,6 @@ public interface DataEvent {
 	public void setCompanyId(long companyId);
 
 	public void setEndDate(Date endDate);
-
-	public void setExtended(boolean extended);
 
 	public void setOccurDate(Date occurDate);
 

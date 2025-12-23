@@ -42,10 +42,6 @@ public class DataEventImpl implements DataEvent {
 		return _endDate;
 	}
 
-	public boolean getExtended() {
-		return _extended;
-	}
-
 	public Date getOccurDate() {
 		return _occurDate;
 	}
