@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.tokogae.data.event.model.Exercise" />
 	<import class="com.tokogae.data.event.model.FoodItem" />
+	<import class="com.tokogae.data.event.model.Sleep" />
 	<import class="com.tokogae.data.event.model.Symptom" />
 	<import class="com.tokogae.data.event.model.SymptomPeriod" />
 	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.ExerciseImpl" table="TOKOGAEData_Exercise">
@@ -40,6 +41,20 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="brand" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantityUnit" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.SleepImpl" table="TOKOGAEData_Sleep">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="sleepId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="subjectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="occurDay" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="occurDaySegment" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="occurTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="duration" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.tokogae.data.event.model.impl.SymptomImpl" table="TOKOGAEData_Symptom">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="symptomId" type="long">

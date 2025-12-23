@@ -32,6 +32,18 @@
 		<field name="quantity" type="double" />
 		<field name="quantityUnit" type="String" />
 	</model>
+	<model name="com.tokogae.data.event.model.Sleep">
+		<field name="mvccVersion" type="long" />
+		<field name="sleepId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="subjectId" type="long" />
+		<field name="occurDay" type="long" />
+		<field name="occurDaySegment" type="int" />
+		<field name="occurTime" type="long" />
+		<field name="duration" type="long" />
+	</model>
 	<model name="com.tokogae.data.event.model.Symptom">
 		<field name="mvccVersion" type="long" />
 		<field name="symptomId" type="long" />

@@ -31,6 +31,19 @@ create table TOKOGAEData_FoodItem (
 	quantityUnit VARCHAR(75) null
 );
 
+create table TOKOGAEData_Sleep (
+	mvccVersion LONG default 0 not null,
+	sleepId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	subjectId LONG,
+	occurDay LONG,
+	occurDaySegment INTEGER,
+	occurTime LONG,
+	duration LONG
+);
+
 create table TOKOGAEData_Symptom (
 	mvccVersion LONG default 0 not null,
 	symptomId LONG not null primary key,
