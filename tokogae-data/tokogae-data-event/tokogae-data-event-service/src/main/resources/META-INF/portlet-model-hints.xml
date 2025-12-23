@@ -42,11 +42,20 @@
 		<field name="occurDay" type="long" />
 		<field name="occurDaySegment" type="int" />
 		<field name="occurTime" type="long" />
+		<field name="duration" type="long" />
 		<field name="name" type="String" />
 		<field name="affectedArea" type="String" />
-		<field name="extended" type="boolean" />
+		<field name="intensityLevel" type="int" />
+	</model>
+	<model name="com.tokogae.data.event.model.SymptomPeriod">
+		<field name="mvccVersion" type="long" />
+		<field name="symptomId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="subjectId" type="long" />
+		<field name="name" type="String" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
-		<field name="intensityLevel" type="int" />
 	</model>
 </model-hints>

@@ -25,7 +25,6 @@ import com.tokogae.data.event.model.Symptom;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -55,8 +54,8 @@ public interface SymptomLocalService
 	 */
 	public Symptom addSymptom(
 			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String affectedArea, boolean extended,
-			Date startDate, Date endDate, int intensityLevel)
+			long occurTime, long duration, String name, String affectedArea,
+			int intensityLevel)
 		throws PortalException;
 
 	/**
@@ -251,8 +250,7 @@ public interface SymptomLocalService
 
 	public Symptom updateSymptom(
 			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			String name, String affectedArea, boolean extended, Date startDate,
-			Date endDate, int intensityLevel)
+			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException;
 
 	/**

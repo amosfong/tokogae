@@ -43,9 +43,8 @@ public class SymptomServiceHttp {
 
 	public static com.tokogae.data.event.model.Symptom addSymptom(
 			HttpPrincipal httpPrincipal, long subjectId, long occurDay,
-			int occurDaySegment, long occurTime, String name,
-			String affectedArea, boolean extended, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			int occurDaySegment, long occurTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,8 +54,7 @@ public class SymptomServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, subjectId, occurDay, occurDaySegment, occurTime,
-				name, affectedArea, extended, startDate, endDate,
-				intensityLevel);
+				duration, name, affectedArea, intensityLevel);
 
 			Object returnObj = null;
 
@@ -128,9 +126,8 @@ public class SymptomServiceHttp {
 
 	public static com.tokogae.data.event.model.Symptom updateSymptom(
 			HttpPrincipal httpPrincipal, long symptomId, long occurDay,
-			int occurDaySegment, long occurTime, String name,
-			String affectedArea, boolean extended, java.util.Date startDate,
-			java.util.Date endDate, int intensityLevel)
+			int occurDaySegment, long occurTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -140,8 +137,7 @@ public class SymptomServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, symptomId, occurDay, occurDaySegment, occurTime,
-				name, affectedArea, extended, startDate, endDate,
-				intensityLevel);
+				duration, name, affectedArea, intensityLevel);
 
 			Object returnObj = null;
 
@@ -174,17 +170,15 @@ public class SymptomServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(SymptomServiceHttp.class);
 
 	private static final Class<?>[] _addSymptomParameterTypes0 = new Class[] {
-		long.class, long.class, int.class, long.class, String.class,
-		String.class, boolean.class, java.util.Date.class, java.util.Date.class,
-		int.class
+		long.class, long.class, int.class, long.class, long.class, String.class,
+		String.class, int.class
 	};
 	private static final Class<?>[] _deleteSymptomParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateSymptomParameterTypes2 =
 		new Class[] {
-			long.class, long.class, int.class, long.class, String.class,
-			String.class, boolean.class, java.util.Date.class,
-			java.util.Date.class, int.class
+			long.class, long.class, int.class, long.class, long.class,
+			String.class, String.class, int.class
 		};
 
 }

@@ -193,6 +193,20 @@ public interface SymptomModel
 	public void setOccurTime(long occurTime);
 
 	/**
+	 * Returns the duration of this symptom.
+	 *
+	 * @return the duration of this symptom
+	 */
+	public long getDuration();
+
+	/**
+	 * Sets the duration of this symptom.
+	 *
+	 * @param duration the duration of this symptom
+	 */
+	public void setDuration(long duration);
+
+	/**
 	 * Returns the name of this symptom.
 	 *
 	 * @return the name of this symptom
@@ -221,55 +235,6 @@ public interface SymptomModel
 	 * @param affectedArea the affected area of this symptom
 	 */
 	public void setAffectedArea(String affectedArea);
-
-	/**
-	 * Returns the extended of this symptom.
-	 *
-	 * @return the extended of this symptom
-	 */
-	public boolean getExtended();
-
-	/**
-	 * Returns <code>true</code> if this symptom is extended.
-	 *
-	 * @return <code>true</code> if this symptom is extended; <code>false</code> otherwise
-	 */
-	public boolean isExtended();
-
-	/**
-	 * Sets whether this symptom is extended.
-	 *
-	 * @param extended the extended of this symptom
-	 */
-	public void setExtended(boolean extended);
-
-	/**
-	 * Returns the start date of this symptom.
-	 *
-	 * @return the start date of this symptom
-	 */
-	public Date getStartDate();
-
-	/**
-	 * Sets the start date of this symptom.
-	 *
-	 * @param startDate the start date of this symptom
-	 */
-	public void setStartDate(Date startDate);
-
-	/**
-	 * Returns the end date of this symptom.
-	 *
-	 * @return the end date of this symptom
-	 */
-	public Date getEndDate();
-
-	/**
-	 * Sets the end date of this symptom.
-	 *
-	 * @param endDate the end date of this symptom
-	 */
-	public void setEndDate(Date endDate);
 
 	/**
 	 * Returns the intensity level of this symptom.

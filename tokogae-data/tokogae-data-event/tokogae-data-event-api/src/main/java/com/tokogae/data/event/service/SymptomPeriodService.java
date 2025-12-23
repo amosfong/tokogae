@@ -12,17 +12,15 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import com.tokogae.data.event.model.Symptom;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the remote service interface for Symptom. Methods of this
+ * Provides the remote service interface for SymptomPeriod. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Amos Fong
- * @see SymptomServiceUtil
+ * @see SymptomPeriodServiceUtil
  * @generated
  */
 @AccessControlled
@@ -32,19 +30,13 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface SymptomService extends BaseService {
+public interface SymptomPeriodService extends BaseService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the symptom remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SymptomServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomPeriodServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the symptom period remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SymptomPeriodServiceUtil} if injection and service tracking are not available.
 	 */
-	public Symptom addSymptom(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
-			long duration, String name, String affectedArea, int intensityLevel)
-		throws PortalException;
-
-	public Symptom deleteSymptom(long symptomId) throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -52,10 +44,5 @@ public interface SymptomService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	public Symptom updateSymptom(
-			long symptomId, long occurDay, int occurDaySegment, long occurTime,
-			long duration, String name, String affectedArea, int intensityLevel)
-		throws PortalException;
 
 }

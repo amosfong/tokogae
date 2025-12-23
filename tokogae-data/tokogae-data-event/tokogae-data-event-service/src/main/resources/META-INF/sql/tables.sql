@@ -41,10 +41,20 @@ create table TOKOGAEData_Symptom (
 	occurDay LONG,
 	occurDaySegment INTEGER,
 	occurTime LONG,
+	duration LONG,
 	name VARCHAR(75) null,
 	affectedArea VARCHAR(75) null,
-	extended BOOLEAN,
-	startDate DATE null,
-	endDate DATE null,
 	intensityLevel INTEGER
+);
+
+create table TOKOGAEData_SymptomPeriod (
+	mvccVersion LONG default 0 not null,
+	symptomId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	subjectId LONG,
+	name VARCHAR(75) null,
+	startDate DATE null,
+	endDate DATE null
 );

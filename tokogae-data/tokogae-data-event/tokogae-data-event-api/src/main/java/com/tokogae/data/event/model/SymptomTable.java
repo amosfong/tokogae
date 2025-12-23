@@ -40,16 +40,12 @@ public class SymptomTable extends BaseTable<SymptomTable> {
 		"occurDaySegment", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Long> occurTime = createColumn(
 		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<SymptomTable, Long> duration = createColumn(
+		"duration", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, String> affectedArea = createColumn(
 		"affectedArea", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SymptomTable, Boolean> extended = createColumn(
-		"extended", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<SymptomTable, Date> startDate = createColumn(
-		"startDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SymptomTable, Date> endDate = createColumn(
-		"endDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SymptomTable, Integer> intensityLevel = createColumn(
 		"intensityLevel", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

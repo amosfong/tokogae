@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 
-import com.tokogae.data.event.model.Symptom;
+import com.tokogae.data.event.model.SymptomPeriod;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -19,13 +19,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing Symptom in entity cache.
+ * The cache model class for representing SymptomPeriod in entity cache.
  *
  * @author Amos Fong
  * @generated
  */
-public class SymptomCacheModel
-	implements CacheModel<Symptom>, Externalizable, MVCCModel {
+public class SymptomPeriodCacheModel
+	implements CacheModel<SymptomPeriod>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -33,14 +33,15 @@ public class SymptomCacheModel
 			return true;
 		}
 
-		if (!(object instanceof SymptomCacheModel)) {
+		if (!(object instanceof SymptomPeriodCacheModel)) {
 			return false;
 		}
 
-		SymptomCacheModel symptomCacheModel = (SymptomCacheModel)object;
+		SymptomPeriodCacheModel symptomPeriodCacheModel =
+			(SymptomPeriodCacheModel)object;
 
-		if ((symptomId == symptomCacheModel.symptomId) &&
-			(mvccVersion == symptomCacheModel.mvccVersion)) {
+		if ((symptomId == symptomPeriodCacheModel.symptomId) &&
+			(mvccVersion == symptomPeriodCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -67,7 +68,7 @@ public class SymptomCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,66 +82,59 @@ public class SymptomCacheModel
 		sb.append(createDate);
 		sb.append(", subjectId=");
 		sb.append(subjectId);
-		sb.append(", occurDay=");
-		sb.append(occurDay);
-		sb.append(", occurDaySegment=");
-		sb.append(occurDaySegment);
-		sb.append(", occurTime=");
-		sb.append(occurTime);
-		sb.append(", duration=");
-		sb.append(duration);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", affectedArea=");
-		sb.append(affectedArea);
-		sb.append(", intensityLevel=");
-		sb.append(intensityLevel);
+		sb.append(", startDate=");
+		sb.append(startDate);
+		sb.append(", endDate=");
+		sb.append(endDate);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public Symptom toEntityModel() {
-		SymptomImpl symptomImpl = new SymptomImpl();
+	public SymptomPeriod toEntityModel() {
+		SymptomPeriodImpl symptomPeriodImpl = new SymptomPeriodImpl();
 
-		symptomImpl.setMvccVersion(mvccVersion);
-		symptomImpl.setSymptomId(symptomId);
-		symptomImpl.setCompanyId(companyId);
-		symptomImpl.setUserId(userId);
+		symptomPeriodImpl.setMvccVersion(mvccVersion);
+		symptomPeriodImpl.setSymptomId(symptomId);
+		symptomPeriodImpl.setCompanyId(companyId);
+		symptomPeriodImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
-			symptomImpl.setCreateDate(null);
+			symptomPeriodImpl.setCreateDate(null);
 		}
 		else {
-			symptomImpl.setCreateDate(new Date(createDate));
+			symptomPeriodImpl.setCreateDate(new Date(createDate));
 		}
 
-		symptomImpl.setSubjectId(subjectId);
-		symptomImpl.setOccurDay(occurDay);
-		symptomImpl.setOccurDaySegment(occurDaySegment);
-		symptomImpl.setOccurTime(occurTime);
-		symptomImpl.setDuration(duration);
+		symptomPeriodImpl.setSubjectId(subjectId);
 
 		if (name == null) {
-			symptomImpl.setName("");
+			symptomPeriodImpl.setName("");
 		}
 		else {
-			symptomImpl.setName(name);
+			symptomPeriodImpl.setName(name);
 		}
 
-		if (affectedArea == null) {
-			symptomImpl.setAffectedArea("");
+		if (startDate == Long.MIN_VALUE) {
+			symptomPeriodImpl.setStartDate(null);
 		}
 		else {
-			symptomImpl.setAffectedArea(affectedArea);
+			symptomPeriodImpl.setStartDate(new Date(startDate));
 		}
 
-		symptomImpl.setIntensityLevel(intensityLevel);
+		if (endDate == Long.MIN_VALUE) {
+			symptomPeriodImpl.setEndDate(null);
+		}
+		else {
+			symptomPeriodImpl.setEndDate(new Date(endDate));
+		}
 
-		symptomImpl.resetOriginalValues();
+		symptomPeriodImpl.resetOriginalValues();
 
-		return symptomImpl;
+		return symptomPeriodImpl;
 	}
 
 	@Override
@@ -155,18 +149,9 @@ public class SymptomCacheModel
 		createDate = objectInput.readLong();
 
 		subjectId = objectInput.readLong();
-
-		occurDay = objectInput.readLong();
-
-		occurDaySegment = objectInput.readInt();
-
-		occurTime = objectInput.readLong();
-
-		duration = objectInput.readLong();
 		name = objectInput.readUTF();
-		affectedArea = objectInput.readUTF();
-
-		intensityLevel = objectInput.readInt();
+		startDate = objectInput.readLong();
+		endDate = objectInput.readLong();
 	}
 
 	@Override
@@ -182,14 +167,6 @@ public class SymptomCacheModel
 
 		objectOutput.writeLong(subjectId);
 
-		objectOutput.writeLong(occurDay);
-
-		objectOutput.writeInt(occurDaySegment);
-
-		objectOutput.writeLong(occurTime);
-
-		objectOutput.writeLong(duration);
-
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -197,14 +174,8 @@ public class SymptomCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (affectedArea == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(affectedArea);
-		}
-
-		objectOutput.writeInt(intensityLevel);
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
 	}
 
 	public long mvccVersion;
@@ -213,12 +184,8 @@ public class SymptomCacheModel
 	public long userId;
 	public long createDate;
 	public long subjectId;
-	public long occurDay;
-	public int occurDaySegment;
-	public long occurTime;
-	public long duration;
 	public String name;
-	public String affectedArea;
-	public int intensityLevel;
+	public long startDate;
+	public long endDate;
 
 }

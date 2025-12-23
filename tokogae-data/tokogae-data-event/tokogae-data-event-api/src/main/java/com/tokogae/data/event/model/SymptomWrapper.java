@@ -41,11 +41,9 @@ public class SymptomWrapper
 		attributes.put("occurDay", getOccurDay());
 		attributes.put("occurDaySegment", getOccurDaySegment());
 		attributes.put("occurTime", getOccurTime());
+		attributes.put("duration", getDuration());
 		attributes.put("name", getName());
 		attributes.put("affectedArea", getAffectedArea());
-		attributes.put("extended", isExtended());
-		attributes.put("startDate", getStartDate());
-		attributes.put("endDate", getEndDate());
 		attributes.put("intensityLevel", getIntensityLevel());
 
 		return attributes;
@@ -107,6 +105,12 @@ public class SymptomWrapper
 			setOccurTime(occurTime);
 		}
 
+		Long duration = (Long)attributes.get("duration");
+
+		if (duration != null) {
+			setDuration(duration);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -117,24 +121,6 @@ public class SymptomWrapper
 
 		if (affectedArea != null) {
 			setAffectedArea(affectedArea);
-		}
-
-		Boolean extended = (Boolean)attributes.get("extended");
-
-		if (extended != null) {
-			setExtended(extended);
-		}
-
-		Date startDate = (Date)attributes.get("startDate");
-
-		if (startDate != null) {
-			setStartDate(startDate);
-		}
-
-		Date endDate = (Date)attributes.get("endDate");
-
-		if (endDate != null) {
-			setEndDate(endDate);
 		}
 
 		Integer intensityLevel = (Integer)attributes.get("intensityLevel");
@@ -180,23 +166,13 @@ public class SymptomWrapper
 	}
 
 	/**
-	 * Returns the end date of this symptom.
+	 * Returns the duration of this symptom.
 	 *
-	 * @return the end date of this symptom
+	 * @return the duration of this symptom
 	 */
 	@Override
-	public Date getEndDate() {
-		return model.getEndDate();
-	}
-
-	/**
-	 * Returns the extended of this symptom.
-	 *
-	 * @return the extended of this symptom
-	 */
-	@Override
-	public boolean getExtended() {
-		return model.getExtended();
+	public long getDuration() {
+		return model.getDuration();
 	}
 
 	/**
@@ -275,16 +251,6 @@ public class SymptomWrapper
 	}
 
 	/**
-	 * Returns the start date of this symptom.
-	 *
-	 * @return the start date of this symptom
-	 */
-	@Override
-	public Date getStartDate() {
-		return model.getStartDate();
-	}
-
-	/**
 	 * Returns the subject ID of this symptom.
 	 *
 	 * @return the subject ID of this symptom
@@ -324,16 +290,6 @@ public class SymptomWrapper
 		return model.getUserUuid();
 	}
 
-	/**
-	 * Returns <code>true</code> if this symptom is extended.
-	 *
-	 * @return <code>true</code> if this symptom is extended; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isExtended() {
-		return model.isExtended();
-	}
-
 	@Override
 	public void persist() {
 		model.persist();
@@ -370,23 +326,13 @@ public class SymptomWrapper
 	}
 
 	/**
-	 * Sets the end date of this symptom.
+	 * Sets the duration of this symptom.
 	 *
-	 * @param endDate the end date of this symptom
+	 * @param duration the duration of this symptom
 	 */
 	@Override
-	public void setEndDate(Date endDate) {
-		model.setEndDate(endDate);
-	}
-
-	/**
-	 * Sets whether this symptom is extended.
-	 *
-	 * @param extended the extended of this symptom
-	 */
-	@Override
-	public void setExtended(boolean extended) {
-		model.setExtended(extended);
+	public void setDuration(long duration) {
+		model.setDuration(duration);
 	}
 
 	/**
@@ -457,16 +403,6 @@ public class SymptomWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the start date of this symptom.
-	 *
-	 * @param startDate the start date of this symptom
-	 */
-	@Override
-	public void setStartDate(Date startDate) {
-		model.setStartDate(startDate);
 	}
 
 	/**
