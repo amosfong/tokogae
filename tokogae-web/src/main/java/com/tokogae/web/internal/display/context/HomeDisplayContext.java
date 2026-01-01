@@ -4,13 +4,13 @@
 
 package com.tokogae.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -31,10 +31,15 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
+import com.tokogae.data.event.model.Exercise;
+import com.tokogae.data.event.model.FoodItem;
+import com.tokogae.data.event.model.Sleep;
+import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 
+import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
@@ -61,25 +66,44 @@ public class HomeDisplayContext {
 		RenderResponse renderResponse, SubjectService subjectService,
 		SymptomLocalService symptomLocalService) {
 
-		_dataEventFactory = dataEventFactory;
-		_exerciseLocalService = exerciseLocalService;
-		_foodItemLocalService = foodItemLocalService;
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-		_subjectService = subjectService;
-		_symptomLocalService = symptomLocalService;
+		this.dataEventFactory = dataEventFactory;
+		this.exerciseLocalService = exerciseLocalService;
+		this.foodItemLocalService = foodItemLocalService;
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
+		this.subjectService = subjectService;
+		this.symptomLocalService = symptomLocalService;
 
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+		httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+		themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd", _themeDisplay.getTimeZone());
+		format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", themeDisplay.getTimeZone());
+	}
+
+	public String getAddLabel(String className) {
+		String label = StringPool.BLANK;
+
+		if (className.equals(Exercise.class.getName())) {
+			label = "add-exercise";
+		}
+		else if (className.equals(FoodItem.class.getName())) {
+			label = "add-food";
+		}
+		else if (className.equals(Sleep.class.getName())) {
+			label = "add-sleep";
+		}
+		else if (className.equals(Symptom.class.getName())) {
+			label = "add-symptom";
+		}
+
+		return LanguageUtil.get(themeDisplay.getLocale(), label);
 	}
 
 	public String getCurrentOccurDay() {
-		return _format.format(new Date());
+		return format.format(new Date());
 	}
 
 	public SearchContainer<DataEvent> getDataEventsSearchContainer()
@@ -87,25 +111,25 @@ public class HomeDisplayContext {
 
 		SearchContainer<DataEvent> dataEventsSearchContainer =
 			new SearchContainer(
-				_renderRequest,
-				PortletURLUtil.getCurrent(_renderRequest, _renderResponse),
-				null, "no-data-events-were-found");
+				renderRequest,
+				PortletURLUtil.getCurrent(renderRequest, renderResponse), null,
+				"no-data-events-were-found");
 
 		dataEventsSearchContainer.setId("dataEvents");
 
 		String orderByCol = ParamUtil.getString(
-			_renderRequest, "orderByCol", "sortDate");
+			renderRequest, "orderByCol", "sortDate");
 
 		dataEventsSearchContainer.setOrderByCol(orderByCol);
 
 		String orderByType = ParamUtil.getString(
-			_renderRequest, "orderByType", "asc");
+			renderRequest, "orderByType", "asc");
 
 		dataEventsSearchContainer.setOrderByType(orderByType);
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+		searchContext.setCompanyId(themeDisplay.getCompanyId());
 
 		List<Subject> subjects = getSubjects();
 
@@ -147,7 +171,7 @@ public class HomeDisplayContext {
 				List<DataEvent> dataEvents = new ArrayList<>();
 
 				for (Document document : hits.getDocs()) {
-					dataEvents.add(_dataEventFactory.create(document));
+					dataEvents.add(dataEventFactory.create(document));
 				}
 
 				return dataEvents;
@@ -157,28 +181,21 @@ public class HomeDisplayContext {
 		return dataEventsSearchContainer;
 	}
 
-	public List<Subject> getSubjects() throws PortalException {
-		return _subjectService.getSubjects(
-			_themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public String getEditDataEventURL(String className) {
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/tokogae/edit_data_event"
+		).setParameter(
+			"className", className
+		).buildPortletURL();
+
+		return portletURL.toString();
 	}
 
-	public List<TabsItem> getTabsItems() {
-		return TabsItemListBuilder.add(
-			tabsItem -> {
-				tabsItem.setActive(true);
-				tabsItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "food"));
-			}
-		).add(
-			tabsItem -> tabsItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "symptoms"))
-		).add(
-			tabsItem -> tabsItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "sleep"))
-		).add(
-			tabsItem -> tabsItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "exercise"))
-		).build();
+	public List<Subject> getSubjects() throws PortalException {
+		return subjectService.getSubjects(
+			themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	public Map<Integer, List<DataEvent>> getTodaysDataEventsMap()
@@ -186,9 +203,9 @@ public class HomeDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+		searchContext.setCompanyId(themeDisplay.getCompanyId());
 
-		Calendar calendar = Calendar.getInstance(_themeDisplay.getTimeZone());
+		Calendar calendar = Calendar.getInstance(themeDisplay.getTimeZone());
 
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -232,13 +249,13 @@ public class HomeDisplayContext {
 		Map<Integer, List<DataEvent>> dataEventsMap = new HashMap<>();
 
 		for (Document document : hits.getDocs()) {
-			DataEvent dataEvent = _dataEventFactory.create(document);
+			DataEvent dataEvent = dataEventFactory.create(document);
 
 			int daySegment = DaySegments.NONE;
 
 			if (dataEvent.getOccurDate() != null) {
 				Calendar dataEventCalendar = Calendar.getInstance(
-					_themeDisplay.getTimeZone());
+					themeDisplay.getTimeZone());
 
 				dataEventCalendar.setTime(dataEvent.getOccurDate());
 
@@ -262,22 +279,22 @@ public class HomeDisplayContext {
 		return dataEventsMap;
 	}
 
+	protected DataEventFactory dataEventFactory;
+	protected ExerciseLocalService exerciseLocalService;
+	protected FoodItemLocalService foodItemLocalService;
+	protected Format format;
+	protected final HttpServletRequest httpServletRequest;
+	protected final RenderRequest renderRequest;
+	protected final RenderResponse renderResponse;
+	protected SubjectService subjectService;
+	protected SymptomLocalService symptomLocalService;
+	protected final ThemeDisplay themeDisplay;
+
 	private long _getTimeinMilliseconds(Calendar cal) {
 		return (cal.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
 			(cal.get(Calendar.MINUTE) * Time.MINUTE) +
 				(cal.get(Calendar.SECOND) * Time.SECOND) +
 					cal.get(Calendar.MILLISECOND);
 	}
-
-	private DataEventFactory _dataEventFactory;
-	private ExerciseLocalService _exerciseLocalService;
-	private FoodItemLocalService _foodItemLocalService;
-	private Format _format;
-	private final HttpServletRequest _httpServletRequest;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private SubjectService _subjectService;
-	private SymptomLocalService _symptomLocalService;
-	private final ThemeDisplay _themeDisplay;
 
 }
