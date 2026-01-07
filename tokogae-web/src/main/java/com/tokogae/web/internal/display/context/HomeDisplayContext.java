@@ -37,6 +37,7 @@ import com.tokogae.data.event.model.Sleep;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SleepLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 
 import jakarta.portlet.PortletURL;
@@ -60,17 +61,20 @@ import java.util.Map;
 public class HomeDisplayContext {
 
 	public HomeDisplayContext(
-		DataEventFactory dataEventFactory,
-		ExerciseLocalService exerciseLocalService,
-		FoodItemLocalService foodItemLocalService, RenderRequest renderRequest,
-		RenderResponse renderResponse, SubjectService subjectService,
-		SymptomLocalService symptomLocalService) {
+			DataEventFactory dataEventFactory,
+			ExerciseLocalService exerciseLocalService,
+			FoodItemLocalService foodItemLocalService,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			SleepLocalService sleepLocalService, SubjectService subjectService,
+			SymptomLocalService symptomLocalService)
+		throws Exception {
 
 		this.dataEventFactory = dataEventFactory;
 		this.exerciseLocalService = exerciseLocalService;
 		this.foodItemLocalService = foodItemLocalService;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
+		this.sleepLocalService = sleepLocalService;
 		this.subjectService = subjectService;
 		this.symptomLocalService = symptomLocalService;
 
@@ -181,6 +185,22 @@ public class HomeDisplayContext {
 		return dataEventsSearchContainer;
 	}
 
+	public String getEditDataEventURL(DataEvent dataEvent) {
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCRenderCommandName(
+			"/tokogae/edit_data_event"
+		).setRedirect(
+			PortalUtil.getCurrentURL(renderRequest)
+		).setParameter(
+			"className", dataEvent.getClassName()
+		).setParameter(
+			"classPK", dataEvent.getClassPK()
+		).buildPortletURL();
+
+		return portletURL.toString();
+	}
+
 	public String getEditDataEventURL(String className) {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			renderResponse
@@ -286,6 +306,7 @@ public class HomeDisplayContext {
 	protected final HttpServletRequest httpServletRequest;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
+	protected SleepLocalService sleepLocalService;
 	protected SubjectService subjectService;
 	protected SymptomLocalService symptomLocalService;
 	protected final ThemeDisplay themeDisplay;

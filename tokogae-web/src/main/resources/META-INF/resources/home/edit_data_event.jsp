@@ -16,6 +16,10 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 	</div>
 
 	<div class="col-md-10">
+		<h1 class="sheet-title">
+			<%= HtmlUtil.escape(editDataEventDisplayContext.getTitle()) %>
+		</h1>
+
 		<portlet:actionURL name="/tokogae/edit_data_event" var="editDataEventURL" />
 
 		<liferay-frontend:edit-form
@@ -26,6 +30,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 		>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
+			<aui:input name="classPK" type="hidden" value='<%= ParamUtil.getString(request, "classPK") %>' />
 
 			<aui:select label="event-type" name="className" onChange="window.location = event.target[event.target.selectedIndex].getAttribute('data-url')">
 
@@ -47,7 +52,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 					collapsible="<%= false %>"
 					label="date"
 				>
-					<aui:input name="occurDay" value="<%= editDataEventDisplayContext.getCurrentOccurDay() %>" />
+					<aui:input name="occurDay" value="<%= editDataEventDisplayContext.getOccurDay() %>" />
 
 					<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="occurDaySegment" label="day-segment" name="occurDaySegment">
 
@@ -55,7 +60,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 						for (int daySegment : DaySegments.VALUES) {
 						%>
 
-							<aui:option label="<%= DaySegments.getLabel(daySegment) %>" value="<%= daySegment %>" />
+							<aui:option label="<%= DaySegments.getLabel(daySegment) %>" selected="<%= daySegment == editDataEventDisplayContext.getOccurDaySegment() %>" useModelValue="<%= false %>" value="<%= daySegment %>" />
 
 						<%
 						}
@@ -71,9 +76,9 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 				>
 					<c:choose>
 						<c:when test="<%= editDataEventDisplayContext.isExerciseEvent() %>">
-							<aui:input name="name" />
+							<aui:input name="name" value="<%= editDataEventDisplayContext.getName() %>" />
 
-							<aui:input name="duration" />
+							<aui:input name="duration" value="<%= editDataEventDisplayContext.getDuration() %>" />
 
 							<aui:select id="quantityUnit" label="quantity-unit" name="quantityUnit">
 
@@ -81,7 +86,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 								for (String quantityUnit : QuantityUnits.EXERCISE_VALUES) {
 								%>
 
-									<aui:option label="<%= quantityUnit %>" value="<%= quantityUnit %>" />
+									<aui:option label="<%= quantityUnit %>" selected="<%= quantityUnit.equals(editDataEventDisplayContext.getQuantityUnit()) %>" useModelValue="<%= false %>" value="<%= quantityUnit %>" />
 
 								<%
 								}
@@ -89,10 +94,10 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 
 							</aui:select>
 
-							<aui:input name="quantity" value="1" />
+							<aui:input name="quantity" value="<%= editDataEventDisplayContext.getQuantity() %>" />
 						</c:when>
 						<c:when test="<%= editDataEventDisplayContext.isFoodItemEvent() %>">
-							<aui:input name="name" />
+							<aui:input name="name" value="<%= editDataEventDisplayContext.getName() %>" />
 
 							<aui:select id="quantityUnit" label="quantity-unit" name="quantityUnit">
 
@@ -100,7 +105,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 								for (String quantityUnit : QuantityUnits.VALUES) {
 								%>
 
-									<aui:option label="<%= quantityUnit %>" value="<%= quantityUnit %>" />
+									<aui:option label="<%= quantityUnit %>" selected="<%= quantityUnit.equals(editDataEventDisplayContext.getQuantityUnit()) %>" useModelValue="<%= false %>" value="<%= quantityUnit %>" />
 
 								<%
 								}
@@ -108,17 +113,17 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 
 							</aui:select>
 
-							<aui:input name="quantity" value="1" />
+							<aui:input name="quantity" value="<%= editDataEventDisplayContext.getQuantity() %>" />
 						</c:when>
 						<c:when test="<%= editDataEventDisplayContext.isSleepEvent() %>">
-							<aui:input name="duration" />
+							<aui:input name="duration" value="<%= editDataEventDisplayContext.getDuration() %>" />
 						</c:when>
 						<c:when test="<%= editDataEventDisplayContext.isSymptomEvent() %>">
-							<aui:input name="duration" />
+							<aui:input name="duration" value="<%= editDataEventDisplayContext.getDuration() %>" />
 
-							<aui:input name="name" />
+							<aui:input name="name" value="<%= editDataEventDisplayContext.getName() %>" />
 
-							<aui:input name="affectedArea" />
+							<aui:input name="affectedArea" value="<%= editDataEventDisplayContext.getAffectedArea() %>" />
 
 							<aui:select label="intensity" name="intensityLevel">
 
@@ -126,7 +131,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 								for (int intensityLevel : IntensityLevels.VALUES) {
 								%>
 
-									<aui:option label="<%= IntensityLevels.getLabel(intensityLevel) %>" value="<%= intensityLevel %>" />
+									<aui:option label="<%= IntensityLevels.getLabel(intensityLevel) %>" selected="<%= intensityLevel == editDataEventDisplayContext.getIntensityLevel() %>" useModelValue="<%= false %>" value="<%= intensityLevel %>" />
 
 								<%
 								}

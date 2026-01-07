@@ -24,6 +24,8 @@ public interface DataEvent {
 
 	public String getOccurDateLabel(Locale locale);
 
+	public Object getOriginalObject();
+
 	public String getPrimaryKey();
 
 	public Date getStartDate();

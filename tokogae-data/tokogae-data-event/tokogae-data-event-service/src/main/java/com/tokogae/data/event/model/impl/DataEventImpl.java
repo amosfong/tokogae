@@ -84,6 +84,10 @@ public class DataEventImpl implements DataEvent {
 			false);
 	}
 
+	public Object getOriginalObject() {
+		return _originalObject;
+	}
+
 	public String getPrimaryKey() {
 		return _className + StringPool.POUND + _classPK;
 	}

@@ -4,6 +4,8 @@
 
 package com.tokogae.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -83,6 +85,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else {
+				_log.error(exception, exception);
+
 				throw exception;
 			}
 		}
@@ -105,7 +109,7 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateExercise(ActionRequest actionRequest) throws Exception {
-		long exerciseId = ParamUtil.getLong(actionRequest, "exerciseId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
 
@@ -118,20 +122,20 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		String quantityUnit = ParamUtil.getString(
 			actionRequest, "quantityUnit");
 
-		if (exerciseId <= 0) {
+		if (classPK <= 0) {
 			_exerciseService.addExercise(
 				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
 				occurTime, name, duration, quantity, quantityUnit);
 		}
 		else {
 			_exerciseService.updateExercise(
-				exerciseId, occurDayBaseTime, occurDaySegment, occurTime, name,
+				classPK, occurDayBaseTime, occurDaySegment, occurTime, name,
 				duration, quantity, quantityUnit);
 		}
 	}
 
 	private void _updateFoodItem(ActionRequest actionRequest) throws Exception {
-		long foodItemId = ParamUtil.getLong(actionRequest, "foodItemId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
 
@@ -146,21 +150,21 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		String quantityUnit = ParamUtil.getString(
 			actionRequest, "quantityUnit");
 
-		if (foodItemId <= 0) {
+		if (classPK <= 0) {
 			_foodItemService.addFoodItem(
 				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
 				occurTime, name, locationOfOrigin, brand, quantity,
 				quantityUnit);
 		}
 		else {
-			_foodItemService.addFoodItem(
-				foodItemId, occurDayBaseTime, occurDaySegment, occurTime, name,
+			_foodItemService.updateFoodItem(
+				classPK, occurDayBaseTime, occurDaySegment, occurTime, name,
 				locationOfOrigin, brand, quantity, quantityUnit);
 		}
 	}
 
 	private void _updateSleep(ActionRequest actionRequest) throws Exception {
-		long sleepId = ParamUtil.getLong(actionRequest, "sleepId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
 
@@ -169,20 +173,20 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
 		long duration = ParamUtil.getLong(actionRequest, "duration");
 
-		if (sleepId <= 0) {
+		if (classPK <= 0) {
 			_sleepService.addSleep(
 				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
 				occurTime, duration);
 		}
 		else {
 			_sleepService.updateSleep(
-				sleepId, occurDayBaseTime, occurDaySegment, occurTime,
+				classPK, occurDayBaseTime, occurDaySegment, occurTime,
 				duration);
 		}
 	}
 
 	private void _updateSymptom(ActionRequest actionRequest) throws Exception {
-		long symptomId = ParamUtil.getLong(actionRequest, "symptomId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
 
@@ -196,17 +200,20 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		int intensityLevel = ParamUtil.getInteger(
 			actionRequest, "intensityLevel");
 
-		if (symptomId <= 0) {
+		if (classPK <= 0) {
 			_symptomService.addSymptom(
 				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
 				occurTime, duration, name, affectedArea, intensityLevel);
 		}
 		else {
 			_symptomService.updateSymptom(
-				symptomId, occurDayBaseTime, occurDaySegment, occurTime,
-				duration, name, affectedArea, intensityLevel);
+				classPK, occurDayBaseTime, occurDaySegment, occurTime, duration,
+				name, affectedArea, intensityLevel);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditDataEventMVCActionCommand.class);
 
 	@Reference
 	private ExerciseService _exerciseService;

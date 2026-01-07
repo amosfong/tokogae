@@ -67,6 +67,11 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 
 					<li class="list-group-item py-0">
 						<%= dataEvent.getSummary() %>
+
+						<liferay-ui:icon
+							icon="pencil"
+							url="<%= homeDisplayContext.getEditDataEventURL(dataEvent) %>"
+						/>
 					</li>
 
 			<%

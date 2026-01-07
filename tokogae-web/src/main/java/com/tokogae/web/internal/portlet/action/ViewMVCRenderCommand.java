@@ -11,6 +11,7 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SleepLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
 import com.tokogae.web.internal.display.context.HomeDisplayContext;
@@ -39,15 +40,20 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HomeDisplayContext homeDisplayContext = new HomeDisplayContext(
-			_dataEventFactory, _exerciseLocalService, _foodItemLocalService,
-			renderRequest, renderResponse, _subjectService,
-			_symptomLocalService);
+		try {
+			HomeDisplayContext homeDisplayContext = new HomeDisplayContext(
+				_dataEventFactory, _exerciseLocalService, _foodItemLocalService,
+				renderRequest, renderResponse, _sleepLocalService,
+				_subjectService, _symptomLocalService);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, homeDisplayContext);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, homeDisplayContext);
 
-		return "/home/view.jsp";
+			return "/home/view.jsp";
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
 	}
 
 	@Reference
@@ -58,6 +64,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private FoodItemLocalService _foodItemLocalService;
+
+	@Reference
+	private SleepLocalService _sleepLocalService;
 
 	@Reference
 	private SubjectService _subjectService;

@@ -11,6 +11,7 @@ import com.tokogae.account.service.SubjectService;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SleepLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 import com.tokogae.web.internal.constants.TokogaePortletKeys;
 import com.tokogae.web.internal.display.context.EditDataEventDisplayContext;
@@ -39,16 +40,21 @@ public class EditDataEventMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		EditDataEventDisplayContext editDataEventDisplayContext =
-			new EditDataEventDisplayContext(
-				_dataEventFactory, _exerciseLocalService, _foodItemLocalService,
-				renderRequest, renderResponse, _subjectService,
-				_symptomLocalService);
+		try {
+			EditDataEventDisplayContext editDataEventDisplayContext =
+				new EditDataEventDisplayContext(
+					_dataEventFactory, _exerciseLocalService,
+					_foodItemLocalService, renderRequest, renderResponse,
+					_sleepLocalService, _subjectService, _symptomLocalService);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, editDataEventDisplayContext);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT, editDataEventDisplayContext);
 
-		return "/home/edit_data_event.jsp";
+			return "/home/edit_data_event.jsp";
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
 	}
 
 	@Reference
@@ -59,6 +65,9 @@ public class EditDataEventMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private FoodItemLocalService _foodItemLocalService;
+
+	@Reference
+	private SleepLocalService _sleepLocalService;
 
 	@Reference
 	private SubjectService _subjectService;

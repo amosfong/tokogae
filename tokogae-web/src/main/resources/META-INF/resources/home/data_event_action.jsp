@@ -7,6 +7,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DataEvent dataEvent = (DataEvent)row.getObject();
@@ -19,6 +21,11 @@ DataEvent dataEvent = (DataEvent)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+	<liferay-ui:icon
+		message="edit"
+		url="<%= homeDisplayContext.getEditDataEventURL(dataEvent) %>"
+	/>
+
 	<portlet:actionURL name="/tokogae/delete_data_event" var="deleteDataEventURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="className" value="<%= dataEvent.getClassName() %>" />

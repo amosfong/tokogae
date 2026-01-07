@@ -5,10 +5,14 @@
 package com.tokogae.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.tokogae.account.service.SubjectService;
+import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Exercise;
 import com.tokogae.data.event.model.FoodItem;
@@ -16,12 +20,14 @@ import com.tokogae.data.event.model.Sleep;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.ExerciseLocalService;
 import com.tokogae.data.event.service.FoodItemLocalService;
+import com.tokogae.data.event.service.SleepLocalService;
 import com.tokogae.data.event.service.SymptomLocalService;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,21 +36,59 @@ import java.util.List;
 public class EditDataEventDisplayContext extends HomeDisplayContext {
 
 	public EditDataEventDisplayContext(
-		DataEventFactory dataEventFactory,
-		ExerciseLocalService exerciseLocalService,
-		FoodItemLocalService foodItemLocalService, RenderRequest renderRequest,
-		RenderResponse renderResponse, SubjectService subjectService,
-		SymptomLocalService symptomLocalService) {
+			DataEventFactory dataEventFactory,
+			ExerciseLocalService exerciseLocalService,
+			FoodItemLocalService foodItemLocalService,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			SleepLocalService sleepLocalService, SubjectService subjectService,
+			SymptomLocalService symptomLocalService)
+		throws Exception {
 
 		super(
 			dataEventFactory, exerciseLocalService, foodItemLocalService,
-			renderRequest, renderResponse, subjectService, symptomLocalService);
+			renderRequest, renderResponse, sleepLocalService, subjectService,
+			symptomLocalService);
 
 		_className = ParamUtil.getString(renderRequest, "className");
+		_classPK = ParamUtil.getLong(renderRequest, "classPK");
+
+		if (_classPK > 0) {
+			if (_className.equals(Exercise.class.getName())) {
+				_dataEvent = dataEventFactory.create(
+					exerciseLocalService.getExercise(_classPK));
+			}
+			else if (_className.equals(FoodItem.class.getName())) {
+				_dataEvent = dataEventFactory.create(
+					foodItemLocalService.getFoodItem(_classPK));
+			}
+			else if (_className.equals(Sleep.class.getName())) {
+				_dataEvent = dataEventFactory.create(
+					sleepLocalService.getSleep(_classPK));
+			}
+			else if (_className.equals(Symptom.class.getName())) {
+				_dataEvent = dataEventFactory.create(
+					symptomLocalService.getSymptom(_classPK));
+			}
+
+			_dataEventObject = _dataEvent.getOriginalObject();
+		}
+	}
+
+	public String getAffectedArea() {
+		return BeanPropertiesUtil.getString(
+			_dataEventObject, "affectedArea", StringPool.BLANK);
 	}
 
 	public List<String> getDataEventClassNames() {
 		return _dataEventClassNames;
+	}
+
+	public long getDuration() {
+		return BeanPropertiesUtil.getLong(_dataEventObject, "duration", 0);
+	}
+
+	public int getIntensityLevel() {
+		return BeanPropertiesUtil.getInteger(_dataEventObject, "intensity", 1);
 	}
 
 	public String getLabel(String className) {
@@ -62,6 +106,47 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public String getName() {
+		return BeanPropertiesUtil.getString(
+			_dataEventObject, "name", StringPool.BLANK);
+	}
+
+	public String getOccurDay() {
+		if (_dataEventObject != null) {
+			long occurDay = BeanPropertiesUtil.getLong(
+				_dataEventObject, "occurDay");
+
+			return format.format(new Date(occurDay));
+		}
+
+		return getCurrentOccurDay();
+	}
+
+	public int getOccurDaySegment() {
+		return BeanPropertiesUtil.getInteger(
+			_dataEventObject, "occurDaySegment");
+	}
+
+	public int getQuantity() {
+		return BeanPropertiesUtil.getInteger(_dataEventObject, "quantity", 1);
+	}
+
+	public String getQuantityUnit() {
+		return BeanPropertiesUtil.getString(
+			_dataEventObject, "quantityUnit", StringPool.BLANK);
+	}
+
+	public String getTitle() {
+		if (_dataEvent != null) {
+			return StringBundler.concat(
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "update-" + getLabel(_className)),
+				": ", _dataEvent.getSummary());
+		}
+
+		return LanguageUtil.get(themeDisplay.getLocale(), "add-event");
 	}
 
 	public boolean isClassName(String className) {
@@ -95,6 +180,8 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	private String _className;
+	private long _classPK;
+	private DataEvent _dataEvent;
 	private List<String> _dataEventClassNames = new ArrayList<String>() {
 		{
 			add(Exercise.class.getName());
@@ -103,5 +190,6 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 			add(Symptom.class.getName());
 		}
 	};
+	private Object _dataEventObject;
 
 }
