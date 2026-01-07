@@ -23,6 +23,7 @@ task formatSourceCustom(type: JavaExec)
 
 formatSourceCustom {
 	dependsOn(":util:source-formatter:compileJava")
+	dependsOn("formatSource")
 
 	mainClass = 'com.tokogae.source.formatter.SourceFormatter'
 	classpath = sourceSets.main.runtimeClasspath
