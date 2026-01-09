@@ -54,13 +54,13 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 				>
 					<aui:input name="occurDay" value="<%= editDataEventDisplayContext.getOccurDay() %>" />
 
-					<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="occurDaySegment" label="day-segment" name="occurDaySegment">
+					<aui:select helpMessage="Early Morning:12am-6am Morning:6am-12pm Afternoon:12pm-6pm Night:6pm-12am" id="occurDaySegment" label="day-segment" name="occurDayNativeTime">
 
 						<%
 						for (int daySegment : DaySegments.VALUES) {
 						%>
 
-							<aui:option label="<%= DaySegments.getLabel(daySegment) %>" selected="<%= daySegment == editDataEventDisplayContext.getOccurDaySegment() %>" useModelValue="<%= false %>" value="<%= daySegment %>" />
+							<aui:option label="<%= DaySegments.getLabel(daySegment) %>" selected="<%= daySegment == editDataEventDisplayContext.getOccurDaySegment() %>" useModelValue="<%= false %>" value="<%= DaySegments.getNativeTime(daySegment) %>" />
 
 						<%
 						}

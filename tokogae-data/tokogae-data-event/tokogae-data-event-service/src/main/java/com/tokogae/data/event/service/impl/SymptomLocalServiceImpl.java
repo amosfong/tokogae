@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Reference;
 public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom addSymptom(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, long duration, String name, String affectedArea,
-			int intensityLevel)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -42,9 +42,8 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 		symptom.setUserId(userId);
 		symptom.setSubjectId(subjectId);
-		symptom.setOccurDay(occurDay);
-		symptom.setOccurDaySegment(occurDaySegment);
-		symptom.setOccurTime(occurTime);
+		symptom.setOccurDayBaseTime(occurDayBaseTime);
+		symptom.setOccurDayNativeTime(occurDayNativeTime);
 		symptom.setDuration(duration);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);
@@ -87,15 +86,14 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 	}
 
 	public Symptom updateSymptom(
-			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			long symptomId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		Symptom symptom = symptomPersistence.findByPrimaryKey(symptomId);
 
-		symptom.setOccurDay(occurDay);
-		symptom.setOccurDaySegment(occurDaySegment);
-		symptom.setOccurTime(occurTime);
+		symptom.setOccurDayBaseTime(occurDayBaseTime);
+		symptom.setOccurDayNativeTime(occurDayNativeTime);
 		symptom.setDuration(duration);
 		symptom.setName(name);
 		symptom.setAffectedArea(affectedArea);

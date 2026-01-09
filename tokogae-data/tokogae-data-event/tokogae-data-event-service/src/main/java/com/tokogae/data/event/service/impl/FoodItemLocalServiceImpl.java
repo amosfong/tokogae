@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Reference;
 public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 	public FoodItem addFoodItem(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String locationOfOrigin, String brand,
-			double quantity, String quantityUnit)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -42,9 +42,8 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 		foodItem.setUserId(userId);
 		foodItem.setSubjectId(subjectId);
-		foodItem.setOccurDay(occurDay);
-		foodItem.setOccurDaySegment(occurDaySegment);
-		foodItem.setOccurTime(occurTime);
+		foodItem.setOccurDayBaseTime(occurDayBaseTime);
+		foodItem.setOccurDayNativeTime(occurDayNativeTime);
 		foodItem.setName(name);
 		foodItem.setLocationOfOrigin(locationOfOrigin);
 		foodItem.setBrand(brand);
@@ -88,16 +87,15 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 	}
 
 	public FoodItem updateFoodItem(
-			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			long foodItemId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException {
 
 		FoodItem foodItem = foodItemPersistence.findByPrimaryKey(foodItemId);
 
-		foodItem.setOccurDay(occurDay);
-		foodItem.setOccurDaySegment(occurDaySegment);
-		foodItem.setOccurTime(occurTime);
+		foodItem.setOccurDayBaseTime(occurDayBaseTime);
+		foodItem.setOccurDayNativeTime(occurDayNativeTime);
 		foodItem.setName(name);
 		foodItem.setLocationOfOrigin(locationOfOrigin);
 		foodItem.setBrand(brand);

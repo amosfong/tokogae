@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ExerciseLocalServiceImpl extends ExerciseLocalServiceBaseImpl {
 
 	public Exercise addExercise(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, long duration, double quantity,
-			String quantityUnit)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, long duration,
+			double quantity, String quantityUnit)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -42,9 +42,8 @@ public class ExerciseLocalServiceImpl extends ExerciseLocalServiceBaseImpl {
 
 		exercise.setUserId(userId);
 		exercise.setSubjectId(subjectId);
-		exercise.setOccurDay(occurDay);
-		exercise.setOccurDaySegment(occurDaySegment);
-		exercise.setOccurTime(occurTime);
+		exercise.setOccurDayBaseTime(occurDayBaseTime);
+		exercise.setOccurDayNativeTime(occurDayNativeTime);
 		exercise.setName(name);
 		exercise.setDuration(duration);
 		exercise.setQuantity(quantity);
@@ -87,15 +86,14 @@ public class ExerciseLocalServiceImpl extends ExerciseLocalServiceBaseImpl {
 	}
 
 	public Exercise updateExercise(
-			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			long exerciseId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, long duration, double quantity, String quantityUnit)
 		throws PortalException {
 
 		Exercise exercise = exercisePersistence.findByPrimaryKey(exerciseId);
 
-		exercise.setOccurDay(occurDay);
-		exercise.setOccurDaySegment(occurDaySegment);
-		exercise.setOccurTime(occurTime);
+		exercise.setOccurDayBaseTime(occurDayBaseTime);
+		exercise.setOccurDayNativeTime(occurDayNativeTime);
 		exercise.setName(name);
 		exercise.setDuration(duration);
 		exercise.setQuantity(quantity);

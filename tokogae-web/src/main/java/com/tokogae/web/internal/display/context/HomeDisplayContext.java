@@ -274,15 +274,9 @@ public class HomeDisplayContext {
 			int daySegment = DaySegments.NONE;
 
 			if (dataEvent.getOccurDate() != null) {
-				Calendar dataEventCalendar = Calendar.getInstance(
-					themeDisplay.getTimeZone());
+				long occurDayNativeTime = _getOccurDayNativeTime(dataEvent);
 
-				dataEventCalendar.setTime(dataEvent.getOccurDate());
-
-				long dataEventDayTime = _getTimeinMilliseconds(
-					dataEventCalendar);
-
-				daySegment = DaySegments.getDaySegment(dataEventDayTime);
+				daySegment = DaySegments.getDaySegment(occurDayNativeTime);
 			}
 
 			List<DataEvent> dataEvents = dataEventsMap.get(daySegment);
@@ -311,11 +305,15 @@ public class HomeDisplayContext {
 	protected SymptomLocalService symptomLocalService;
 	protected final ThemeDisplay themeDisplay;
 
-	private long _getTimeinMilliseconds(Calendar cal) {
-		return (cal.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
-			(cal.get(Calendar.MINUTE) * Time.MINUTE) +
-				(cal.get(Calendar.SECOND) * Time.SECOND) +
-					cal.get(Calendar.MILLISECOND);
+	private long _getOccurDayNativeTime(DataEvent dataEvent) {
+		Calendar calendar = Calendar.getInstance(themeDisplay.getTimeZone());
+
+		calendar.setTime(dataEvent.getOccurDate());
+
+		return (calendar.get(Calendar.HOUR_OF_DAY) * Time.HOUR) +
+			(calendar.get(Calendar.MINUTE) * Time.MINUTE) +
+				(calendar.get(Calendar.SECOND) * Time.SECOND) +
+					calendar.get(Calendar.MILLISECOND);
 	}
 
 }

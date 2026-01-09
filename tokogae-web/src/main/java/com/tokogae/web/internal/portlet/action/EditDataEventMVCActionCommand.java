@@ -112,10 +112,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
-
-		int occurDaySegment = ParamUtil.getInteger(
-			actionRequest, "occurDaySegment");
-		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
+		long occurDayNativeTime = ParamUtil.getLong(
+			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
 		long duration = ParamUtil.getLong(actionRequest, "duration");
 		double quantity = ParamUtil.getDouble(actionRequest, "quantity");
@@ -124,13 +122,13 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_exerciseService.addExercise(
-				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
-				occurTime, name, duration, quantity, quantityUnit);
+				getSubjectId(actionRequest), occurDayBaseTime,
+				occurDayNativeTime, name, duration, quantity, quantityUnit);
 		}
 		else {
 			_exerciseService.updateExercise(
-				classPK, occurDayBaseTime, occurDaySegment, occurTime, name,
-				duration, quantity, quantityUnit);
+				classPK, occurDayBaseTime, occurDayNativeTime, name, duration,
+				quantity, quantityUnit);
 		}
 	}
 
@@ -138,10 +136,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
-
-		int occurDaySegment = ParamUtil.getInteger(
-			actionRequest, "occurDaySegment");
-		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
+		long occurDayNativeTime = ParamUtil.getLong(
+			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String locationOfOrigin = ParamUtil.getString(
 			actionRequest, "locationOfOrigin");
@@ -152,13 +148,13 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_foodItemService.addFoodItem(
-				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
-				occurTime, name, locationOfOrigin, brand, quantity,
+				getSubjectId(actionRequest), occurDayBaseTime,
+				occurDayNativeTime, name, locationOfOrigin, brand, quantity,
 				quantityUnit);
 		}
 		else {
 			_foodItemService.updateFoodItem(
-				classPK, occurDayBaseTime, occurDaySegment, occurTime, name,
+				classPK, occurDayBaseTime, occurDayNativeTime, name,
 				locationOfOrigin, brand, quantity, quantityUnit);
 		}
 	}
@@ -167,21 +163,18 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
-
-		int occurDaySegment = ParamUtil.getInteger(
-			actionRequest, "occurDaySegment");
-		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
+		long occurDayNativeTime = ParamUtil.getLong(
+			actionRequest, "occurDayNativeTime");
 		long duration = ParamUtil.getLong(actionRequest, "duration");
 
 		if (classPK <= 0) {
 			_sleepService.addSleep(
-				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
-				occurTime, duration);
+				getSubjectId(actionRequest), occurDayBaseTime,
+				occurDayNativeTime, duration);
 		}
 		else {
 			_sleepService.updateSleep(
-				classPK, occurDayBaseTime, occurDaySegment, occurTime,
-				duration);
+				classPK, occurDayBaseTime, occurDayNativeTime, duration);
 		}
 	}
 
@@ -189,10 +182,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
-
-		int occurDaySegment = ParamUtil.getInteger(
-			actionRequest, "occurDaySegment");
-		long occurTime = ParamUtil.getLong(actionRequest, "occurTime");
+		long occurDayNativeTime = ParamUtil.getLong(
+			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String affectedArea = ParamUtil.getString(
 			actionRequest, "affectedArea");
@@ -202,13 +193,14 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_symptomService.addSymptom(
-				getSubjectId(actionRequest), occurDayBaseTime, occurDaySegment,
-				occurTime, duration, name, affectedArea, intensityLevel);
+				getSubjectId(actionRequest), occurDayBaseTime,
+				occurDayNativeTime, duration, name, affectedArea,
+				intensityLevel);
 		}
 		else {
 			_symptomService.updateSymptom(
-				classPK, occurDayBaseTime, occurDaySegment, occurTime, duration,
-				name, affectedArea, intensityLevel);
+				classPK, occurDayBaseTime, occurDayNativeTime, duration, name,
+				affectedArea, intensityLevel);
 		}
 	}
 

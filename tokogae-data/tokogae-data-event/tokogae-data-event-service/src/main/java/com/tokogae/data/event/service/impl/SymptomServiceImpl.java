@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom addSymptom(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
@@ -36,7 +36,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 			getPermissionChecker(), subjectId, ActionKeys.UPDATE);
 
 		return symptomLocalService.addSymptom(
-			getUserId(), subjectId, occurDay, occurDaySegment, occurTime,
+			getUserId(), subjectId, occurDayBaseTime, occurDayNativeTime,
 			duration, name, affectedArea, intensityLevel);
 	}
 
@@ -50,7 +50,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 	}
 
 	public Symptom updateSymptom(
-			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			long symptomId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
@@ -60,7 +60,7 @@ public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 			getPermissionChecker(), symptom.getSubjectId(), ActionKeys.UPDATE);
 
 		return symptomLocalService.updateSymptom(
-			symptomId, occurDay, occurDaySegment, occurTime, duration, name,
+			symptomId, occurDayBaseTime, occurDayNativeTime, duration, name,
 			affectedArea, intensityLevel);
 	}
 

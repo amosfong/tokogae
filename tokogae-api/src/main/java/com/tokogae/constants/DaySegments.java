@@ -15,7 +15,7 @@ public interface DaySegments {
 
 	public static int EARLY_MORNING = 2;
 
-	public static final long EARLY_MORNING_TIME = 0;
+	public static final long EARLY_MORNING_TIME = 1;
 
 	public static int MORNING = 3;
 
@@ -29,37 +29,22 @@ public interface DaySegments {
 
 	public static int[] VALUES = {EARLY_MORNING, MORNING, AFTERNOON, NIGHT};
 
-	public static int getDaySegment(long dayTime) {
-		if (dayTime < MORNING_TIME) {
+	public static int getDaySegment(long dayNativeTime) {
+		if (dayNativeTime < MORNING_TIME) {
 			return EARLY_MORNING;
 		}
 
-		if ((dayTime >= MORNING_TIME) && (dayTime < AFTERNOON_TIME)) {
+		if ((dayNativeTime >= MORNING_TIME) &&
+			(dayNativeTime < AFTERNOON_TIME)) {
+
 			return MORNING;
 		}
 
-		if ((dayTime >= AFTERNOON_TIME) && (dayTime < NIGHT_TIME)) {
+		if ((dayNativeTime >= AFTERNOON_TIME) && (dayNativeTime < NIGHT_TIME)) {
 			return AFTERNOON;
 		}
 
 		return NIGHT;
-	}
-
-	public static long getDayTime(int daySegment) {
-		if (daySegment == AFTERNOON) {
-			return AFTERNOON_TIME;
-		}
-		else if (daySegment == EARLY_MORNING) {
-			return EARLY_MORNING_TIME;
-		}
-		else if (daySegment == MORNING) {
-			return MORNING_TIME;
-		}
-		else if (daySegment == NIGHT) {
-			return NIGHT_TIME;
-		}
-
-		return 0;
 	}
 
 	public static String getLabel(int daySegment) {
@@ -79,24 +64,45 @@ public interface DaySegments {
 		return "";
 	}
 
-	public static boolean isDaySegment(int daySegment, long dayTime) {
+	public static long getNativeTime(int daySegment) {
+		if (daySegment == AFTERNOON) {
+			return AFTERNOON_TIME * -1;
+		}
+		else if (daySegment == EARLY_MORNING) {
+			return EARLY_MORNING_TIME * -1;
+		}
+		else if (daySegment == MORNING) {
+			return MORNING_TIME * -1;
+		}
+		else if (daySegment == NIGHT) {
+			return NIGHT_TIME * -1;
+		}
+
+		return 0;
+	}
+
+	public static boolean isDaySegment(int daySegment, long dayNativeTime) {
 		if (daySegment == EARLY_MORNING) {
-			if (dayTime < MORNING_TIME) {
+			if (dayNativeTime < MORNING_TIME) {
 				return true;
 			}
 		}
 		else if (daySegment == MORNING) {
-			if ((dayTime >= MORNING_TIME) && (dayTime < AFTERNOON_TIME)) {
+			if ((dayNativeTime >= MORNING_TIME) &&
+				(dayNativeTime < AFTERNOON_TIME)) {
+
 				return true;
 			}
 		}
 		else if (daySegment == AFTERNOON) {
-			if ((dayTime >= AFTERNOON_TIME) && (dayTime < NIGHT_TIME)) {
+			if ((dayNativeTime >= AFTERNOON_TIME) &&
+				(dayNativeTime < NIGHT_TIME)) {
+
 				return true;
 			}
 		}
 		else if (daySegment == NIGHT) {
-			if (dayTime >= NIGHT_TIME) {
+			if (dayNativeTime >= NIGHT_TIME) {
 				return true;
 			}
 		}

@@ -19,9 +19,8 @@
 		<!-- Other fields -->
 
 		<column name="subjectId" type="long" />
-		<column name="occurDay" type="long" />
-		<column name="occurDaySegment" type="int" />
-		<column name="occurTime" type="long" />
+		<column name="occurDayBaseTime" type="long" />
+		<column name="occurDayNativeTime" type="long" />
 		<column name="name" type="String" />
 		<column name="duration" type="long" />
 		<column name="quantity" type="double" />
@@ -42,9 +41,8 @@
 		<!-- Other fields -->
 
 		<column name="subjectId" type="long" />
-		<column name="occurDay" type="long" />
-		<column name="occurDaySegment" type="int" />
-		<column name="occurTime" type="long" />
+		<column name="occurDayBaseTime" type="long" />
+		<column name="occurDayNativeTime" type="long" />
 		<column name="name" type="String" />
 		<column name="locationOfOrigin" type="String" />
 		<column name="brand" type="String" />
@@ -66,9 +64,8 @@
 		<!-- Other fields -->
 
 		<column name="subjectId" type="long" />
-		<column name="occurDay" type="long" />
-		<column name="occurDaySegment" type="int" />
-		<column name="occurTime" type="long" />
+		<column name="occurDayBaseTime" type="long" />
+		<column name="occurDayNativeTime" type="long" />
 		<column name="duration" type="long" />
 	</entity>
 	<entity local-service="true" name="Symptom" remote-service="true">
@@ -86,9 +83,8 @@
 		<!-- Other fields -->
 
 		<column name="subjectId" type="long" />
-		<column name="occurDay" type="long" />
-		<column name="occurDaySegment" type="int" />
-		<column name="occurTime" type="long" />
+		<column name="occurDayBaseTime" type="long" />
+		<column name="occurDayNativeTime" type="long" />
 		<column name="duration" type="long" />
 		<column name="name" type="String" />
 		<column name="affectedArea" type="String" />

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.tokogae.account.service.SubjectService;
+import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Exercise;
@@ -115,18 +116,20 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 
 	public String getOccurDay() {
 		if (_dataEventObject != null) {
-			long occurDay = BeanPropertiesUtil.getLong(
-				_dataEventObject, "occurDay");
+			long occurDayBaseTime = BeanPropertiesUtil.getLong(
+				_dataEventObject, "occurDayBaseTime");
 
-			return format.format(new Date(occurDay));
+			return format.format(new Date(occurDayBaseTime));
 		}
 
 		return getCurrentOccurDay();
 	}
 
 	public int getOccurDaySegment() {
-		return BeanPropertiesUtil.getInteger(
-			_dataEventObject, "occurDaySegment");
+		long occurDayNativeTime = BeanPropertiesUtil.getLong(
+			_dataEventObject, "occurDayNativeTime");
+
+		return DaySegments.getDaySegment(Math.abs(occurDayNativeTime));
 	}
 
 	public int getQuantity() {

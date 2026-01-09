@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.tokogae.constants.DaySegments;
 import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Exercise;
@@ -60,18 +59,10 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setCompanyId(exercise.getCompanyId());
 		dataEvent.setClassName(Exercise.class.getName());
 		dataEvent.setClassPK(exercise.getExerciseId());
-
-		long occurTime = 0;
-
-		if (exercise.getOccurTime() > 0) {
-			occurTime = exercise.getOccurTime();
-		}
-		else {
-			occurTime = DaySegments.getDayTime(exercise.getOccurDaySegment());
-		}
-
-		dataEvent.setOccurDate(new Date(exercise.getOccurDay() + occurTime));
-
+		dataEvent.setOccurDate(
+			new Date(
+				exercise.getOccurDayBaseTime() +
+					Math.abs(exercise.getOccurDayNativeTime())));
 		dataEvent.setOriginalObject(exercise);
 		dataEvent.setSubjectId(exercise.getSubjectId());
 
@@ -94,18 +85,10 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setCompanyId(foodItem.getCompanyId());
 		dataEvent.setClassName(FoodItem.class.getName());
 		dataEvent.setClassPK(foodItem.getFoodItemId());
-
-		long occurTime = 0;
-
-		if (foodItem.getOccurTime() > 0) {
-			occurTime = foodItem.getOccurTime();
-		}
-		else {
-			occurTime = DaySegments.getDayTime(foodItem.getOccurDaySegment());
-		}
-
-		dataEvent.setOccurDate(new Date(foodItem.getOccurDay() + occurTime));
-
+		dataEvent.setOccurDate(
+			new Date(
+				foodItem.getOccurDayBaseTime() +
+					Math.abs(foodItem.getOccurDayNativeTime())));
 		dataEvent.setOriginalObject(foodItem);
 		dataEvent.setSubjectId(foodItem.getSubjectId());
 
@@ -128,18 +111,10 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setCompanyId(sleep.getCompanyId());
 		dataEvent.setClassName(Sleep.class.getName());
 		dataEvent.setClassPK(sleep.getSleepId());
-
-		long occurTime = 0;
-
-		if (sleep.getOccurTime() > 0) {
-			occurTime = sleep.getOccurTime();
-		}
-		else {
-			occurTime = DaySegments.getDayTime(sleep.getOccurDaySegment());
-		}
-
-		dataEvent.setOccurDate(new Date(sleep.getOccurDay() + occurTime));
-
+		dataEvent.setOccurDate(
+			new Date(
+				sleep.getOccurDayBaseTime() +
+					Math.abs(sleep.getOccurDayNativeTime())));
 		dataEvent.setOriginalObject(sleep);
 		dataEvent.setSubjectId(sleep.getSubjectId());
 
@@ -160,16 +135,9 @@ public class DataEventFactoryImpl implements DataEventFactory {
 		dataEvent.setClassName(Symptom.class.getName());
 		dataEvent.setClassPK(symptom.getSymptomId());
 
-		long occurTime = 0;
-
-		if (symptom.getOccurTime() > 0) {
-			occurTime = symptom.getOccurTime();
-		}
-		else {
-			occurTime = DaySegments.getDayTime(symptom.getOccurDaySegment());
-		}
-
-		Date occurDate = new Date(symptom.getOccurDay() + occurTime);
+		Date occurDate = new Date(
+			symptom.getOccurDayBaseTime() +
+				Math.abs(symptom.getOccurDayNativeTime()));
 
 		dataEvent.setOccurDate(occurDate);
 

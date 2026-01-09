@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SleepLocalServiceImpl extends SleepLocalServiceBaseImpl {
 
 	public Sleep addSleep(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, long duration)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration)
 		throws PortalException {
 
 		_subjectLocalService.getSubject(subjectId);
@@ -41,9 +41,8 @@ public class SleepLocalServiceImpl extends SleepLocalServiceBaseImpl {
 
 		sleep.setUserId(userId);
 		sleep.setSubjectId(subjectId);
-		sleep.setOccurDay(occurDay);
-		sleep.setOccurDaySegment(occurDaySegment);
-		sleep.setOccurTime(occurTime);
+		sleep.setOccurDayBaseTime(occurDayBaseTime);
+		sleep.setOccurDayNativeTime(occurDayNativeTime);
 		sleep.setDuration(duration);
 
 		sleep = sleepPersistence.update(sleep);
@@ -83,15 +82,14 @@ public class SleepLocalServiceImpl extends SleepLocalServiceBaseImpl {
 	}
 
 	public Sleep updateSleep(
-			long sleepId, long occurDay, int occurDaySegment, long occurTime,
+			long sleepId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration)
 		throws PortalException {
 
 		Sleep sleep = sleepPersistence.findByPrimaryKey(sleepId);
 
-		sleep.setOccurDay(occurDay);
-		sleep.setOccurDaySegment(occurDaySegment);
-		sleep.setOccurTime(occurTime);
+		sleep.setOccurDayBaseTime(occurDayBaseTime);
+		sleep.setOccurDayNativeTime(occurDayNativeTime);
 		sleep.setDuration(duration);
 
 		sleep = sleepPersistence.update(sleep);

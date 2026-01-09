@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
 public class ExerciseServiceImpl extends ExerciseServiceBaseImpl {
 
 	public Exercise addExercise(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, long duration, double quantity, String quantityUnit)
 		throws PortalException {
 
 		return exerciseLocalService.addExercise(
-			getUserId(), subjectId, occurDay, occurDaySegment, occurTime, name,
+			getUserId(), subjectId, occurDayBaseTime, occurDayNativeTime, name,
 			duration, quantity, quantityUnit);
 	}
 
@@ -39,12 +39,12 @@ public class ExerciseServiceImpl extends ExerciseServiceBaseImpl {
 	}
 
 	public Exercise updateExercise(
-			long exerciseId, long occurDay, int occurDaySegment, long occurTime,
+			long exerciseId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, long duration, double quantity, String quantityUnit)
 		throws PortalException {
 
 		return exerciseLocalService.updateExercise(
-			exerciseId, occurDay, occurDaySegment, occurTime, name, duration,
+			exerciseId, occurDayBaseTime, occurDayNativeTime, name, duration,
 			quantity, quantityUnit);
 	}
 
