@@ -34,12 +34,10 @@ public class SleepTable extends BaseTable<SleepTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SleepTable, Long> subjectId = createColumn(
 		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<SleepTable, Long> occurDay = createColumn(
-		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<SleepTable, Integer> occurDaySegment = createColumn(
-		"occurDaySegment", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<SleepTable, Long> occurTime = createColumn(
-		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<SleepTable, Long> occurDayBaseTime = createColumn(
+		"occurDayBaseTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<SleepTable, Long> occurDayNativeTime = createColumn(
+		"occurDayNativeTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SleepTable, Long> duration = createColumn(
 		"duration", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 

@@ -64,8 +64,8 @@ public class ExerciseModelImpl
 		{"mvccVersion", Types.BIGINT}, {"exerciseId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
-		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
-		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"occurDayBaseTime", Types.BIGINT},
+		{"occurDayNativeTime", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"duration", Types.BIGINT}, {"quantity", Types.DOUBLE},
 		{"quantityUnit", Types.VARCHAR}
 	};
@@ -80,9 +80,8 @@ public class ExerciseModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayBaseTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayNativeTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.DOUBLE);
@@ -90,7 +89,7 @@ public class ExerciseModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_Exercise (mvccVersion LONG default 0 not null,exerciseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,duration LONG,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
+		"create table TOKOGAEData_Exercise (mvccVersion LONG default 0 not null,exerciseId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDayBaseTime LONG,occurDayNativeTime LONG,name VARCHAR(75) null,duration LONG,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_Exercise";
@@ -228,10 +227,10 @@ public class ExerciseModelImpl
 			attributeGetterFunctions.put("userId", Exercise::getUserId);
 			attributeGetterFunctions.put("createDate", Exercise::getCreateDate);
 			attributeGetterFunctions.put("subjectId", Exercise::getSubjectId);
-			attributeGetterFunctions.put("occurDay", Exercise::getOccurDay);
 			attributeGetterFunctions.put(
-				"occurDaySegment", Exercise::getOccurDaySegment);
-			attributeGetterFunctions.put("occurTime", Exercise::getOccurTime);
+				"occurDayBaseTime", Exercise::getOccurDayBaseTime);
+			attributeGetterFunctions.put(
+				"occurDayNativeTime", Exercise::getOccurDayNativeTime);
 			attributeGetterFunctions.put("name", Exercise::getName);
 			attributeGetterFunctions.put("duration", Exercise::getDuration);
 			attributeGetterFunctions.put("quantity", Exercise::getQuantity);
@@ -271,13 +270,11 @@ public class ExerciseModelImpl
 				"subjectId",
 				(BiConsumer<Exercise, Long>)Exercise::setSubjectId);
 			attributeSetterBiConsumers.put(
-				"occurDay", (BiConsumer<Exercise, Long>)Exercise::setOccurDay);
+				"occurDayBaseTime",
+				(BiConsumer<Exercise, Long>)Exercise::setOccurDayBaseTime);
 			attributeSetterBiConsumers.put(
-				"occurDaySegment",
-				(BiConsumer<Exercise, Integer>)Exercise::setOccurDaySegment);
-			attributeSetterBiConsumers.put(
-				"occurTime",
-				(BiConsumer<Exercise, Long>)Exercise::setOccurTime);
+				"occurDayNativeTime",
+				(BiConsumer<Exercise, Long>)Exercise::setOccurDayNativeTime);
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<Exercise, String>)Exercise::setName);
 			attributeSetterBiConsumers.put(
@@ -403,47 +400,32 @@ public class ExerciseModelImpl
 
 	@JSON
 	@Override
-	public long getOccurDay() {
-		return _occurDay;
+	public long getOccurDayBaseTime() {
+		return _occurDayBaseTime;
 	}
 
 	@Override
-	public void setOccurDay(long occurDay) {
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDay = occurDay;
+		_occurDayBaseTime = occurDayBaseTime;
 	}
 
 	@JSON
 	@Override
-	public int getOccurDaySegment() {
-		return _occurDaySegment;
+	public long getOccurDayNativeTime() {
+		return _occurDayNativeTime;
 	}
 
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDaySegment = occurDaySegment;
-	}
-
-	@JSON
-	@Override
-	public long getOccurTime() {
-		return _occurTime;
-	}
-
-	@Override
-	public void setOccurTime(long occurTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_occurTime = occurTime;
+		_occurDayNativeTime = occurDayNativeTime;
 	}
 
 	@JSON
@@ -578,9 +560,8 @@ public class ExerciseModelImpl
 		exerciseImpl.setUserId(getUserId());
 		exerciseImpl.setCreateDate(getCreateDate());
 		exerciseImpl.setSubjectId(getSubjectId());
-		exerciseImpl.setOccurDay(getOccurDay());
-		exerciseImpl.setOccurDaySegment(getOccurDaySegment());
-		exerciseImpl.setOccurTime(getOccurTime());
+		exerciseImpl.setOccurDayBaseTime(getOccurDayBaseTime());
+		exerciseImpl.setOccurDayNativeTime(getOccurDayNativeTime());
 		exerciseImpl.setName(getName());
 		exerciseImpl.setDuration(getDuration());
 		exerciseImpl.setQuantity(getQuantity());
@@ -606,11 +587,10 @@ public class ExerciseModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		exerciseImpl.setSubjectId(
 			this.<Long>getColumnOriginalValue("subjectId"));
-		exerciseImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
-		exerciseImpl.setOccurDaySegment(
-			this.<Integer>getColumnOriginalValue("occurDaySegment"));
-		exerciseImpl.setOccurTime(
-			this.<Long>getColumnOriginalValue("occurTime"));
+		exerciseImpl.setOccurDayBaseTime(
+			this.<Long>getColumnOriginalValue("occurDayBaseTime"));
+		exerciseImpl.setOccurDayNativeTime(
+			this.<Long>getColumnOriginalValue("occurDayNativeTime"));
 		exerciseImpl.setName(this.<String>getColumnOriginalValue("name"));
 		exerciseImpl.setDuration(this.<Long>getColumnOriginalValue("duration"));
 		exerciseImpl.setQuantity(
@@ -711,11 +691,9 @@ public class ExerciseModelImpl
 
 		exerciseCacheModel.subjectId = getSubjectId();
 
-		exerciseCacheModel.occurDay = getOccurDay();
+		exerciseCacheModel.occurDayBaseTime = getOccurDayBaseTime();
 
-		exerciseCacheModel.occurDaySegment = getOccurDaySegment();
-
-		exerciseCacheModel.occurTime = getOccurTime();
+		exerciseCacheModel.occurDayNativeTime = getOccurDayNativeTime();
 
 		exerciseCacheModel.name = getName();
 
@@ -804,9 +782,8 @@ public class ExerciseModelImpl
 	private long _userId;
 	private Date _createDate;
 	private long _subjectId;
-	private long _occurDay;
-	private int _occurDaySegment;
-	private long _occurTime;
+	private long _occurDayBaseTime;
+	private long _occurDayNativeTime;
 	private String _name;
 	private long _duration;
 	private double _quantity;
@@ -846,9 +823,8 @@ public class ExerciseModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("subjectId", _subjectId);
-		_columnOriginalValues.put("occurDay", _occurDay);
-		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
-		_columnOriginalValues.put("occurTime", _occurTime);
+		_columnOriginalValues.put("occurDayBaseTime", _occurDayBaseTime);
+		_columnOriginalValues.put("occurDayNativeTime", _occurDayNativeTime);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("duration", _duration);
 		_columnOriginalValues.put("quantity", _quantity);
@@ -878,19 +854,17 @@ public class ExerciseModelImpl
 
 		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDay", 64L);
+		columnBitmasks.put("occurDayBaseTime", 64L);
 
-		columnBitmasks.put("occurDaySegment", 128L);
+		columnBitmasks.put("occurDayNativeTime", 128L);
 
-		columnBitmasks.put("occurTime", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("duration", 512L);
 
-		columnBitmasks.put("duration", 1024L);
+		columnBitmasks.put("quantity", 1024L);
 
-		columnBitmasks.put("quantity", 2048L);
-
-		columnBitmasks.put("quantityUnit", 4096L);
+		columnBitmasks.put("quantityUnit", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

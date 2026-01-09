@@ -63,8 +63,8 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 		{"mvccVersion", Types.BIGINT}, {"sleepId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
-		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
-		{"occurTime", Types.BIGINT}, {"duration", Types.BIGINT}
+		{"occurDayBaseTime", Types.BIGINT},
+		{"occurDayNativeTime", Types.BIGINT}, {"duration", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,14 +77,13 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayBaseTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayNativeTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_Sleep (mvccVersion LONG default 0 not null,sleepId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,duration LONG)";
+		"create table TOKOGAEData_Sleep (mvccVersion LONG default 0 not null,sleepId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDayBaseTime LONG,occurDayNativeTime LONG,duration LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table TOKOGAEData_Sleep";
 
@@ -215,10 +214,10 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 			attributeGetterFunctions.put("userId", Sleep::getUserId);
 			attributeGetterFunctions.put("createDate", Sleep::getCreateDate);
 			attributeGetterFunctions.put("subjectId", Sleep::getSubjectId);
-			attributeGetterFunctions.put("occurDay", Sleep::getOccurDay);
 			attributeGetterFunctions.put(
-				"occurDaySegment", Sleep::getOccurDaySegment);
-			attributeGetterFunctions.put("occurTime", Sleep::getOccurTime);
+				"occurDayBaseTime", Sleep::getOccurDayBaseTime);
+			attributeGetterFunctions.put(
+				"occurDayNativeTime", Sleep::getOccurDayNativeTime);
 			attributeGetterFunctions.put("duration", Sleep::getDuration);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -249,12 +248,11 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 			attributeSetterBiConsumers.put(
 				"subjectId", (BiConsumer<Sleep, Long>)Sleep::setSubjectId);
 			attributeSetterBiConsumers.put(
-				"occurDay", (BiConsumer<Sleep, Long>)Sleep::setOccurDay);
+				"occurDayBaseTime",
+				(BiConsumer<Sleep, Long>)Sleep::setOccurDayBaseTime);
 			attributeSetterBiConsumers.put(
-				"occurDaySegment",
-				(BiConsumer<Sleep, Integer>)Sleep::setOccurDaySegment);
-			attributeSetterBiConsumers.put(
-				"occurTime", (BiConsumer<Sleep, Long>)Sleep::setOccurTime);
+				"occurDayNativeTime",
+				(BiConsumer<Sleep, Long>)Sleep::setOccurDayNativeTime);
 			attributeSetterBiConsumers.put(
 				"duration", (BiConsumer<Sleep, Long>)Sleep::setDuration);
 
@@ -372,47 +370,32 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 
 	@JSON
 	@Override
-	public long getOccurDay() {
-		return _occurDay;
+	public long getOccurDayBaseTime() {
+		return _occurDayBaseTime;
 	}
 
 	@Override
-	public void setOccurDay(long occurDay) {
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDay = occurDay;
+		_occurDayBaseTime = occurDayBaseTime;
 	}
 
 	@JSON
 	@Override
-	public int getOccurDaySegment() {
-		return _occurDaySegment;
+	public long getOccurDayNativeTime() {
+		return _occurDayNativeTime;
 	}
 
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDaySegment = occurDaySegment;
-	}
-
-	@JSON
-	@Override
-	public long getOccurTime() {
-		return _occurTime;
-	}
-
-	@Override
-	public void setOccurTime(long occurTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_occurTime = occurTime;
+		_occurDayNativeTime = occurDayNativeTime;
 	}
 
 	@JSON
@@ -492,9 +475,8 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 		sleepImpl.setUserId(getUserId());
 		sleepImpl.setCreateDate(getCreateDate());
 		sleepImpl.setSubjectId(getSubjectId());
-		sleepImpl.setOccurDay(getOccurDay());
-		sleepImpl.setOccurDaySegment(getOccurDaySegment());
-		sleepImpl.setOccurTime(getOccurTime());
+		sleepImpl.setOccurDayBaseTime(getOccurDayBaseTime());
+		sleepImpl.setOccurDayNativeTime(getOccurDayNativeTime());
 		sleepImpl.setDuration(getDuration());
 
 		sleepImpl.resetOriginalValues();
@@ -514,10 +496,10 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 		sleepImpl.setCreateDate(
 			this.<Date>getColumnOriginalValue("createDate"));
 		sleepImpl.setSubjectId(this.<Long>getColumnOriginalValue("subjectId"));
-		sleepImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
-		sleepImpl.setOccurDaySegment(
-			this.<Integer>getColumnOriginalValue("occurDaySegment"));
-		sleepImpl.setOccurTime(this.<Long>getColumnOriginalValue("occurTime"));
+		sleepImpl.setOccurDayBaseTime(
+			this.<Long>getColumnOriginalValue("occurDayBaseTime"));
+		sleepImpl.setOccurDayNativeTime(
+			this.<Long>getColumnOriginalValue("occurDayNativeTime"));
 		sleepImpl.setDuration(this.<Long>getColumnOriginalValue("duration"));
 
 		return sleepImpl;
@@ -613,11 +595,9 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 
 		sleepCacheModel.subjectId = getSubjectId();
 
-		sleepCacheModel.occurDay = getOccurDay();
+		sleepCacheModel.occurDayBaseTime = getOccurDayBaseTime();
 
-		sleepCacheModel.occurDaySegment = getOccurDaySegment();
-
-		sleepCacheModel.occurTime = getOccurTime();
+		sleepCacheModel.occurDayNativeTime = getOccurDayNativeTime();
 
 		sleepCacheModel.duration = getDuration();
 
@@ -687,9 +667,8 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 	private long _userId;
 	private Date _createDate;
 	private long _subjectId;
-	private long _occurDay;
-	private int _occurDaySegment;
-	private long _occurTime;
+	private long _occurDayBaseTime;
+	private long _occurDayNativeTime;
 	private long _duration;
 
 	public <T> T getColumnValue(String columnName) {
@@ -726,9 +705,8 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("subjectId", _subjectId);
-		_columnOriginalValues.put("occurDay", _occurDay);
-		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
-		_columnOriginalValues.put("occurTime", _occurTime);
+		_columnOriginalValues.put("occurDayBaseTime", _occurDayBaseTime);
+		_columnOriginalValues.put("occurDayNativeTime", _occurDayNativeTime);
 		_columnOriginalValues.put("duration", _duration);
 	}
 
@@ -755,13 +733,11 @@ public class SleepModelImpl extends BaseModelImpl<Sleep> implements SleepModel {
 
 		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDay", 64L);
+		columnBitmasks.put("occurDayBaseTime", 64L);
 
-		columnBitmasks.put("occurDaySegment", 128L);
+		columnBitmasks.put("occurDayNativeTime", 128L);
 
-		columnBitmasks.put("occurTime", 256L);
-
-		columnBitmasks.put("duration", 512L);
+		columnBitmasks.put("duration", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

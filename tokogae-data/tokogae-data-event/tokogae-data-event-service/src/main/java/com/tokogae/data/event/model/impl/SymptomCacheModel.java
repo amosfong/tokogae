@@ -67,7 +67,7 @@ public class SymptomCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,12 +81,10 @@ public class SymptomCacheModel
 		sb.append(createDate);
 		sb.append(", subjectId=");
 		sb.append(subjectId);
-		sb.append(", occurDay=");
-		sb.append(occurDay);
-		sb.append(", occurDaySegment=");
-		sb.append(occurDaySegment);
-		sb.append(", occurTime=");
-		sb.append(occurTime);
+		sb.append(", occurDayBaseTime=");
+		sb.append(occurDayBaseTime);
+		sb.append(", occurDayNativeTime=");
+		sb.append(occurDayNativeTime);
 		sb.append(", duration=");
 		sb.append(duration);
 		sb.append(", name=");
@@ -117,9 +115,8 @@ public class SymptomCacheModel
 		}
 
 		symptomImpl.setSubjectId(subjectId);
-		symptomImpl.setOccurDay(occurDay);
-		symptomImpl.setOccurDaySegment(occurDaySegment);
-		symptomImpl.setOccurTime(occurTime);
+		symptomImpl.setOccurDayBaseTime(occurDayBaseTime);
+		symptomImpl.setOccurDayNativeTime(occurDayNativeTime);
 		symptomImpl.setDuration(duration);
 
 		if (name == null) {
@@ -156,11 +153,9 @@ public class SymptomCacheModel
 
 		subjectId = objectInput.readLong();
 
-		occurDay = objectInput.readLong();
+		occurDayBaseTime = objectInput.readLong();
 
-		occurDaySegment = objectInput.readInt();
-
-		occurTime = objectInput.readLong();
+		occurDayNativeTime = objectInput.readLong();
 
 		duration = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -182,11 +177,9 @@ public class SymptomCacheModel
 
 		objectOutput.writeLong(subjectId);
 
-		objectOutput.writeLong(occurDay);
+		objectOutput.writeLong(occurDayBaseTime);
 
-		objectOutput.writeInt(occurDaySegment);
-
-		objectOutput.writeLong(occurTime);
+		objectOutput.writeLong(occurDayNativeTime);
 
 		objectOutput.writeLong(duration);
 
@@ -213,9 +206,8 @@ public class SymptomCacheModel
 	public long userId;
 	public long createDate;
 	public long subjectId;
-	public long occurDay;
-	public int occurDaySegment;
-	public long occurTime;
+	public long occurDayBaseTime;
+	public long occurDayNativeTime;
 	public long duration;
 	public String name;
 	public String affectedArea;

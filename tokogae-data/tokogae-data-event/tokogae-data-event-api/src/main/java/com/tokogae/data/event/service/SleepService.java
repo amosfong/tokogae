@@ -40,7 +40,7 @@ public interface SleepService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SleepServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sleep remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SleepServiceUtil} if injection and service tracking are not available.
 	 */
 	public Sleep addSleep(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration)
 		throws PortalException;
 
@@ -54,7 +54,7 @@ public interface SleepService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public Sleep updateSleep(
-			long sleepId, long occurDay, int occurDaySegment, long occurTime,
+			long sleepId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration)
 		throws PortalException;
 

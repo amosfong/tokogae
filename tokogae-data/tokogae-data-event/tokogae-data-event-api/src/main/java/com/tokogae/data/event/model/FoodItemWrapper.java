@@ -38,9 +38,8 @@ public class FoodItemWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("subjectId", getSubjectId());
-		attributes.put("occurDay", getOccurDay());
-		attributes.put("occurDaySegment", getOccurDaySegment());
-		attributes.put("occurTime", getOccurTime());
+		attributes.put("occurDayBaseTime", getOccurDayBaseTime());
+		attributes.put("occurDayNativeTime", getOccurDayNativeTime());
 		attributes.put("name", getName());
 		attributes.put("locationOfOrigin", getLocationOfOrigin());
 		attributes.put("brand", getBrand());
@@ -88,22 +87,16 @@ public class FoodItemWrapper
 			setSubjectId(subjectId);
 		}
 
-		Long occurDay = (Long)attributes.get("occurDay");
+		Long occurDayBaseTime = (Long)attributes.get("occurDayBaseTime");
 
-		if (occurDay != null) {
-			setOccurDay(occurDay);
+		if (occurDayBaseTime != null) {
+			setOccurDayBaseTime(occurDayBaseTime);
 		}
 
-		Integer occurDaySegment = (Integer)attributes.get("occurDaySegment");
+		Long occurDayNativeTime = (Long)attributes.get("occurDayNativeTime");
 
-		if (occurDaySegment != null) {
-			setOccurDaySegment(occurDaySegment);
-		}
-
-		Long occurTime = (Long)attributes.get("occurTime");
-
-		if (occurTime != null) {
-			setOccurTime(occurTime);
+		if (occurDayNativeTime != null) {
+			setOccurDayNativeTime(occurDayNativeTime);
 		}
 
 		String name = (String)attributes.get("name");
@@ -213,33 +206,23 @@ public class FoodItemWrapper
 	}
 
 	/**
-	 * Returns the occur day of this food item.
+	 * Returns the occur day base time of this food item.
 	 *
-	 * @return the occur day of this food item
+	 * @return the occur day base time of this food item
 	 */
 	@Override
-	public long getOccurDay() {
-		return model.getOccurDay();
+	public long getOccurDayBaseTime() {
+		return model.getOccurDayBaseTime();
 	}
 
 	/**
-	 * Returns the occur day segment of this food item.
+	 * Returns the occur day native time of this food item.
 	 *
-	 * @return the occur day segment of this food item
+	 * @return the occur day native time of this food item
 	 */
 	@Override
-	public int getOccurDaySegment() {
-		return model.getOccurDaySegment();
-	}
-
-	/**
-	 * Returns the occur time of this food item.
-	 *
-	 * @return the occur time of this food item
-	 */
-	@Override
-	public long getOccurTime() {
-		return model.getOccurTime();
+	public long getOccurDayNativeTime() {
+		return model.getOccurDayNativeTime();
 	}
 
 	/**
@@ -383,33 +366,23 @@ public class FoodItemWrapper
 	}
 
 	/**
-	 * Sets the occur day of this food item.
+	 * Sets the occur day base time of this food item.
 	 *
-	 * @param occurDay the occur day of this food item
+	 * @param occurDayBaseTime the occur day base time of this food item
 	 */
 	@Override
-	public void setOccurDay(long occurDay) {
-		model.setOccurDay(occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
+		model.setOccurDayBaseTime(occurDayBaseTime);
 	}
 
 	/**
-	 * Sets the occur day segment of this food item.
+	 * Sets the occur day native time of this food item.
 	 *
-	 * @param occurDaySegment the occur day segment of this food item
+	 * @param occurDayNativeTime the occur day native time of this food item
 	 */
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
-		model.setOccurDaySegment(occurDaySegment);
-	}
-
-	/**
-	 * Sets the occur time of this food item.
-	 *
-	 * @param occurTime the occur time of this food item
-	 */
-	@Override
-	public void setOccurTime(long occurTime) {
-		model.setOccurTime(occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
+		model.setOccurDayNativeTime(occurDayNativeTime);
 	}
 
 	/**

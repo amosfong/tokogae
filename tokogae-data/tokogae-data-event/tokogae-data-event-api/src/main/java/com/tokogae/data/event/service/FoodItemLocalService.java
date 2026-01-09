@@ -67,9 +67,9 @@ public interface FoodItemLocalService
 	public FoodItem addFoodItem(FoodItem foodItem);
 
 	public FoodItem addFoodItem(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, String name, String locationOfOrigin, String brand,
-			double quantity, String quantityUnit)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws PortalException;
 
 	/**
@@ -263,7 +263,7 @@ public interface FoodItemLocalService
 	public FoodItem updateFoodItem(FoodItem foodItem);
 
 	public FoodItem updateFoodItem(
-			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			long foodItemId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException;

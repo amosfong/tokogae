@@ -64,8 +64,8 @@ public class SymptomModelImpl
 		{"mvccVersion", Types.BIGINT}, {"symptomId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
-		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
-		{"occurTime", Types.BIGINT}, {"duration", Types.BIGINT},
+		{"occurDayBaseTime", Types.BIGINT},
+		{"occurDayNativeTime", Types.BIGINT}, {"duration", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"affectedArea", Types.VARCHAR},
 		{"intensityLevel", Types.INTEGER}
 	};
@@ -80,9 +80,8 @@ public class SymptomModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayBaseTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayNativeTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("affectedArea", Types.VARCHAR);
@@ -90,7 +89,7 @@ public class SymptomModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,duration LONG,name VARCHAR(75) null,affectedArea VARCHAR(75) null,intensityLevel INTEGER)";
+		"create table TOKOGAEData_Symptom (mvccVersion LONG default 0 not null,symptomId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDayBaseTime LONG,occurDayNativeTime LONG,duration LONG,name VARCHAR(75) null,affectedArea VARCHAR(75) null,intensityLevel INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_Symptom";
@@ -228,10 +227,10 @@ public class SymptomModelImpl
 			attributeGetterFunctions.put("userId", Symptom::getUserId);
 			attributeGetterFunctions.put("createDate", Symptom::getCreateDate);
 			attributeGetterFunctions.put("subjectId", Symptom::getSubjectId);
-			attributeGetterFunctions.put("occurDay", Symptom::getOccurDay);
 			attributeGetterFunctions.put(
-				"occurDaySegment", Symptom::getOccurDaySegment);
-			attributeGetterFunctions.put("occurTime", Symptom::getOccurTime);
+				"occurDayBaseTime", Symptom::getOccurDayBaseTime);
+			attributeGetterFunctions.put(
+				"occurDayNativeTime", Symptom::getOccurDayNativeTime);
 			attributeGetterFunctions.put("duration", Symptom::getDuration);
 			attributeGetterFunctions.put("name", Symptom::getName);
 			attributeGetterFunctions.put(
@@ -269,12 +268,11 @@ public class SymptomModelImpl
 			attributeSetterBiConsumers.put(
 				"subjectId", (BiConsumer<Symptom, Long>)Symptom::setSubjectId);
 			attributeSetterBiConsumers.put(
-				"occurDay", (BiConsumer<Symptom, Long>)Symptom::setOccurDay);
+				"occurDayBaseTime",
+				(BiConsumer<Symptom, Long>)Symptom::setOccurDayBaseTime);
 			attributeSetterBiConsumers.put(
-				"occurDaySegment",
-				(BiConsumer<Symptom, Integer>)Symptom::setOccurDaySegment);
-			attributeSetterBiConsumers.put(
-				"occurTime", (BiConsumer<Symptom, Long>)Symptom::setOccurTime);
+				"occurDayNativeTime",
+				(BiConsumer<Symptom, Long>)Symptom::setOccurDayNativeTime);
 			attributeSetterBiConsumers.put(
 				"duration", (BiConsumer<Symptom, Long>)Symptom::setDuration);
 			attributeSetterBiConsumers.put(
@@ -400,47 +398,32 @@ public class SymptomModelImpl
 
 	@JSON
 	@Override
-	public long getOccurDay() {
-		return _occurDay;
+	public long getOccurDayBaseTime() {
+		return _occurDayBaseTime;
 	}
 
 	@Override
-	public void setOccurDay(long occurDay) {
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDay = occurDay;
+		_occurDayBaseTime = occurDayBaseTime;
 	}
 
 	@JSON
 	@Override
-	public int getOccurDaySegment() {
-		return _occurDaySegment;
+	public long getOccurDayNativeTime() {
+		return _occurDayNativeTime;
 	}
 
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDaySegment = occurDaySegment;
-	}
-
-	@JSON
-	@Override
-	public long getOccurTime() {
-		return _occurTime;
-	}
-
-	@Override
-	public void setOccurTime(long occurTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_occurTime = occurTime;
+		_occurDayNativeTime = occurDayNativeTime;
 	}
 
 	@JSON
@@ -575,9 +558,8 @@ public class SymptomModelImpl
 		symptomImpl.setUserId(getUserId());
 		symptomImpl.setCreateDate(getCreateDate());
 		symptomImpl.setSubjectId(getSubjectId());
-		symptomImpl.setOccurDay(getOccurDay());
-		symptomImpl.setOccurDaySegment(getOccurDaySegment());
-		symptomImpl.setOccurTime(getOccurTime());
+		symptomImpl.setOccurDayBaseTime(getOccurDayBaseTime());
+		symptomImpl.setOccurDayNativeTime(getOccurDayNativeTime());
 		symptomImpl.setDuration(getDuration());
 		symptomImpl.setName(getName());
 		symptomImpl.setAffectedArea(getAffectedArea());
@@ -603,11 +585,10 @@ public class SymptomModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		symptomImpl.setSubjectId(
 			this.<Long>getColumnOriginalValue("subjectId"));
-		symptomImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
-		symptomImpl.setOccurDaySegment(
-			this.<Integer>getColumnOriginalValue("occurDaySegment"));
-		symptomImpl.setOccurTime(
-			this.<Long>getColumnOriginalValue("occurTime"));
+		symptomImpl.setOccurDayBaseTime(
+			this.<Long>getColumnOriginalValue("occurDayBaseTime"));
+		symptomImpl.setOccurDayNativeTime(
+			this.<Long>getColumnOriginalValue("occurDayNativeTime"));
 		symptomImpl.setDuration(this.<Long>getColumnOriginalValue("duration"));
 		symptomImpl.setName(this.<String>getColumnOriginalValue("name"));
 		symptomImpl.setAffectedArea(
@@ -708,11 +689,9 @@ public class SymptomModelImpl
 
 		symptomCacheModel.subjectId = getSubjectId();
 
-		symptomCacheModel.occurDay = getOccurDay();
+		symptomCacheModel.occurDayBaseTime = getOccurDayBaseTime();
 
-		symptomCacheModel.occurDaySegment = getOccurDaySegment();
-
-		symptomCacheModel.occurTime = getOccurTime();
+		symptomCacheModel.occurDayNativeTime = getOccurDayNativeTime();
 
 		symptomCacheModel.duration = getDuration();
 
@@ -801,9 +780,8 @@ public class SymptomModelImpl
 	private long _userId;
 	private Date _createDate;
 	private long _subjectId;
-	private long _occurDay;
-	private int _occurDaySegment;
-	private long _occurTime;
+	private long _occurDayBaseTime;
+	private long _occurDayNativeTime;
 	private long _duration;
 	private String _name;
 	private String _affectedArea;
@@ -843,9 +821,8 @@ public class SymptomModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("subjectId", _subjectId);
-		_columnOriginalValues.put("occurDay", _occurDay);
-		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
-		_columnOriginalValues.put("occurTime", _occurTime);
+		_columnOriginalValues.put("occurDayBaseTime", _occurDayBaseTime);
+		_columnOriginalValues.put("occurDayNativeTime", _occurDayNativeTime);
 		_columnOriginalValues.put("duration", _duration);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("affectedArea", _affectedArea);
@@ -875,19 +852,17 @@ public class SymptomModelImpl
 
 		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDay", 64L);
+		columnBitmasks.put("occurDayBaseTime", 64L);
 
-		columnBitmasks.put("occurDaySegment", 128L);
+		columnBitmasks.put("occurDayNativeTime", 128L);
 
-		columnBitmasks.put("occurTime", 256L);
+		columnBitmasks.put("duration", 256L);
 
-		columnBitmasks.put("duration", 512L);
+		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("affectedArea", 1024L);
 
-		columnBitmasks.put("affectedArea", 2048L);
-
-		columnBitmasks.put("intensityLevel", 4096L);
+		columnBitmasks.put("intensityLevel", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

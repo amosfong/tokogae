@@ -42,10 +42,9 @@ import com.tokogae.data.event.service.FoodItemServiceUtil;
 public class FoodItemServiceHttp {
 
 	public static com.tokogae.data.event.model.FoodItem addFoodItem(
-			HttpPrincipal httpPrincipal, long subjectId, long occurDay,
-			int occurDaySegment, long occurTime, String name,
-			String locationOfOrigin, String brand, double quantity,
-			String quantityUnit)
+			HttpPrincipal httpPrincipal, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -54,7 +53,7 @@ public class FoodItemServiceHttp {
 				_addFoodItemParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, subjectId, occurDay, occurDaySegment, occurTime,
+				methodKey, subjectId, occurDayBaseTime, occurDayNativeTime,
 				name, locationOfOrigin, brand, quantity, quantityUnit);
 
 			Object returnObj = null;
@@ -126,10 +125,9 @@ public class FoodItemServiceHttp {
 	}
 
 	public static com.tokogae.data.event.model.FoodItem updateFoodItem(
-			HttpPrincipal httpPrincipal, long foodItemId, long occurDay,
-			int occurDaySegment, long occurTime, String name,
-			String locationOfOrigin, String brand, double quantity,
-			String quantityUnit)
+			HttpPrincipal httpPrincipal, long foodItemId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -138,7 +136,7 @@ public class FoodItemServiceHttp {
 				_updateFoodItemParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, foodItemId, occurDay, occurDaySegment, occurTime,
+				methodKey, foodItemId, occurDayBaseTime, occurDayNativeTime,
 				name, locationOfOrigin, brand, quantity, quantityUnit);
 
 			Object returnObj = null;
@@ -172,15 +170,15 @@ public class FoodItemServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(FoodItemServiceHttp.class);
 
 	private static final Class<?>[] _addFoodItemParameterTypes0 = new Class[] {
-		long.class, long.class, int.class, long.class, String.class,
-		String.class, String.class, double.class, String.class
+		long.class, long.class, long.class, String.class, String.class,
+		String.class, double.class, String.class
 	};
 	private static final Class<?>[] _deleteFoodItemParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateFoodItemParameterTypes2 =
 		new Class[] {
-			long.class, long.class, int.class, long.class, String.class,
-			String.class, String.class, double.class, String.class
+			long.class, long.class, long.class, String.class, String.class,
+			String.class, double.class, String.class
 		};
 
 }

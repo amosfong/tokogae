@@ -38,9 +38,8 @@ public class SymptomWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("subjectId", getSubjectId());
-		attributes.put("occurDay", getOccurDay());
-		attributes.put("occurDaySegment", getOccurDaySegment());
-		attributes.put("occurTime", getOccurTime());
+		attributes.put("occurDayBaseTime", getOccurDayBaseTime());
+		attributes.put("occurDayNativeTime", getOccurDayNativeTime());
 		attributes.put("duration", getDuration());
 		attributes.put("name", getName());
 		attributes.put("affectedArea", getAffectedArea());
@@ -87,22 +86,16 @@ public class SymptomWrapper
 			setSubjectId(subjectId);
 		}
 
-		Long occurDay = (Long)attributes.get("occurDay");
+		Long occurDayBaseTime = (Long)attributes.get("occurDayBaseTime");
 
-		if (occurDay != null) {
-			setOccurDay(occurDay);
+		if (occurDayBaseTime != null) {
+			setOccurDayBaseTime(occurDayBaseTime);
 		}
 
-		Integer occurDaySegment = (Integer)attributes.get("occurDaySegment");
+		Long occurDayNativeTime = (Long)attributes.get("occurDayNativeTime");
 
-		if (occurDaySegment != null) {
-			setOccurDaySegment(occurDaySegment);
-		}
-
-		Long occurTime = (Long)attributes.get("occurTime");
-
-		if (occurTime != null) {
-			setOccurTime(occurTime);
+		if (occurDayNativeTime != null) {
+			setOccurDayNativeTime(occurDayNativeTime);
 		}
 
 		Long duration = (Long)attributes.get("duration");
@@ -211,33 +204,23 @@ public class SymptomWrapper
 	}
 
 	/**
-	 * Returns the occur day of this symptom.
+	 * Returns the occur day base time of this symptom.
 	 *
-	 * @return the occur day of this symptom
+	 * @return the occur day base time of this symptom
 	 */
 	@Override
-	public long getOccurDay() {
-		return model.getOccurDay();
+	public long getOccurDayBaseTime() {
+		return model.getOccurDayBaseTime();
 	}
 
 	/**
-	 * Returns the occur day segment of this symptom.
+	 * Returns the occur day native time of this symptom.
 	 *
-	 * @return the occur day segment of this symptom
+	 * @return the occur day native time of this symptom
 	 */
 	@Override
-	public int getOccurDaySegment() {
-		return model.getOccurDaySegment();
-	}
-
-	/**
-	 * Returns the occur time of this symptom.
-	 *
-	 * @return the occur time of this symptom
-	 */
-	@Override
-	public long getOccurTime() {
-		return model.getOccurTime();
+	public long getOccurDayNativeTime() {
+		return model.getOccurDayNativeTime();
 	}
 
 	/**
@@ -366,33 +349,23 @@ public class SymptomWrapper
 	}
 
 	/**
-	 * Sets the occur day of this symptom.
+	 * Sets the occur day base time of this symptom.
 	 *
-	 * @param occurDay the occur day of this symptom
+	 * @param occurDayBaseTime the occur day base time of this symptom
 	 */
 	@Override
-	public void setOccurDay(long occurDay) {
-		model.setOccurDay(occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
+		model.setOccurDayBaseTime(occurDayBaseTime);
 	}
 
 	/**
-	 * Sets the occur day segment of this symptom.
+	 * Sets the occur day native time of this symptom.
 	 *
-	 * @param occurDaySegment the occur day segment of this symptom
+	 * @param occurDayNativeTime the occur day native time of this symptom
 	 */
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
-		model.setOccurDaySegment(occurDaySegment);
-	}
-
-	/**
-	 * Sets the occur time of this symptom.
-	 *
-	 * @param occurTime the occur time of this symptom
-	 */
-	@Override
-	public void setOccurTime(long occurTime) {
-		model.setOccurTime(occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
+		model.setOccurDayNativeTime(occurDayNativeTime);
 	}
 
 	/**

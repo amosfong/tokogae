@@ -34,12 +34,10 @@ public class FoodItemTable extends BaseTable<FoodItemTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, Long> subjectId = createColumn(
 		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<FoodItemTable, Long> occurDay = createColumn(
-		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<FoodItemTable, Integer> occurDaySegment = createColumn(
-		"occurDaySegment", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<FoodItemTable, Long> occurTime = createColumn(
-		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FoodItemTable, Long> occurDayBaseTime = createColumn(
+		"occurDayBaseTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FoodItemTable, Long> occurDayNativeTime = createColumn(
+		"occurDayNativeTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FoodItemTable, String> locationOfOrigin = createColumn(

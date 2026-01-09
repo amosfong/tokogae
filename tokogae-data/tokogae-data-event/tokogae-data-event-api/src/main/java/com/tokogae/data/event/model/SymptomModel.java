@@ -151,46 +151,32 @@ public interface SymptomModel
 	public void setSubjectId(long subjectId);
 
 	/**
-	 * Returns the occur day of this symptom.
+	 * Returns the occur day base time of this symptom.
 	 *
-	 * @return the occur day of this symptom
+	 * @return the occur day base time of this symptom
 	 */
-	public long getOccurDay();
+	public long getOccurDayBaseTime();
 
 	/**
-	 * Sets the occur day of this symptom.
+	 * Sets the occur day base time of this symptom.
 	 *
-	 * @param occurDay the occur day of this symptom
+	 * @param occurDayBaseTime the occur day base time of this symptom
 	 */
-	public void setOccurDay(long occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime);
 
 	/**
-	 * Returns the occur day segment of this symptom.
+	 * Returns the occur day native time of this symptom.
 	 *
-	 * @return the occur day segment of this symptom
+	 * @return the occur day native time of this symptom
 	 */
-	public int getOccurDaySegment();
+	public long getOccurDayNativeTime();
 
 	/**
-	 * Sets the occur day segment of this symptom.
+	 * Sets the occur day native time of this symptom.
 	 *
-	 * @param occurDaySegment the occur day segment of this symptom
+	 * @param occurDayNativeTime the occur day native time of this symptom
 	 */
-	public void setOccurDaySegment(int occurDaySegment);
-
-	/**
-	 * Returns the occur time of this symptom.
-	 *
-	 * @return the occur time of this symptom
-	 */
-	public long getOccurTime();
-
-	/**
-	 * Sets the occur time of this symptom.
-	 *
-	 * @param occurTime the occur time of this symptom
-	 */
-	public void setOccurTime(long occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime);
 
 	/**
 	 * Returns the duration of this symptom.

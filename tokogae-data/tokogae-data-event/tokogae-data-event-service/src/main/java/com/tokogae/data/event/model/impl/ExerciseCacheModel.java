@@ -67,7 +67,7 @@ public class ExerciseCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,12 +81,10 @@ public class ExerciseCacheModel
 		sb.append(createDate);
 		sb.append(", subjectId=");
 		sb.append(subjectId);
-		sb.append(", occurDay=");
-		sb.append(occurDay);
-		sb.append(", occurDaySegment=");
-		sb.append(occurDaySegment);
-		sb.append(", occurTime=");
-		sb.append(occurTime);
+		sb.append(", occurDayBaseTime=");
+		sb.append(occurDayBaseTime);
+		sb.append(", occurDayNativeTime=");
+		sb.append(occurDayNativeTime);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", duration=");
@@ -117,9 +115,8 @@ public class ExerciseCacheModel
 		}
 
 		exerciseImpl.setSubjectId(subjectId);
-		exerciseImpl.setOccurDay(occurDay);
-		exerciseImpl.setOccurDaySegment(occurDaySegment);
-		exerciseImpl.setOccurTime(occurTime);
+		exerciseImpl.setOccurDayBaseTime(occurDayBaseTime);
+		exerciseImpl.setOccurDayNativeTime(occurDayNativeTime);
 
 		if (name == null) {
 			exerciseImpl.setName("");
@@ -156,11 +153,9 @@ public class ExerciseCacheModel
 
 		subjectId = objectInput.readLong();
 
-		occurDay = objectInput.readLong();
+		occurDayBaseTime = objectInput.readLong();
 
-		occurDaySegment = objectInput.readInt();
-
-		occurTime = objectInput.readLong();
+		occurDayNativeTime = objectInput.readLong();
 		name = objectInput.readUTF();
 
 		duration = objectInput.readLong();
@@ -182,11 +177,9 @@ public class ExerciseCacheModel
 
 		objectOutput.writeLong(subjectId);
 
-		objectOutput.writeLong(occurDay);
+		objectOutput.writeLong(occurDayBaseTime);
 
-		objectOutput.writeInt(occurDaySegment);
-
-		objectOutput.writeLong(occurTime);
+		objectOutput.writeLong(occurDayNativeTime);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -213,9 +206,8 @@ public class ExerciseCacheModel
 	public long userId;
 	public long createDate;
 	public long subjectId;
-	public long occurDay;
-	public int occurDaySegment;
-	public long occurTime;
+	public long occurDayBaseTime;
+	public long occurDayNativeTime;
 	public String name;
 	public long duration;
 	public double quantity;

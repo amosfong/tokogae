@@ -64,8 +64,8 @@ public class FoodItemModelImpl
 		{"mvccVersion", Types.BIGINT}, {"foodItemId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"subjectId", Types.BIGINT},
-		{"occurDay", Types.BIGINT}, {"occurDaySegment", Types.INTEGER},
-		{"occurTime", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"occurDayBaseTime", Types.BIGINT},
+		{"occurDayNativeTime", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"locationOfOrigin", Types.VARCHAR}, {"brand", Types.VARCHAR},
 		{"quantity", Types.DOUBLE}, {"quantityUnit", Types.VARCHAR}
 	};
@@ -80,9 +80,8 @@ public class FoodItemModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("subjectId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDay", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("occurDaySegment", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("occurTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayBaseTime", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("occurDayNativeTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("locationOfOrigin", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("brand", Types.VARCHAR);
@@ -91,7 +90,7 @@ public class FoodItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDay LONG,occurDaySegment INTEGER,occurTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
+		"create table TOKOGAEData_FoodItem (mvccVersion LONG default 0 not null,foodItemId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,subjectId LONG,occurDayBaseTime LONG,occurDayNativeTime LONG,name VARCHAR(75) null,locationOfOrigin VARCHAR(75) null,brand VARCHAR(75) null,quantity DOUBLE,quantityUnit VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_FoodItem";
@@ -229,10 +228,10 @@ public class FoodItemModelImpl
 			attributeGetterFunctions.put("userId", FoodItem::getUserId);
 			attributeGetterFunctions.put("createDate", FoodItem::getCreateDate);
 			attributeGetterFunctions.put("subjectId", FoodItem::getSubjectId);
-			attributeGetterFunctions.put("occurDay", FoodItem::getOccurDay);
 			attributeGetterFunctions.put(
-				"occurDaySegment", FoodItem::getOccurDaySegment);
-			attributeGetterFunctions.put("occurTime", FoodItem::getOccurTime);
+				"occurDayBaseTime", FoodItem::getOccurDayBaseTime);
+			attributeGetterFunctions.put(
+				"occurDayNativeTime", FoodItem::getOccurDayNativeTime);
 			attributeGetterFunctions.put("name", FoodItem::getName);
 			attributeGetterFunctions.put(
 				"locationOfOrigin", FoodItem::getLocationOfOrigin);
@@ -274,13 +273,11 @@ public class FoodItemModelImpl
 				"subjectId",
 				(BiConsumer<FoodItem, Long>)FoodItem::setSubjectId);
 			attributeSetterBiConsumers.put(
-				"occurDay", (BiConsumer<FoodItem, Long>)FoodItem::setOccurDay);
+				"occurDayBaseTime",
+				(BiConsumer<FoodItem, Long>)FoodItem::setOccurDayBaseTime);
 			attributeSetterBiConsumers.put(
-				"occurDaySegment",
-				(BiConsumer<FoodItem, Integer>)FoodItem::setOccurDaySegment);
-			attributeSetterBiConsumers.put(
-				"occurTime",
-				(BiConsumer<FoodItem, Long>)FoodItem::setOccurTime);
+				"occurDayNativeTime",
+				(BiConsumer<FoodItem, Long>)FoodItem::setOccurDayNativeTime);
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<FoodItem, String>)FoodItem::setName);
 			attributeSetterBiConsumers.put(
@@ -409,47 +406,32 @@ public class FoodItemModelImpl
 
 	@JSON
 	@Override
-	public long getOccurDay() {
-		return _occurDay;
+	public long getOccurDayBaseTime() {
+		return _occurDayBaseTime;
 	}
 
 	@Override
-	public void setOccurDay(long occurDay) {
+	public void setOccurDayBaseTime(long occurDayBaseTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDay = occurDay;
+		_occurDayBaseTime = occurDayBaseTime;
 	}
 
 	@JSON
 	@Override
-	public int getOccurDaySegment() {
-		return _occurDaySegment;
+	public long getOccurDayNativeTime() {
+		return _occurDayNativeTime;
 	}
 
 	@Override
-	public void setOccurDaySegment(int occurDaySegment) {
+	public void setOccurDayNativeTime(long occurDayNativeTime) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_occurDaySegment = occurDaySegment;
-	}
-
-	@JSON
-	@Override
-	public long getOccurTime() {
-		return _occurTime;
-	}
-
-	@Override
-	public void setOccurTime(long occurTime) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_occurTime = occurTime;
+		_occurDayNativeTime = occurDayNativeTime;
 	}
 
 	@JSON
@@ -609,9 +591,8 @@ public class FoodItemModelImpl
 		foodItemImpl.setUserId(getUserId());
 		foodItemImpl.setCreateDate(getCreateDate());
 		foodItemImpl.setSubjectId(getSubjectId());
-		foodItemImpl.setOccurDay(getOccurDay());
-		foodItemImpl.setOccurDaySegment(getOccurDaySegment());
-		foodItemImpl.setOccurTime(getOccurTime());
+		foodItemImpl.setOccurDayBaseTime(getOccurDayBaseTime());
+		foodItemImpl.setOccurDayNativeTime(getOccurDayNativeTime());
 		foodItemImpl.setName(getName());
 		foodItemImpl.setLocationOfOrigin(getLocationOfOrigin());
 		foodItemImpl.setBrand(getBrand());
@@ -638,11 +619,10 @@ public class FoodItemModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		foodItemImpl.setSubjectId(
 			this.<Long>getColumnOriginalValue("subjectId"));
-		foodItemImpl.setOccurDay(this.<Long>getColumnOriginalValue("occurDay"));
-		foodItemImpl.setOccurDaySegment(
-			this.<Integer>getColumnOriginalValue("occurDaySegment"));
-		foodItemImpl.setOccurTime(
-			this.<Long>getColumnOriginalValue("occurTime"));
+		foodItemImpl.setOccurDayBaseTime(
+			this.<Long>getColumnOriginalValue("occurDayBaseTime"));
+		foodItemImpl.setOccurDayNativeTime(
+			this.<Long>getColumnOriginalValue("occurDayNativeTime"));
 		foodItemImpl.setName(this.<String>getColumnOriginalValue("name"));
 		foodItemImpl.setLocationOfOrigin(
 			this.<String>getColumnOriginalValue("locationOfOrigin"));
@@ -745,11 +725,9 @@ public class FoodItemModelImpl
 
 		foodItemCacheModel.subjectId = getSubjectId();
 
-		foodItemCacheModel.occurDay = getOccurDay();
+		foodItemCacheModel.occurDayBaseTime = getOccurDayBaseTime();
 
-		foodItemCacheModel.occurDaySegment = getOccurDaySegment();
-
-		foodItemCacheModel.occurTime = getOccurTime();
+		foodItemCacheModel.occurDayNativeTime = getOccurDayNativeTime();
 
 		foodItemCacheModel.name = getName();
 
@@ -852,9 +830,8 @@ public class FoodItemModelImpl
 	private long _userId;
 	private Date _createDate;
 	private long _subjectId;
-	private long _occurDay;
-	private int _occurDaySegment;
-	private long _occurTime;
+	private long _occurDayBaseTime;
+	private long _occurDayNativeTime;
 	private String _name;
 	private String _locationOfOrigin;
 	private String _brand;
@@ -895,9 +872,8 @@ public class FoodItemModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("subjectId", _subjectId);
-		_columnOriginalValues.put("occurDay", _occurDay);
-		_columnOriginalValues.put("occurDaySegment", _occurDaySegment);
-		_columnOriginalValues.put("occurTime", _occurTime);
+		_columnOriginalValues.put("occurDayBaseTime", _occurDayBaseTime);
+		_columnOriginalValues.put("occurDayNativeTime", _occurDayNativeTime);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("locationOfOrigin", _locationOfOrigin);
 		_columnOriginalValues.put("brand", _brand);
@@ -928,21 +904,19 @@ public class FoodItemModelImpl
 
 		columnBitmasks.put("subjectId", 32L);
 
-		columnBitmasks.put("occurDay", 64L);
+		columnBitmasks.put("occurDayBaseTime", 64L);
 
-		columnBitmasks.put("occurDaySegment", 128L);
+		columnBitmasks.put("occurDayNativeTime", 128L);
 
-		columnBitmasks.put("occurTime", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("locationOfOrigin", 512L);
 
-		columnBitmasks.put("locationOfOrigin", 1024L);
+		columnBitmasks.put("brand", 1024L);
 
-		columnBitmasks.put("brand", 2048L);
+		columnBitmasks.put("quantity", 2048L);
 
-		columnBitmasks.put("quantity", 4096L);
-
-		columnBitmasks.put("quantityUnit", 8192L);
+		columnBitmasks.put("quantityUnit", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

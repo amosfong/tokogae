@@ -40,7 +40,7 @@ public interface FoodItemService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.FoodItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the food item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link FoodItemServiceUtil} if injection and service tracking are not available.
 	 */
 	public FoodItem addFoodItem(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException;
@@ -55,7 +55,7 @@ public interface FoodItemService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public FoodItem updateFoodItem(
-			long foodItemId, long occurDay, int occurDaySegment, long occurTime,
+			long foodItemId, long occurDayBaseTime, long occurDayNativeTime,
 			String name, String locationOfOrigin, String brand, double quantity,
 			String quantityUnit)
 		throws PortalException;

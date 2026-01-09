@@ -37,13 +37,13 @@ public class SymptomLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Symptom addSymptom(
-			long userId, long subjectId, long occurDay, int occurDaySegment,
-			long occurTime, long duration, String name, String affectedArea,
-			int intensityLevel)
+			long userId, long subjectId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		return getService().addSymptom(
-			userId, subjectId, occurDay, occurDaySegment, occurTime, duration,
+			userId, subjectId, occurDayBaseTime, occurDayNativeTime, duration,
 			name, affectedArea, intensityLevel);
 	}
 
@@ -276,12 +276,12 @@ public class SymptomLocalServiceUtil {
 	}
 
 	public static Symptom updateSymptom(
-			long symptomId, long occurDay, int occurDaySegment, long occurTime,
+			long symptomId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration, String name, String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		return getService().updateSymptom(
-			symptomId, occurDay, occurDaySegment, occurTime, duration, name,
+			symptomId, occurDayBaseTime, occurDayNativeTime, duration, name,
 			affectedArea, intensityLevel);
 	}
 

@@ -151,46 +151,32 @@ public interface ExerciseModel
 	public void setSubjectId(long subjectId);
 
 	/**
-	 * Returns the occur day of this exercise.
+	 * Returns the occur day base time of this exercise.
 	 *
-	 * @return the occur day of this exercise
+	 * @return the occur day base time of this exercise
 	 */
-	public long getOccurDay();
+	public long getOccurDayBaseTime();
 
 	/**
-	 * Sets the occur day of this exercise.
+	 * Sets the occur day base time of this exercise.
 	 *
-	 * @param occurDay the occur day of this exercise
+	 * @param occurDayBaseTime the occur day base time of this exercise
 	 */
-	public void setOccurDay(long occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime);
 
 	/**
-	 * Returns the occur day segment of this exercise.
+	 * Returns the occur day native time of this exercise.
 	 *
-	 * @return the occur day segment of this exercise
+	 * @return the occur day native time of this exercise
 	 */
-	public int getOccurDaySegment();
+	public long getOccurDayNativeTime();
 
 	/**
-	 * Sets the occur day segment of this exercise.
+	 * Sets the occur day native time of this exercise.
 	 *
-	 * @param occurDaySegment the occur day segment of this exercise
+	 * @param occurDayNativeTime the occur day native time of this exercise
 	 */
-	public void setOccurDaySegment(int occurDaySegment);
-
-	/**
-	 * Returns the occur time of this exercise.
-	 *
-	 * @return the occur time of this exercise
-	 */
-	public long getOccurTime();
-
-	/**
-	 * Sets the occur time of this exercise.
-	 *
-	 * @param occurTime the occur time of this exercise
-	 */
-	public void setOccurTime(long occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime);
 
 	/**
 	 * Returns the name of this exercise.

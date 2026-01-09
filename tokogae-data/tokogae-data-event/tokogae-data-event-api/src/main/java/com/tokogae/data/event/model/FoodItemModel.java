@@ -151,46 +151,32 @@ public interface FoodItemModel
 	public void setSubjectId(long subjectId);
 
 	/**
-	 * Returns the occur day of this food item.
+	 * Returns the occur day base time of this food item.
 	 *
-	 * @return the occur day of this food item
+	 * @return the occur day base time of this food item
 	 */
-	public long getOccurDay();
+	public long getOccurDayBaseTime();
 
 	/**
-	 * Sets the occur day of this food item.
+	 * Sets the occur day base time of this food item.
 	 *
-	 * @param occurDay the occur day of this food item
+	 * @param occurDayBaseTime the occur day base time of this food item
 	 */
-	public void setOccurDay(long occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime);
 
 	/**
-	 * Returns the occur day segment of this food item.
+	 * Returns the occur day native time of this food item.
 	 *
-	 * @return the occur day segment of this food item
+	 * @return the occur day native time of this food item
 	 */
-	public int getOccurDaySegment();
+	public long getOccurDayNativeTime();
 
 	/**
-	 * Sets the occur day segment of this food item.
+	 * Sets the occur day native time of this food item.
 	 *
-	 * @param occurDaySegment the occur day segment of this food item
+	 * @param occurDayNativeTime the occur day native time of this food item
 	 */
-	public void setOccurDaySegment(int occurDaySegment);
-
-	/**
-	 * Returns the occur time of this food item.
-	 *
-	 * @return the occur time of this food item
-	 */
-	public long getOccurTime();
-
-	/**
-	 * Sets the occur time of this food item.
-	 *
-	 * @param occurTime the occur time of this food item
-	 */
-	public void setOccurTime(long occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime);
 
 	/**
 	 * Returns the name of this food item.

@@ -67,7 +67,7 @@ public class SleepCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -81,12 +81,10 @@ public class SleepCacheModel
 		sb.append(createDate);
 		sb.append(", subjectId=");
 		sb.append(subjectId);
-		sb.append(", occurDay=");
-		sb.append(occurDay);
-		sb.append(", occurDaySegment=");
-		sb.append(occurDaySegment);
-		sb.append(", occurTime=");
-		sb.append(occurTime);
+		sb.append(", occurDayBaseTime=");
+		sb.append(occurDayBaseTime);
+		sb.append(", occurDayNativeTime=");
+		sb.append(occurDayNativeTime);
 		sb.append(", duration=");
 		sb.append(duration);
 		sb.append("}");
@@ -111,9 +109,8 @@ public class SleepCacheModel
 		}
 
 		sleepImpl.setSubjectId(subjectId);
-		sleepImpl.setOccurDay(occurDay);
-		sleepImpl.setOccurDaySegment(occurDaySegment);
-		sleepImpl.setOccurTime(occurTime);
+		sleepImpl.setOccurDayBaseTime(occurDayBaseTime);
+		sleepImpl.setOccurDayNativeTime(occurDayNativeTime);
 		sleepImpl.setDuration(duration);
 
 		sleepImpl.resetOriginalValues();
@@ -134,11 +131,9 @@ public class SleepCacheModel
 
 		subjectId = objectInput.readLong();
 
-		occurDay = objectInput.readLong();
+		occurDayBaseTime = objectInput.readLong();
 
-		occurDaySegment = objectInput.readInt();
-
-		occurTime = objectInput.readLong();
+		occurDayNativeTime = objectInput.readLong();
 
 		duration = objectInput.readLong();
 	}
@@ -156,11 +151,9 @@ public class SleepCacheModel
 
 		objectOutput.writeLong(subjectId);
 
-		objectOutput.writeLong(occurDay);
+		objectOutput.writeLong(occurDayBaseTime);
 
-		objectOutput.writeInt(occurDaySegment);
-
-		objectOutput.writeLong(occurTime);
+		objectOutput.writeLong(occurDayNativeTime);
 
 		objectOutput.writeLong(duration);
 	}
@@ -171,9 +164,8 @@ public class SleepCacheModel
 	public long userId;
 	public long createDate;
 	public long subjectId;
-	public long occurDay;
-	public int occurDaySegment;
-	public long occurTime;
+	public long occurDayBaseTime;
+	public long occurDayNativeTime;
 	public long duration;
 
 }

@@ -34,12 +34,10 @@ public class ExerciseTable extends BaseTable<ExerciseTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, Long> subjectId = createColumn(
 		"subjectId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Long> occurDay = createColumn(
-		"occurDay", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Integer> occurDaySegment = createColumn(
-		"occurDaySegment", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<ExerciseTable, Long> occurTime = createColumn(
-		"occurTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, Long> occurDayBaseTime = createColumn(
+		"occurDayBaseTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ExerciseTable, Long> occurDayNativeTime = createColumn(
+		"occurDayNativeTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ExerciseTable, Long> duration = createColumn(

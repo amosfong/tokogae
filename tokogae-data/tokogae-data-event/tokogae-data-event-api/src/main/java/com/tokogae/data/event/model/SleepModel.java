@@ -149,46 +149,32 @@ public interface SleepModel extends BaseModel<Sleep>, MVCCModel, ShardedModel {
 	public void setSubjectId(long subjectId);
 
 	/**
-	 * Returns the occur day of this sleep.
+	 * Returns the occur day base time of this sleep.
 	 *
-	 * @return the occur day of this sleep
+	 * @return the occur day base time of this sleep
 	 */
-	public long getOccurDay();
+	public long getOccurDayBaseTime();
 
 	/**
-	 * Sets the occur day of this sleep.
+	 * Sets the occur day base time of this sleep.
 	 *
-	 * @param occurDay the occur day of this sleep
+	 * @param occurDayBaseTime the occur day base time of this sleep
 	 */
-	public void setOccurDay(long occurDay);
+	public void setOccurDayBaseTime(long occurDayBaseTime);
 
 	/**
-	 * Returns the occur day segment of this sleep.
+	 * Returns the occur day native time of this sleep.
 	 *
-	 * @return the occur day segment of this sleep
+	 * @return the occur day native time of this sleep
 	 */
-	public int getOccurDaySegment();
+	public long getOccurDayNativeTime();
 
 	/**
-	 * Sets the occur day segment of this sleep.
+	 * Sets the occur day native time of this sleep.
 	 *
-	 * @param occurDaySegment the occur day segment of this sleep
+	 * @param occurDayNativeTime the occur day native time of this sleep
 	 */
-	public void setOccurDaySegment(int occurDaySegment);
-
-	/**
-	 * Returns the occur time of this sleep.
-	 *
-	 * @return the occur time of this sleep
-	 */
-	public long getOccurTime();
-
-	/**
-	 * Sets the occur time of this sleep.
-	 *
-	 * @param occurTime the occur time of this sleep
-	 */
-	public void setOccurTime(long occurTime);
+	public void setOccurDayNativeTime(long occurDayNativeTime);
 
 	/**
 	 * Returns the duration of this sleep.

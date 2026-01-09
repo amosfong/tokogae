@@ -26,12 +26,12 @@ public class SleepServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.Sleep addSleep(
-			long subjectId, long occurDay, int occurDaySegment, long occurTime,
+			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sleepService.addSleep(
-			subjectId, occurDay, occurDaySegment, occurTime, duration);
+			subjectId, occurDayBaseTime, occurDayNativeTime, duration);
 	}
 
 	@Override
@@ -53,12 +53,12 @@ public class SleepServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.Sleep updateSleep(
-			long sleepId, long occurDay, int occurDaySegment, long occurTime,
+			long sleepId, long occurDayBaseTime, long occurDayNativeTime,
 			long duration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sleepService.updateSleep(
-			sleepId, occurDay, occurDaySegment, occurTime, duration);
+			sleepId, occurDayBaseTime, occurDayNativeTime, duration);
 	}
 
 	@Override
