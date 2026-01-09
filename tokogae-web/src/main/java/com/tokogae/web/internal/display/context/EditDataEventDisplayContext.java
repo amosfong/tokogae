@@ -126,10 +126,14 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	public int getOccurDaySegment() {
-		long occurDayNativeTime = BeanPropertiesUtil.getLong(
-			_dataEventObject, "occurDayNativeTime");
+		if (_dataEventObject != null) {
+			long occurDayNativeTime = BeanPropertiesUtil.getLong(
+				_dataEventObject, "occurDayNativeTime");
 
-		return DaySegments.getDaySegment(Math.abs(occurDayNativeTime));
+			return DaySegments.getDaySegment(Math.abs(occurDayNativeTime));
+		}
+
+		return DaySegments.getDaySegment(getNativeTime(new Date()));
 	}
 
 	public int getQuantity() {

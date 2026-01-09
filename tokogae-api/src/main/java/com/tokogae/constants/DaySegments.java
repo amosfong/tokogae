@@ -23,7 +23,7 @@ public interface DaySegments {
 
 	public static int NIGHT = 4;
 
-	public static final long NIGHT_TIME = 86400000;
+	public static final long NIGHT_TIME = 64800000;
 
 	public static int NONE = -1;
 
