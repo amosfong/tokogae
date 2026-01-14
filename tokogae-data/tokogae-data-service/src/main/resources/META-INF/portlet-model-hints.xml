@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.tokogae.data.model.Phrase">
+		<field name="mvccVersion" type="long" />
+		<field name="phraseId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="text" type="String">
+			<hint name="max-length">250</hint>
+		</field>
+	</model>
+	<model name="com.tokogae.data.model.PhraseUsage">
+		<field name="mvccVersion" type="long" />
+		<field name="phraseUsageId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="phraseId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+</model-hints>
