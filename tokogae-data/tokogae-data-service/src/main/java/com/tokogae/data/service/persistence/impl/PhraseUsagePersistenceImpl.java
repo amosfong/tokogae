@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.tokogae.data.exception.NoSuchPhraseUsageException;
 import com.tokogae.data.model.PhraseUsage;
@@ -39,6 +40,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -574,75 +576,284 @@ public class PhraseUsagePersistenceImpl
 	private static final String _FINDER_COLUMN_PHRASEID_PHRASEID_2 =
 		"phraseUsage.phraseId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
+	private FinderPath _finderPathFetchByC_C;
 
 	/**
-	 * Returns all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPhraseUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching phrase usages
+	 * @return the matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
 	 */
 	@Override
-	public List<PhraseUsage> findByC_C(long classNameId, long classPK) {
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public PhraseUsage findByC_C(long classNameId, long classPK)
+		throws NoSuchPhraseUsageException {
+
+		PhraseUsage phraseUsage = fetchByC_C(classNameId, classPK);
+
+		if (phraseUsage == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("classNameId=");
+			sb.append(classNameId);
+
+			sb.append(", classPK=");
+			sb.append(classPK);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPhraseUsageException(sb.toString());
+		}
+
+		return phraseUsage;
 	}
 
 	/**
-	 * Returns a range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	@Override
+	public PhraseUsage fetchByC_C(long classNameId, long classPK) {
+		return fetchByC_C(classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	@Override
+	public PhraseUsage fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {classNameId, classPK};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
+		}
+
+		if (result instanceof PhraseUsage) {
+			PhraseUsage phraseUsage = (PhraseUsage)result;
+
+			if ((classNameId != phraseUsage.getClassNameId()) ||
+				(classPK != phraseUsage.getClassPK())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_PHRASEUSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				List<PhraseUsage> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									classNameId, classPK
+								};
+							}
+
+							_log.warn(
+								"PhraseUsagePersistenceImpl.fetchByC_C(long, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					PhraseUsage phraseUsage = list.get(0);
+
+					result = phraseUsage;
+
+					cacheResult(phraseUsage);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (PhraseUsage)result;
+		}
+	}
+
+	/**
+	 * Removes the phrase usage where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the phrase usage that was removed
+	 */
+	@Override
+	public PhraseUsage removeByC_C(long classNameId, long classPK)
+		throws NoSuchPhraseUsageException {
+
+		PhraseUsage phraseUsage = findByC_C(classNameId, classPK);
+
+		return remove(phraseUsage);
+	}
+
+	/**
+	 * Returns the number of phrase usages where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching phrase usages
+	 */
+	@Override
+	public int countByC_C(long classNameId, long classPK) {
+		PhraseUsage phraseUsage = fetchByC_C(classNameId, classPK);
+
+		if (phraseUsage == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+		"phraseUsage.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
+		"phraseUsage.classPK = ?";
+
+	private FinderPath _finderPathWithPaginationFindByC_C_AHC;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_AHC;
+	private FinderPath _finderPathCountByC_C_AHC;
+
+	/**
+	 * Returns all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @return the matching phrase usages
+	 */
+	@Override
+	public List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
+
+		return findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param start the lower bound of the range of phrase usages
 	 * @param end the upper bound of the range of phrase usages (not inclusive)
 	 * @return the range of matching phrase usages
 	 */
 	@Override
-	public List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end) {
+	public List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end) {
 
-		return findByC_C(classNameId, classPK, start, end, null);
+		return findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param start the lower bound of the range of phrase usages
 	 * @param end the upper bound of the range of phrase usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching phrase usages
 	 */
 	@Override
-	public List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<PhraseUsage> orderByComparator) {
+	public List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end, OrderByComparator<PhraseUsage> orderByComparator) {
 
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
+		return findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param start the lower bound of the range of phrase usages
 	 * @param end the upper bound of the range of phrase usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -650,9 +861,9 @@ public class PhraseUsagePersistenceImpl
 	 * @return the ordered range of matching phrase usages
 	 */
 	@Override
-	public List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<PhraseUsage> orderByComparator,
+	public List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end, OrderByComparator<PhraseUsage> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -662,14 +873,17 @@ public class PhraseUsagePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, classPK};
+				finderPath = _finderPathWithoutPaginationFindByC_C_AHC;
+				finderArgs = new Object[] {
+					companyId, classNameId, attributesHashCode
+				};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C;
+			finderPath = _finderPathWithPaginationFindByC_C_AHC;
 			finderArgs = new Object[] {
-				classNameId, classPK, start, end, orderByComparator
+				companyId, classNameId, attributesHashCode, start, end,
+				orderByComparator
 			};
 		}
 
@@ -681,8 +895,10 @@ public class PhraseUsagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PhraseUsage phraseUsage : list) {
-					if ((classNameId != phraseUsage.getClassNameId()) ||
-						(classPK != phraseUsage.getClassPK())) {
+					if ((companyId != phraseUsage.getCompanyId()) ||
+						(classNameId != phraseUsage.getClassNameId()) ||
+						(attributesHashCode !=
+							phraseUsage.getAttributesHashCode())) {
 
 						list = null;
 
@@ -697,17 +913,19 @@ public class PhraseUsagePersistenceImpl
 
 			if (orderByComparator != null) {
 				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
+					5 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				sb = new StringBundler(4);
+				sb = new StringBundler(5);
 			}
 
 			sb.append(_SQL_SELECT_PHRASEUSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_AHC_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_AHC_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_AHC_ATTRIBUTESHASHCODE_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -728,9 +946,11 @@ public class PhraseUsagePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(companyId);
+
 				queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+				queryPos.add(attributesHashCode);
 
 				list = (List<PhraseUsage>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -753,36 +973,40 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching phrase usage
 	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
 	 */
 	@Override
-	public PhraseUsage findByC_C_First(
-			long classNameId, long classPK,
+	public PhraseUsage findByC_C_AHC_First(
+			long companyId, long classNameId, int attributesHashCode,
 			OrderByComparator<PhraseUsage> orderByComparator)
 		throws NoSuchPhraseUsageException {
 
-		PhraseUsage phraseUsage = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
+		PhraseUsage phraseUsage = fetchByC_C_AHC_First(
+			companyId, classNameId, attributesHashCode, orderByComparator);
 
 		if (phraseUsage != null) {
 			return phraseUsage;
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("classNameId=");
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
 		sb.append(classNameId);
 
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", attributesHashCode=");
+		sb.append(attributesHashCode);
 
 		sb.append("}");
 
@@ -790,20 +1014,22 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
 	@Override
-	public PhraseUsage fetchByC_C_First(
-		long classNameId, long classPK,
+	public PhraseUsage fetchByC_C_AHC_First(
+		long companyId, long classNameId, int attributesHashCode,
 		OrderByComparator<PhraseUsage> orderByComparator) {
 
-		List<PhraseUsage> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
+		List<PhraseUsage> list = findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, 0, 1,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -813,36 +1039,40 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching phrase usage
 	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
 	 */
 	@Override
-	public PhraseUsage findByC_C_Last(
-			long classNameId, long classPK,
+	public PhraseUsage findByC_C_AHC_Last(
+			long companyId, long classNameId, int attributesHashCode,
 			OrderByComparator<PhraseUsage> orderByComparator)
 		throws NoSuchPhraseUsageException {
 
-		PhraseUsage phraseUsage = fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
+		PhraseUsage phraseUsage = fetchByC_C_AHC_Last(
+			companyId, classNameId, attributesHashCode, orderByComparator);
 
 		if (phraseUsage != null) {
 			return phraseUsage;
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("classNameId=");
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", classNameId=");
 		sb.append(classNameId);
 
-		sb.append(", classPK=");
-		sb.append(classPK);
+		sb.append(", attributesHashCode=");
+		sb.append(attributesHashCode);
 
 		sb.append("}");
 
@@ -850,26 +1080,28 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
 	@Override
-	public PhraseUsage fetchByC_C_Last(
-		long classNameId, long classPK,
+	public PhraseUsage fetchByC_C_AHC_Last(
+		long companyId, long classNameId, int attributesHashCode,
 		OrderByComparator<PhraseUsage> orderByComparator) {
 
-		int count = countByC_C(classNameId, classPK);
+		int count = countByC_C_AHC(companyId, classNameId, attributesHashCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<PhraseUsage> list = findByC_C(
-			classNameId, classPK, count - 1, count, orderByComparator);
+		List<PhraseUsage> list = findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -879,18 +1111,20 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the phrase usages before and after the current phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Returns the phrase usages before and after the current phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
 	 * @param phraseUsageId the primary key of the current phrase usage
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next phrase usage
 	 * @throws NoSuchPhraseUsageException if a phrase usage with the primary key could not be found
 	 */
 	@Override
-	public PhraseUsage[] findByC_C_PrevAndNext(
-			long phraseUsageId, long classNameId, long classPK,
+	public PhraseUsage[] findByC_C_AHC_PrevAndNext(
+			long phraseUsageId, long companyId, long classNameId,
+			int attributesHashCode,
 			OrderByComparator<PhraseUsage> orderByComparator)
 		throws NoSuchPhraseUsageException {
 
@@ -903,15 +1137,15 @@ public class PhraseUsagePersistenceImpl
 
 			PhraseUsage[] array = new PhraseUsageImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(
-				session, phraseUsage, classNameId, classPK, orderByComparator,
-				true);
+			array[0] = getByC_C_AHC_PrevAndNext(
+				session, phraseUsage, companyId, classNameId,
+				attributesHashCode, orderByComparator, true);
 
 			array[1] = phraseUsage;
 
-			array[2] = getByC_C_PrevAndNext(
-				session, phraseUsage, classNameId, classPK, orderByComparator,
-				false);
+			array[2] = getByC_C_AHC_PrevAndNext(
+				session, phraseUsage, companyId, classNameId,
+				attributesHashCode, orderByComparator, false);
 
 			return array;
 		}
@@ -923,27 +1157,29 @@ public class PhraseUsagePersistenceImpl
 		}
 	}
 
-	protected PhraseUsage getByC_C_PrevAndNext(
-		Session session, PhraseUsage phraseUsage, long classNameId,
-		long classPK, OrderByComparator<PhraseUsage> orderByComparator,
-		boolean previous) {
+	protected PhraseUsage getByC_C_AHC_PrevAndNext(
+		Session session, PhraseUsage phraseUsage, long companyId,
+		long classNameId, int attributesHashCode,
+		OrderByComparator<PhraseUsage> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
 		if (orderByComparator != null) {
 			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			sb = new StringBundler(4);
+			sb = new StringBundler(5);
 		}
 
 		sb.append(_SQL_SELECT_PHRASEUSAGE_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+		sb.append(_FINDER_COLUMN_C_C_AHC_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+		sb.append(_FINDER_COLUMN_C_C_AHC_CLASSNAMEID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_AHC_ATTRIBUTESHASHCODE_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -1014,9 +1250,11 @@ public class PhraseUsagePersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
+		queryPos.add(companyId);
+
 		queryPos.add(classNameId);
 
-		queryPos.add(classPK);
+		queryPos.add(attributesHashCode);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -1037,45 +1275,55 @@ public class PhraseUsagePersistenceImpl
 	}
 
 	/**
-	 * Removes all the phrase usages where classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 */
 	@Override
-	public void removeByC_C(long classNameId, long classPK) {
+	public void removeByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
+
 		for (PhraseUsage phraseUsage :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
+				findByC_C_AHC(
+					companyId, classNameId, attributesHashCode,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(phraseUsage);
 		}
 	}
 
 	/**
-	 * Returns the number of phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param classPK the class pk
+	 * @param attributesHashCode the attributes hash code
 	 * @return the number of matching phrase usages
 	 */
 	@Override
-	public int countByC_C(long classNameId, long classPK) {
-		FinderPath finderPath = _finderPathCountByC_C;
+	public int countByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
 
-		Object[] finderArgs = new Object[] {classNameId, classPK};
+		FinderPath finderPath = _finderPathCountByC_C_AHC;
+
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, attributesHashCode
+		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(_SQL_COUNT_PHRASEUSAGE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
+			sb.append(_FINDER_COLUMN_C_C_AHC_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
+			sb.append(_FINDER_COLUMN_C_C_AHC_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_AHC_ATTRIBUTESHASHCODE_2);
 
 			String sql = sb.toString();
 
@@ -1088,9 +1336,11 @@ public class PhraseUsagePersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(companyId);
+
 				queryPos.add(classNameId);
 
-				queryPos.add(classPK);
+				queryPos.add(attributesHashCode);
 
 				count = (Long)query.uniqueResult();
 
@@ -1107,11 +1357,14 @@ public class PhraseUsagePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
+	private static final String _FINDER_COLUMN_C_C_AHC_COMPANYID_2 =
+		"phraseUsage.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_AHC_CLASSNAMEID_2 =
 		"phraseUsage.classNameId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"phraseUsage.classPK = ?";
+	private static final String _FINDER_COLUMN_C_C_AHC_ATTRIBUTESHASHCODE_2 =
+		"phraseUsage.attributesHashCode = ?";
 
 	public PhraseUsagePersistenceImpl() {
 		setModelClass(PhraseUsage.class);
@@ -1131,6 +1384,13 @@ public class PhraseUsagePersistenceImpl
 	public void cacheResult(PhraseUsage phraseUsage) {
 		entityCache.putResult(
 			PhraseUsageImpl.class, phraseUsage.getPrimaryKey(), phraseUsage);
+
+		finderCache.putResult(
+			_finderPathFetchByC_C,
+			new Object[] {
+				phraseUsage.getClassNameId(), phraseUsage.getClassPK()
+			},
+			phraseUsage);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1199,6 +1459,18 @@ public class PhraseUsagePersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(PhraseUsageImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		PhraseUsageModelImpl phraseUsageModelImpl) {
+
+		Object[] args = new Object[] {
+			phraseUsageModelImpl.getClassNameId(),
+			phraseUsageModelImpl.getClassPK()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByC_C, args, phraseUsageModelImpl);
 	}
 
 	/**
@@ -1362,6 +1634,8 @@ public class PhraseUsagePersistenceImpl
 
 		entityCache.putResult(
 			PhraseUsageImpl.class, phraseUsageModelImpl, false, true);
+
+		cacheUniqueFindersCache(phraseUsageModelImpl);
 
 		if (isNew) {
 			phraseUsage.setNew(false);
@@ -1659,24 +1933,38 @@ public class PhraseUsagePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"phraseId"},
 			false);
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+		_finderPathFetchByC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"classNameId", "classPK"}, true);
+
+		_finderPathWithPaginationFindByC_C_AHC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_AHC",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
+				Integer.class.getName(), OrderByComparator.class.getName()
 			},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"companyId", "classNameId", "attributesHashCode"},
+			true);
 
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+		_finderPathWithoutPaginationFindByC_C_AHC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_AHC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "attributesHashCode"},
+			true);
 
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
+		_finderPathCountByC_C_AHC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_AHC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "attributesHashCode"},
+			false);
 
 		PhraseUsageUtil.setPersistence(this);
 	}

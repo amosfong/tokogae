@@ -18,5 +18,6 @@
 		<field name="phraseId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="attributesHashCode" type="int" />
 	</model>
 </model-hints>

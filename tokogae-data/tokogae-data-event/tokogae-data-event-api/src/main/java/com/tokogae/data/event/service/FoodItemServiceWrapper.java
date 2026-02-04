@@ -26,13 +26,13 @@ public class FoodItemServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.FoodItem addFoodItem(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			String name, String locationOfOrigin, String brand, double quantity,
-			String quantityUnit)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _foodItemService.addFoodItem(
-			subjectId, occurDayBaseTime, occurDayNativeTime, name,
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime, name,
 			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 

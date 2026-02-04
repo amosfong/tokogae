@@ -67,7 +67,7 @@ public interface FoodItemLocalService
 	public FoodItem addFoodItem(FoodItem foodItem);
 
 	public FoodItem addFoodItem(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, String name, String locationOfOrigin,
 			String brand, double quantity, String quantityUnit)
 		throws PortalException;

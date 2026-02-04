@@ -13,5 +13,6 @@ create table TOKOGAEData_PhraseUsage (
 	createDate DATE null,
 	phraseId LONG,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	attributesHashCode INTEGER
 );

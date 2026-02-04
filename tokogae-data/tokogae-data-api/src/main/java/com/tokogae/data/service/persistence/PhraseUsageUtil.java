@@ -280,177 +280,56 @@ public class PhraseUsageUtil {
 	}
 
 	/**
-	 * Returns all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPhraseUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching phrase usages
+	 * @return the matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
 	 */
-	public static List<PhraseUsage> findByC_C(long classNameId, long classPK) {
+	public static PhraseUsage findByC_C(long classNameId, long classPK)
+		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
+
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
 	/**
-	 * Returns a range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @return the range of matching phrase usages
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
-	public static List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C(classNameId, classPK, start, end);
+	public static PhraseUsage fetchByC_C(long classNameId, long classPK) {
+		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
 	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching phrase usages
-	 */
-	public static List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<PhraseUsage> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching phrase usages
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
-	public static List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<PhraseUsage> orderByComparator,
-		boolean useFinderCache) {
+	public static PhraseUsage fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache) {
 
-		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator,
-			useFinderCache);
+		return getPersistence().fetchByC_C(
+			classNameId, classPK, useFinderCache);
 	}
 
 	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Removes the phrase usage where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching phrase usage
-	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 * @return the phrase usage that was removed
 	 */
-	public static PhraseUsage findByC_C_First(
-			long classNameId, long classPK,
-			OrderByComparator<PhraseUsage> orderByComparator)
+	public static PhraseUsage removeByC_C(long classNameId, long classPK)
 		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
 
-		return getPersistence().findByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
-	 */
-	public static PhraseUsage fetchByC_C_First(
-		long classNameId, long classPK,
-		OrderByComparator<PhraseUsage> orderByComparator) {
-
-		return getPersistence().fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching phrase usage
-	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
-	 */
-	public static PhraseUsage findByC_C_Last(
-			long classNameId, long classPK,
-			OrderByComparator<PhraseUsage> orderByComparator)
-		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
-
-		return getPersistence().findByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
-	 */
-	public static PhraseUsage fetchByC_C_Last(
-		long classNameId, long classPK,
-		OrderByComparator<PhraseUsage> orderByComparator) {
-
-		return getPersistence().fetchByC_C_Last(
-			classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns the phrase usages before and after the current phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param phraseUsageId the primary key of the current phrase usage
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next phrase usage
-	 * @throws NoSuchPhraseUsageException if a phrase usage with the primary key could not be found
-	 */
-	public static PhraseUsage[] findByC_C_PrevAndNext(
-			long phraseUsageId, long classNameId, long classPK,
-			OrderByComparator<PhraseUsage> orderByComparator)
-		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
-
-		return getPersistence().findByC_C_PrevAndNext(
-			phraseUsageId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Removes all the phrase usages where classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 */
-	public static void removeByC_C(long classNameId, long classPK) {
-		getPersistence().removeByC_C(classNameId, classPK);
+		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -462,6 +341,216 @@ public class PhraseUsageUtil {
 	 */
 	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @return the matching phrase usages
+	 */
+	public static List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
+
+		return getPersistence().findByC_C_AHC(
+			companyId, classNameId, attributesHashCode);
+	}
+
+	/**
+	 * Returns a range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @return the range of matching phrase usages
+	 */
+	public static List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end) {
+
+		return getPersistence().findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching phrase usages
+	 */
+	public static List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end, OrderByComparator<PhraseUsage> orderByComparator) {
+
+		return getPersistence().findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching phrase usages
+	 */
+	public static List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end, OrderByComparator<PhraseUsage> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByC_C_AHC(
+			companyId, classNameId, attributesHashCode, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 */
+	public static PhraseUsage findByC_C_AHC_First(
+			long companyId, long classNameId, int attributesHashCode,
+			OrderByComparator<PhraseUsage> orderByComparator)
+		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
+
+		return getPersistence().findByC_C_AHC_First(
+			companyId, classNameId, attributesHashCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	public static PhraseUsage fetchByC_C_AHC_First(
+		long companyId, long classNameId, int attributesHashCode,
+		OrderByComparator<PhraseUsage> orderByComparator) {
+
+		return getPersistence().fetchByC_C_AHC_First(
+			companyId, classNameId, attributesHashCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 */
+	public static PhraseUsage findByC_C_AHC_Last(
+			long companyId, long classNameId, int attributesHashCode,
+			OrderByComparator<PhraseUsage> orderByComparator)
+		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
+
+		return getPersistence().findByC_C_AHC_Last(
+			companyId, classNameId, attributesHashCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	public static PhraseUsage fetchByC_C_AHC_Last(
+		long companyId, long classNameId, int attributesHashCode,
+		OrderByComparator<PhraseUsage> orderByComparator) {
+
+		return getPersistence().fetchByC_C_AHC_Last(
+			companyId, classNameId, attributesHashCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the phrase usages before and after the current phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param phraseUsageId the primary key of the current phrase usage
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next phrase usage
+	 * @throws NoSuchPhraseUsageException if a phrase usage with the primary key could not be found
+	 */
+	public static PhraseUsage[] findByC_C_AHC_PrevAndNext(
+			long phraseUsageId, long companyId, long classNameId,
+			int attributesHashCode,
+			OrderByComparator<PhraseUsage> orderByComparator)
+		throws com.tokogae.data.exception.NoSuchPhraseUsageException {
+
+		return getPersistence().findByC_C_AHC_PrevAndNext(
+			phraseUsageId, companyId, classNameId, attributesHashCode,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 */
+	public static void removeByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
+
+		getPersistence().removeByC_C_AHC(
+			companyId, classNameId, attributesHashCode);
+	}
+
+	/**
+	 * Returns the number of phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @return the number of matching phrase usages
+	 */
+	public static int countByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode) {
+
+		return getPersistence().countByC_C_AHC(
+			companyId, classNameId, attributesHashCode);
 	}
 
 	/**

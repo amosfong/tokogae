@@ -52,14 +52,14 @@ public class ExerciseLocalServiceUtil {
 	}
 
 	public static Exercise addExercise(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, String name, long duration,
 			double quantity, String quantityUnit)
 		throws PortalException {
 
 		return getService().addExercise(
-			userId, subjectId, occurDayBaseTime, occurDayNativeTime, name,
-			duration, quantity, quantityUnit);
+			userId, subjectId, phraseId, occurDayBaseTime, occurDayNativeTime,
+			name, duration, quantity, quantityUnit);
 	}
 
 	/**

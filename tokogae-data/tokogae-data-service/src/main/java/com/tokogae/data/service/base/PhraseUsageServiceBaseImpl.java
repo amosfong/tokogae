@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 
 import com.tokogae.data.model.PhraseUsage;
 import com.tokogae.data.service.PhraseUsageService;
+import com.tokogae.data.service.persistence.PhraseUsageFinder;
 import com.tokogae.data.service.persistence.PhraseUsagePersistence;
 
 import java.sql.Connection;
@@ -116,6 +117,9 @@ public abstract class PhraseUsageServiceBaseImpl
 
 	@Reference
 	protected PhraseUsagePersistence phraseUsagePersistence;
+
+	@Reference
+	protected PhraseUsageFinder phraseUsageFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

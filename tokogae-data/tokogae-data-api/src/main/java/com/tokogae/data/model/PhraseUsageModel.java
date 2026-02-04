@@ -192,6 +192,20 @@ public interface PhraseUsageModel
 	@Override
 	public void setClassPK(long classPK);
 
+	/**
+	 * Returns the attributes hash code of this phrase usage.
+	 *
+	 * @return the attributes hash code of this phrase usage
+	 */
+	public int getAttributesHashCode();
+
+	/**
+	 * Sets the attributes hash code of this phrase usage.
+	 *
+	 * @param attributesHashCode the attributes hash code of this phrase usage
+	 */
+	public void setAttributesHashCode(int attributesHashCode);
+
 	@Override
 	public PhraseUsage cloneWithOriginalValues();
 

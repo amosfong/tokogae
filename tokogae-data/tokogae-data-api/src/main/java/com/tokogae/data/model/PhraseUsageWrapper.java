@@ -40,6 +40,7 @@ public class PhraseUsageWrapper
 		attributes.put("phraseId", getPhraseId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("attributesHashCode", getAttributesHashCode());
 
 		return attributes;
 	}
@@ -93,11 +94,28 @@ public class PhraseUsageWrapper
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+
+		Integer attributesHashCode = (Integer)attributes.get(
+			"attributesHashCode");
+
+		if (attributesHashCode != null) {
+			setAttributesHashCode(attributesHashCode);
+		}
 	}
 
 	@Override
 	public PhraseUsage cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the attributes hash code of this phrase usage.
+	 *
+	 * @return the attributes hash code of this phrase usage
+	 */
+	@Override
+	public int getAttributesHashCode() {
+		return model.getAttributesHashCode();
 	}
 
 	/**
@@ -213,6 +231,16 @@ public class PhraseUsageWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the attributes hash code of this phrase usage.
+	 *
+	 * @param attributesHashCode the attributes hash code of this phrase usage
+	 */
+	@Override
+	public void setAttributesHashCode(int attributesHashCode) {
+		model.setAttributesHashCode(attributesHashCode);
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public interface SleepLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SleepLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the sleep local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SleepLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Sleep addSleep(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, long duration)
 		throws PortalException;
 

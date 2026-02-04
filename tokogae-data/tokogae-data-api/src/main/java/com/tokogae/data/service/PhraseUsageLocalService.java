@@ -53,7 +53,8 @@ public interface PhraseUsageLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.service.impl.PhraseUsageLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the phrase usage local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PhraseUsageLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public PhraseUsage addPhraseUsage(
-		long userId, long phraseId, long classNameId, long classPK);
+		long userId, long phraseId, String className, long classPK,
+		int attributesHashCode);
 
 	/**
 	 * Adds the phrase usage to the database. Also notifies the appropriate model listeners.
@@ -105,6 +106,9 @@ public interface PhraseUsageLocalService
 	public PhraseUsage deletePhraseUsage(long phraseUsageId)
 		throws PortalException;
 
+	public PhraseUsage deletePhraseUsage(long classNameId, long classPK)
+		throws PortalException;
+
 	/**
 	 * Deletes the phrase usage from the database. Also notifies the appropriate model listeners.
 	 *
@@ -117,8 +121,6 @@ public interface PhraseUsageLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public PhraseUsage deletePhraseUsage(PhraseUsage phraseUsage);
-
-	public void deletePhraseUsages(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -196,6 +198,9 @@ public interface PhraseUsageLocalService
 	public PhraseUsage fetchPhraseUsage(long phraseUsageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PhraseUsage fetchPhraseUsage(String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -242,7 +247,8 @@ public interface PhraseUsageLocalService
 	public List<PhraseUsage> getPhraseUsages(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<PhraseUsage> getPhraseUsages(long phraseId);
+	public List<PhraseUsage> getPhraseUsages(long phraseId, int start, int end)
+		throws PortalException;
 
 	/**
 	 * Returns the number of phrase usages.
@@ -251,6 +257,10 @@ public interface PhraseUsageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPhraseUsagesCount();
+
+	public PhraseUsage updatePhraseUsage(
+			long phraseUsageId, int attributesHashCode)
+		throws PortalException;
 
 	/**
 	 * Updates the phrase usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

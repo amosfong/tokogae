@@ -29,13 +29,14 @@ public class SymptomServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Symptom addSymptom(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			long duration, String name, String affectedArea, int intensityLevel)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		return getService().addSymptom(
-			subjectId, occurDayBaseTime, occurDayNativeTime, duration, name,
-			affectedArea, intensityLevel);
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime, duration,
+			name, affectedArea, intensityLevel);
 	}
 
 	public static Symptom deleteSymptom(long symptomId) throws PortalException {

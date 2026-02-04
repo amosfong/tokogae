@@ -175,150 +175,45 @@ public interface PhraseUsagePersistence extends BasePersistence<PhraseUsage> {
 	public int countByPhraseId(long phraseId);
 
 	/**
-	 * Returns all the phrase usages where classNameId = &#63; and classPK = &#63;.
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPhraseUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @return the matching phrase usages
+	 * @return the matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
 	 */
-	public java.util.List<PhraseUsage> findByC_C(
-		long classNameId, long classPK);
+	public PhraseUsage findByC_C(long classNameId, long classPK)
+		throws NoSuchPhraseUsageException;
 
 	/**
-	 * Returns a range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @return the range of matching phrase usages
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
-	public java.util.List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end);
+	public PhraseUsage fetchByC_C(long classNameId, long classPK);
 
 	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
+	 * Returns the phrase usage where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching phrase usages
-	 */
-	public java.util.List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the phrase usages where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of phrase usages
-	 * @param end the upper bound of the range of phrase usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching phrase usages
+	 * @return the matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
 	 */
-	public java.util.List<PhraseUsage> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-			orderByComparator,
-		boolean useFinderCache);
+	public PhraseUsage fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 * Removes the phrase usage where classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching phrase usage
-	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 * @return the phrase usage that was removed
 	 */
-	public PhraseUsage findByC_C_First(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-				orderByComparator)
+	public PhraseUsage removeByC_C(long classNameId, long classPK)
 		throws NoSuchPhraseUsageException;
-
-	/**
-	 * Returns the first phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
-	 */
-	public PhraseUsage fetchByC_C_First(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-			orderByComparator);
-
-	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching phrase usage
-	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
-	 */
-	public PhraseUsage findByC_C_Last(
-			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-				orderByComparator)
-		throws NoSuchPhraseUsageException;
-
-	/**
-	 * Returns the last phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
-	 */
-	public PhraseUsage fetchByC_C_Last(
-		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-			orderByComparator);
-
-	/**
-	 * Returns the phrase usages before and after the current phrase usage in the ordered set where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param phraseUsageId the primary key of the current phrase usage
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next phrase usage
-	 * @throws NoSuchPhraseUsageException if a phrase usage with the primary key could not be found
-	 */
-	public PhraseUsage[] findByC_C_PrevAndNext(
-			long phraseUsageId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
-				orderByComparator)
-		throws NoSuchPhraseUsageException;
-
-	/**
-	 * Removes all the phrase usages where classNameId = &#63; and classPK = &#63; from the database.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 */
-	public void removeByC_C(long classNameId, long classPK);
 
 	/**
 	 * Returns the number of phrase usages where classNameId = &#63; and classPK = &#63;.
@@ -328,6 +223,178 @@ public interface PhraseUsagePersistence extends BasePersistence<PhraseUsage> {
 	 * @return the number of matching phrase usages
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	/**
+	 * Returns all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @return the matching phrase usages
+	 */
+	public java.util.List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode);
+
+	/**
+	 * Returns a range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @return the range of matching phrase usages
+	 */
+	public java.util.List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching phrase usages
+	 */
+	public java.util.List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PhraseUsageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param start the lower bound of the range of phrase usages
+	 * @param end the upper bound of the range of phrase usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching phrase usages
+	 */
+	public java.util.List<PhraseUsage> findByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 */
+	public PhraseUsage findByC_C_AHC_First(
+			long companyId, long classNameId, int attributesHashCode,
+			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+				orderByComparator)
+		throws NoSuchPhraseUsageException;
+
+	/**
+	 * Returns the first phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	public PhraseUsage fetchByC_C_AHC_First(
+		long companyId, long classNameId, int attributesHashCode,
+		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching phrase usage
+	 * @throws NoSuchPhraseUsageException if a matching phrase usage could not be found
+	 */
+	public PhraseUsage findByC_C_AHC_Last(
+			long companyId, long classNameId, int attributesHashCode,
+			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+				orderByComparator)
+		throws NoSuchPhraseUsageException;
+
+	/**
+	 * Returns the last phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching phrase usage, or <code>null</code> if a matching phrase usage could not be found
+	 */
+	public PhraseUsage fetchByC_C_AHC_Last(
+		long companyId, long classNameId, int attributesHashCode,
+		com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+			orderByComparator);
+
+	/**
+	 * Returns the phrase usages before and after the current phrase usage in the ordered set where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param phraseUsageId the primary key of the current phrase usage
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next phrase usage
+	 * @throws NoSuchPhraseUsageException if a phrase usage with the primary key could not be found
+	 */
+	public PhraseUsage[] findByC_C_AHC_PrevAndNext(
+			long phraseUsageId, long companyId, long classNameId,
+			int attributesHashCode,
+			com.liferay.portal.kernel.util.OrderByComparator<PhraseUsage>
+				orderByComparator)
+		throws NoSuchPhraseUsageException;
+
+	/**
+	 * Removes all the phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 */
+	public void removeByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode);
+
+	/**
+	 * Returns the number of phrase usages where companyId = &#63; and classNameId = &#63; and attributesHashCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param attributesHashCode the attributes hash code
+	 * @return the number of matching phrase usages
+	 */
+	public int countByC_C_AHC(
+		long companyId, long classNameId, int attributesHashCode);
 
 	/**
 	 * Caches the phrase usage in the entity cache if it is enabled.

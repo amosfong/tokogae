@@ -46,14 +46,14 @@ public class ExerciseLocalServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.Exercise addExercise(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, String name, long duration,
 			double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _exerciseLocalService.addExercise(
-			userId, subjectId, occurDayBaseTime, occurDayNativeTime, name,
-			duration, quantity, quantityUnit);
+			userId, subjectId, phraseId, occurDayBaseTime, occurDayNativeTime,
+			name, duration, quantity, quantityUnit);
 	}
 
 	/**

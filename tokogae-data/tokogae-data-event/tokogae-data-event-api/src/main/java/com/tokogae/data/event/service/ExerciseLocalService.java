@@ -67,7 +67,7 @@ public interface ExerciseLocalService
 	public Exercise addExercise(Exercise exercise);
 
 	public Exercise addExercise(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, String name, long duration,
 			double quantity, String quantityUnit)
 		throws PortalException;

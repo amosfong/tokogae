@@ -27,12 +27,13 @@ public class SleepLocalServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.Sleep addSleep(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, long duration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sleepLocalService.addSleep(
-			userId, subjectId, occurDayBaseTime, occurDayNativeTime, duration);
+			userId, subjectId, phraseId, occurDayBaseTime, occurDayNativeTime,
+			duration);
 	}
 
 	/**

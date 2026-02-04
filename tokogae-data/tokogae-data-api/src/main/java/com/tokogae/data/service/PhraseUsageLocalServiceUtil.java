@@ -37,10 +37,11 @@ public class PhraseUsageLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.service.impl.PhraseUsageLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static PhraseUsage addPhraseUsage(
-		long userId, long phraseId, long classNameId, long classPK) {
+		long userId, long phraseId, String className, long classPK,
+		int attributesHashCode) {
 
 		return getService().addPhraseUsage(
-			userId, phraseId, classNameId, classPK);
+			userId, phraseId, className, classPK, attributesHashCode);
 	}
 
 	/**
@@ -104,6 +105,12 @@ public class PhraseUsageLocalServiceUtil {
 		return getService().deletePhraseUsage(phraseUsageId);
 	}
 
+	public static PhraseUsage deletePhraseUsage(long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().deletePhraseUsage(classNameId, classPK);
+	}
+
 	/**
 	 * Deletes the phrase usage from the database. Also notifies the appropriate model listeners.
 	 *
@@ -116,10 +123,6 @@ public class PhraseUsageLocalServiceUtil {
 	 */
 	public static PhraseUsage deletePhraseUsage(PhraseUsage phraseUsage) {
 		return getService().deletePhraseUsage(phraseUsage);
-	}
-
-	public static void deletePhraseUsages(long classNameId, long classPK) {
-		getService().deletePhraseUsages(classNameId, classPK);
 	}
 
 	public static <T> T dslQuery(DSLQuery dslQuery) {
@@ -211,6 +214,10 @@ public class PhraseUsageLocalServiceUtil {
 		return getService().fetchPhraseUsage(phraseUsageId);
 	}
 
+	public static PhraseUsage fetchPhraseUsage(String className, long classPK) {
+		return getService().fetchPhraseUsage(className, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -270,8 +277,11 @@ public class PhraseUsageLocalServiceUtil {
 		return getService().getPhraseUsages(start, end);
 	}
 
-	public static List<PhraseUsage> getPhraseUsages(long phraseId) {
-		return getService().getPhraseUsages(phraseId);
+	public static List<PhraseUsage> getPhraseUsages(
+			long phraseId, int start, int end)
+		throws PortalException {
+
+		return getService().getPhraseUsages(phraseId, start, end);
 	}
 
 	/**
@@ -281,6 +291,14 @@ public class PhraseUsageLocalServiceUtil {
 	 */
 	public static int getPhraseUsagesCount() {
 		return getService().getPhraseUsagesCount();
+	}
+
+	public static PhraseUsage updatePhraseUsage(
+			long phraseUsageId, int attributesHashCode)
+		throws PortalException {
+
+		return getService().updatePhraseUsage(
+			phraseUsageId, attributesHashCode);
 	}
 
 	/**

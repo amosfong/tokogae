@@ -67,7 +67,8 @@ public class PhraseUsageModelImpl
 		{"mvccVersion", Types.BIGINT}, {"phraseUsageId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"phraseId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"attributesHashCode", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,10 +83,11 @@ public class PhraseUsageModelImpl
 		TABLE_COLUMNS_MAP.put("phraseId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("attributesHashCode", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TOKOGAEData_PhraseUsage (mvccVersion LONG default 0 not null,phraseUsageId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,phraseId LONG,classNameId LONG,classPK LONG)";
+		"create table TOKOGAEData_PhraseUsage (mvccVersion LONG default 0 not null,phraseUsageId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,phraseId LONG,classNameId LONG,classPK LONG,attributesHashCode INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table TOKOGAEData_PhraseUsage";
@@ -106,26 +108,38 @@ public class PhraseUsageModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long ATTRIBUTESHASHCODE_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PHRASEID_COLUMN_BITMASK = 4L;
+	public static final long CLASSPK_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long PHRASEID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PHRASEUSAGEID_COLUMN_BITMASK = 8L;
+	public static final long PHRASEUSAGEID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -249,6 +263,8 @@ public class PhraseUsageModelImpl
 			attributeGetterFunctions.put(
 				"classNameId", PhraseUsage::getClassNameId);
 			attributeGetterFunctions.put("classPK", PhraseUsage::getClassPK);
+			attributeGetterFunctions.put(
+				"attributesHashCode", PhraseUsage::getAttributesHashCode);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -289,6 +305,10 @@ public class PhraseUsageModelImpl
 			attributeSetterBiConsumers.put(
 				"classPK",
 				(BiConsumer<PhraseUsage, Long>)PhraseUsage::setClassPK);
+			attributeSetterBiConsumers.put(
+				"attributesHashCode",
+				(BiConsumer<PhraseUsage, Integer>)
+					PhraseUsage::setAttributesHashCode);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -339,6 +359,16 @@ public class PhraseUsageModelImpl
 		}
 
 		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -481,6 +511,31 @@ public class PhraseUsageModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
+	@JSON
+	@Override
+	public int getAttributesHashCode() {
+		return _attributesHashCode;
+	}
+
+	@Override
+	public void setAttributesHashCode(int attributesHashCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_attributesHashCode = attributesHashCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalAttributesHashCode() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("attributesHashCode"));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -545,6 +600,7 @@ public class PhraseUsageModelImpl
 		phraseUsageImpl.setPhraseId(getPhraseId());
 		phraseUsageImpl.setClassNameId(getClassNameId());
 		phraseUsageImpl.setClassPK(getClassPK());
+		phraseUsageImpl.setAttributesHashCode(getAttributesHashCode());
 
 		phraseUsageImpl.resetOriginalValues();
 
@@ -570,6 +626,8 @@ public class PhraseUsageModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		phraseUsageImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
+		phraseUsageImpl.setAttributesHashCode(
+			this.<Integer>getColumnOriginalValue("attributesHashCode"));
 
 		return phraseUsageImpl;
 	}
@@ -669,6 +727,8 @@ public class PhraseUsageModelImpl
 
 		phraseUsageCacheModel.classPK = getClassPK();
 
+		phraseUsageCacheModel.attributesHashCode = getAttributesHashCode();
+
 		return phraseUsageCacheModel;
 	}
 
@@ -738,6 +798,7 @@ public class PhraseUsageModelImpl
 	private long _phraseId;
 	private long _classNameId;
 	private long _classPK;
+	private int _attributesHashCode;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PhraseUsage, Object> function =
@@ -775,6 +836,7 @@ public class PhraseUsageModelImpl
 		_columnOriginalValues.put("phraseId", _phraseId);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("attributesHashCode", _attributesHashCode);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -803,6 +865,8 @@ public class PhraseUsageModelImpl
 		columnBitmasks.put("classNameId", 64L);
 
 		columnBitmasks.put("classPK", 128L);
+
+		columnBitmasks.put("attributesHashCode", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

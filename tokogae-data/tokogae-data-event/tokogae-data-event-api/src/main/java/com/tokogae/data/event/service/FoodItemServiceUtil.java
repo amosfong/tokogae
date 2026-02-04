@@ -29,13 +29,13 @@ public class FoodItemServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.FoodItemServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static FoodItem addFoodItem(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			String name, String locationOfOrigin, String brand, double quantity,
-			String quantityUnit)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws PortalException {
 
 		return getService().addFoodItem(
-			subjectId, occurDayBaseTime, occurDayNativeTime, name,
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime, name,
 			locationOfOrigin, brand, quantity, quantityUnit);
 	}
 

@@ -42,9 +42,9 @@ import com.tokogae.data.event.service.ExerciseServiceUtil;
 public class ExerciseServiceHttp {
 
 	public static com.tokogae.data.event.model.Exercise addExercise(
-			HttpPrincipal httpPrincipal, long subjectId, long occurDayBaseTime,
-			long occurDayNativeTime, String name, long duration,
-			double quantity, String quantityUnit)
+			HttpPrincipal httpPrincipal, long subjectId, long phraseId,
+			long occurDayBaseTime, long occurDayNativeTime, String name,
+			long duration, double quantity, String quantityUnit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -53,8 +53,8 @@ public class ExerciseServiceHttp {
 				_addExerciseParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, subjectId, occurDayBaseTime, occurDayNativeTime,
-				name, duration, quantity, quantityUnit);
+				methodKey, subjectId, phraseId, occurDayBaseTime,
+				occurDayNativeTime, name, duration, quantity, quantityUnit);
 
 			Object returnObj = null;
 
@@ -170,8 +170,8 @@ public class ExerciseServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(ExerciseServiceHttp.class);
 
 	private static final Class<?>[] _addExerciseParameterTypes0 = new Class[] {
-		long.class, long.class, long.class, String.class, long.class,
-		double.class, String.class
+		long.class, long.class, long.class, long.class, String.class,
+		long.class, double.class, String.class
 	};
 	private static final Class<?>[] _deleteExerciseParameterTypes1 =
 		new Class[] {long.class};

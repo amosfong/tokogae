@@ -29,12 +29,13 @@ public class SleepServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SleepServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Sleep addSleep(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			long duration)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration)
 		throws PortalException {
 
 		return getService().addSleep(
-			subjectId, occurDayBaseTime, occurDayNativeTime, duration);
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime,
+			duration);
 	}
 
 	public static Sleep deleteSleep(long sleepId) throws PortalException {

@@ -26,13 +26,14 @@ public class SymptomServiceWrapper
 
 	@Override
 	public com.tokogae.data.event.model.Symptom addSymptom(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			long duration, String name, String affectedArea, int intensityLevel)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _symptomService.addSymptom(
-			subjectId, occurDayBaseTime, occurDayNativeTime, duration, name,
-			affectedArea, intensityLevel);
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime, duration,
+			name, affectedArea, intensityLevel);
 	}
 
 	@Override

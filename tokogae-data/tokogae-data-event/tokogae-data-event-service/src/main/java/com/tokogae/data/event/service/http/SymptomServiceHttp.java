@@ -42,9 +42,9 @@ import com.tokogae.data.event.service.SymptomServiceUtil;
 public class SymptomServiceHttp {
 
 	public static com.tokogae.data.event.model.Symptom addSymptom(
-			HttpPrincipal httpPrincipal, long subjectId, long occurDayBaseTime,
-			long occurDayNativeTime, long duration, String name,
-			String affectedArea, int intensityLevel)
+			HttpPrincipal httpPrincipal, long subjectId, long phraseId,
+			long occurDayBaseTime, long occurDayNativeTime, long duration,
+			String name, String affectedArea, int intensityLevel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -53,8 +53,9 @@ public class SymptomServiceHttp {
 				_addSymptomParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, subjectId, occurDayBaseTime, occurDayNativeTime,
-				duration, name, affectedArea, intensityLevel);
+				methodKey, subjectId, phraseId, occurDayBaseTime,
+				occurDayNativeTime, duration, name, affectedArea,
+				intensityLevel);
 
 			Object returnObj = null;
 
@@ -170,8 +171,8 @@ public class SymptomServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(SymptomServiceHttp.class);
 
 	private static final Class<?>[] _addSymptomParameterTypes0 = new Class[] {
-		long.class, long.class, long.class, long.class, String.class,
-		String.class, int.class
+		long.class, long.class, long.class, long.class, long.class,
+		String.class, String.class, int.class
 	};
 	private static final Class<?>[] _deleteSymptomParameterTypes1 =
 		new Class[] {long.class};

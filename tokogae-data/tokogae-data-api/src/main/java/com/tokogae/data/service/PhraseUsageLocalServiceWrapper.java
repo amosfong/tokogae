@@ -30,10 +30,11 @@ public class PhraseUsageLocalServiceWrapper
 
 	@Override
 	public com.tokogae.data.model.PhraseUsage addPhraseUsage(
-		long userId, long phraseId, long classNameId, long classPK) {
+		long userId, long phraseId, String className, long classPK,
+		int attributesHashCode) {
 
 		return _phraseUsageLocalService.addPhraseUsage(
-			userId, phraseId, classNameId, classPK);
+			userId, phraseId, className, classPK, attributesHashCode);
 	}
 
 	/**
@@ -107,6 +108,14 @@ public class PhraseUsageLocalServiceWrapper
 		return _phraseUsageLocalService.deletePhraseUsage(phraseUsageId);
 	}
 
+	@Override
+	public com.tokogae.data.model.PhraseUsage deletePhraseUsage(
+			long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phraseUsageLocalService.deletePhraseUsage(classNameId, classPK);
+	}
+
 	/**
 	 * Deletes the phrase usage from the database. Also notifies the appropriate model listeners.
 	 *
@@ -122,11 +131,6 @@ public class PhraseUsageLocalServiceWrapper
 		com.tokogae.data.model.PhraseUsage phraseUsage) {
 
 		return _phraseUsageLocalService.deletePhraseUsage(phraseUsage);
-	}
-
-	@Override
-	public void deletePhraseUsages(long classNameId, long classPK) {
-		_phraseUsageLocalService.deletePhraseUsages(classNameId, classPK);
 	}
 
 	@Override
@@ -239,6 +243,13 @@ public class PhraseUsageLocalServiceWrapper
 	}
 
 	@Override
+	public com.tokogae.data.model.PhraseUsage fetchPhraseUsage(
+		String className, long classPK) {
+
+		return _phraseUsageLocalService.fetchPhraseUsage(className, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -307,9 +318,10 @@ public class PhraseUsageLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.tokogae.data.model.PhraseUsage> getPhraseUsages(
-		long phraseId) {
+			long phraseId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _phraseUsageLocalService.getPhraseUsages(phraseId);
+		return _phraseUsageLocalService.getPhraseUsages(phraseId, start, end);
 	}
 
 	/**
@@ -320,6 +332,15 @@ public class PhraseUsageLocalServiceWrapper
 	@Override
 	public int getPhraseUsagesCount() {
 		return _phraseUsageLocalService.getPhraseUsagesCount();
+	}
+
+	@Override
+	public com.tokogae.data.model.PhraseUsage updatePhraseUsage(
+			long phraseUsageId, int attributesHashCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _phraseUsageLocalService.updatePhraseUsage(
+			phraseUsageId, attributesHashCode);
 	}
 
 	/**

@@ -42,8 +42,8 @@ import com.tokogae.data.event.service.SleepServiceUtil;
 public class SleepServiceHttp {
 
 	public static com.tokogae.data.event.model.Sleep addSleep(
-			HttpPrincipal httpPrincipal, long subjectId, long occurDayBaseTime,
-			long occurDayNativeTime, long duration)
+			HttpPrincipal httpPrincipal, long subjectId, long phraseId,
+			long occurDayBaseTime, long occurDayNativeTime, long duration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -51,8 +51,8 @@ public class SleepServiceHttp {
 				SleepServiceUtil.class, "addSleep", _addSleepParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, subjectId, occurDayBaseTime, occurDayNativeTime,
-				duration);
+				methodKey, subjectId, phraseId, occurDayBaseTime,
+				occurDayNativeTime, duration);
 
 			Object returnObj = null;
 
@@ -166,7 +166,7 @@ public class SleepServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(SleepServiceHttp.class);
 
 	private static final Class<?>[] _addSleepParameterTypes0 = new Class[] {
-		long.class, long.class, long.class, long.class
+		long.class, long.class, long.class, long.class, long.class
 	};
 	private static final Class<?>[] _deleteSleepParameterTypes1 = new Class[] {
 		long.class

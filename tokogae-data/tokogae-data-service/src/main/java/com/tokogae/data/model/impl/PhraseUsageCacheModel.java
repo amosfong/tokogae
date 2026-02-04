@@ -68,7 +68,7 @@ public class PhraseUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,6 +86,8 @@ public class PhraseUsageCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", attributesHashCode=");
+		sb.append(attributesHashCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,6 +112,7 @@ public class PhraseUsageCacheModel
 		phraseUsageImpl.setPhraseId(phraseId);
 		phraseUsageImpl.setClassNameId(classNameId);
 		phraseUsageImpl.setClassPK(classPK);
+		phraseUsageImpl.setAttributesHashCode(attributesHashCode);
 
 		phraseUsageImpl.resetOriginalValues();
 
@@ -132,6 +135,8 @@ public class PhraseUsageCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+
+		attributesHashCode = objectInput.readInt();
 	}
 
 	@Override
@@ -150,6 +155,8 @@ public class PhraseUsageCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
+
+		objectOutput.writeInt(attributesHashCode);
 	}
 
 	public long mvccVersion;
@@ -160,5 +167,6 @@ public class PhraseUsageCacheModel
 	public long phraseId;
 	public long classNameId;
 	public long classPK;
+	public int attributesHashCode;
 
 }

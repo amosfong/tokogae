@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.tokogae.data.model.PhraseUsage;
 import com.tokogae.data.service.PhraseUsageLocalService;
+import com.tokogae.data.service.persistence.PhraseUsageFinder;
 import com.tokogae.data.service.persistence.PhraseUsagePersistence;
 
 import java.io.Serializable;
@@ -441,6 +442,9 @@ public abstract class PhraseUsageLocalServiceBaseImpl
 
 	@Reference
 	protected PhraseUsagePersistence phraseUsagePersistence;
+
+	@Reference
+	protected PhraseUsageFinder phraseUsageFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

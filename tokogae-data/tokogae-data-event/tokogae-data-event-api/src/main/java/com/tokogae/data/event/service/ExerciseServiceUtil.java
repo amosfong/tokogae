@@ -29,13 +29,14 @@ public class ExerciseServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.ExerciseServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Exercise addExercise(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			String name, long duration, double quantity, String quantityUnit)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, long duration,
+			double quantity, String quantityUnit)
 		throws PortalException {
 
 		return getService().addExercise(
-			subjectId, occurDayBaseTime, occurDayNativeTime, name, duration,
-			quantity, quantityUnit);
+			subjectId, phraseId, occurDayBaseTime, occurDayNativeTime, name,
+			duration, quantity, quantityUnit);
 	}
 
 	public static Exercise deleteExercise(long exerciseId)

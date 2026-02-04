@@ -38,6 +38,10 @@ public class PhraseUsageTable extends BaseTable<PhraseUsageTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PhraseUsageTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<PhraseUsageTable, Integer> attributesHashCode =
+		createColumn(
+			"attributesHashCode", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 
 	private PhraseUsageTable() {
 		super("TOKOGAEData_PhraseUsage", PhraseUsageTable::new);

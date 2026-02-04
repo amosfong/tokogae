@@ -53,7 +53,7 @@ public interface SymptomLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.tokogae.data.event.service.impl.SymptomLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the symptom local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SymptomLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public Symptom addSymptom(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, long duration, String name,
 			String affectedArea, int intensityLevel)
 		throws PortalException;
