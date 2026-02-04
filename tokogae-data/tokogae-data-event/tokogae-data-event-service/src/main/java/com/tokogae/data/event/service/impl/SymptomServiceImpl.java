@@ -28,16 +28,17 @@ import org.osgi.service.component.annotations.Reference;
 public class SymptomServiceImpl extends SymptomServiceBaseImpl {
 
 	public Symptom addSymptom(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			long duration, String name, String affectedArea, int intensityLevel)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, long duration, String name,
+			String affectedArea, int intensityLevel)
 		throws PortalException {
 
 		_subjectPermission.check(
 			getPermissionChecker(), subjectId, ActionKeys.UPDATE);
 
 		return symptomLocalService.addSymptom(
-			getUserId(), subjectId, occurDayBaseTime, occurDayNativeTime,
-			duration, name, affectedArea, intensityLevel);
+			getUserId(), subjectId, phraseId, occurDayBaseTime,
+			occurDayNativeTime, duration, name, affectedArea, intensityLevel);
 	}
 
 	public Symptom deleteSymptom(long symptomId) throws PortalException {

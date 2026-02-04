@@ -31,6 +31,7 @@ EditDataEventDisplayContext editDataEventDisplayContext = (EditDataEventDisplayC
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect") %>' />
 			<aui:input name="classPK" type="hidden" value='<%= ParamUtil.getString(request, "classPK") %>' />
+			<aui:input name="phraseId" type="hidden" value='<%= ParamUtil.getLong(request, "phraseId") %>' />
 
 			<aui:select label="event-type" name="className" onChange="window.location = event.target[event.target.selectedIndex].getAttribute('data-url')">
 

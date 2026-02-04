@@ -84,6 +84,19 @@ HomeDisplayContext homeDisplayContext = (HomeDisplayContext)request.getAttribute
 	</div>
 
 	<div class="col-md-7">
+		<portlet:actionURL name="/tokogae/evaluate_phrase" var="evaluatePhraseURL" />
+
+		<liferay-frontend:edit-form
+			action="<%= evaluatePhraseURL %>"
+			enctype="multipart/form-data"
+			method="post"
+			name="fm1"
+		>
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+			<aui:input name="phraseText" />
+		</liferay-frontend:edit-form>
+
 		<p>
 			<aui:a href="<%= homeDisplayContext.getEditDataEventURL(Exercise.class.getName()) %>"><%= homeDisplayContext.getAddLabel(Exercise.class.getName()) %></aui:a>
 		</p>

@@ -6,6 +6,7 @@ package com.tokogae.data.event.model.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -19,6 +20,9 @@ import com.tokogae.data.event.model.Sleep;
 import com.tokogae.data.event.model.Symptom;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,6 +60,7 @@ public class DataEventFactoryImpl implements DataEventFactory {
 	public DataEvent create(Exercise exercise) {
 		DataEvent dataEvent = new DataEventImpl();
 
+		dataEvent.setAttributes(_getAttributes(exercise));
 		dataEvent.setCompanyId(exercise.getCompanyId());
 		dataEvent.setClassName(Exercise.class.getName());
 		dataEvent.setClassPK(exercise.getExerciseId());
@@ -63,7 +68,6 @@ public class DataEventFactoryImpl implements DataEventFactory {
 			new Date(
 				exercise.getOccurDayBaseTime() +
 					Math.abs(exercise.getOccurDayNativeTime())));
-		dataEvent.setOriginalObject(exercise);
 		dataEvent.setSubjectId(exercise.getSubjectId());
 
 		StringBundler sb = new StringBundler();
@@ -82,6 +86,7 @@ public class DataEventFactoryImpl implements DataEventFactory {
 	public DataEvent create(FoodItem foodItem) {
 		DataEvent dataEvent = new DataEventImpl();
 
+		dataEvent.setAttributes(_getAttributes(foodItem));
 		dataEvent.setCompanyId(foodItem.getCompanyId());
 		dataEvent.setClassName(FoodItem.class.getName());
 		dataEvent.setClassPK(foodItem.getFoodItemId());
@@ -89,7 +94,6 @@ public class DataEventFactoryImpl implements DataEventFactory {
 			new Date(
 				foodItem.getOccurDayBaseTime() +
 					Math.abs(foodItem.getOccurDayNativeTime())));
-		dataEvent.setOriginalObject(foodItem);
 		dataEvent.setSubjectId(foodItem.getSubjectId());
 
 		StringBundler sb = new StringBundler();
@@ -108,6 +112,7 @@ public class DataEventFactoryImpl implements DataEventFactory {
 	public DataEvent create(Sleep sleep) {
 		DataEvent dataEvent = new DataEventImpl();
 
+		dataEvent.setAttributes(_getAttributes(sleep));
 		dataEvent.setCompanyId(sleep.getCompanyId());
 		dataEvent.setClassName(Sleep.class.getName());
 		dataEvent.setClassPK(sleep.getSleepId());
@@ -115,7 +120,6 @@ public class DataEventFactoryImpl implements DataEventFactory {
 			new Date(
 				sleep.getOccurDayBaseTime() +
 					Math.abs(sleep.getOccurDayNativeTime())));
-		dataEvent.setOriginalObject(sleep);
 		dataEvent.setSubjectId(sleep.getSubjectId());
 
 		StringBundler sb = new StringBundler();
@@ -131,6 +135,7 @@ public class DataEventFactoryImpl implements DataEventFactory {
 	public DataEvent create(Symptom symptom) {
 		DataEvent dataEvent = new DataEventImpl();
 
+		dataEvent.setAttributes(_getAttributes(symptom));
 		dataEvent.setCompanyId(symptom.getCompanyId());
 		dataEvent.setClassName(Symptom.class.getName());
 		dataEvent.setClassPK(symptom.getSymptomId());
@@ -147,7 +152,6 @@ public class DataEventFactoryImpl implements DataEventFactory {
 				new Date(occurDate.getTime() + symptom.getDuration()));
 		}
 
-		dataEvent.setOriginalObject(symptom);
 		dataEvent.setSubjectId(symptom.getSubjectId());
 
 		StringBundler sb = new StringBundler();
@@ -162,5 +166,30 @@ public class DataEventFactoryImpl implements DataEventFactory {
 
 		return dataEvent;
 	}
+
+	private Map<String, Object> _getAttributes(BaseModel<?> baseModel) {
+		Map<String, Object> attributes = baseModel.getModelAttributes();
+
+		Set<String> keys = attributes.keySet();
+
+		keys.retainAll(_attributeNames);
+
+		return attributes;
+	}
+
+	private Set<String> _attributeNames = new HashSet<String>() {
+		{
+			add("affectedArea");
+			add("brand");
+			add("duration");
+			add("intensityLevel");
+			add("locationOfOrigin");
+			add("name");
+			add("occurDayBaseTime");
+			add("occurDayNativeTime");
+			add("quantity");
+			add("quantityUnit");
+		}
+	};
 
 }

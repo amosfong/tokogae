@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Amos Fong
@@ -24,6 +25,18 @@ import java.util.Locale;
 public class DataEventImpl implements DataEvent {
 
 	public DataEventImpl() {
+	}
+
+	public Object getAttribute(String key) {
+		return _attributes.get(key);
+	}
+
+	public Map<String, Object> getAttributes() {
+		return _attributes;
+	}
+
+	public int getAttributesHashCode() {
+		return _attributes.hashCode();
 	}
 
 	public String getClassName() {
@@ -84,10 +97,6 @@ public class DataEventImpl implements DataEvent {
 			false);
 	}
 
-	public Object getOriginalObject() {
-		return _originalObject;
-	}
-
 	public String getPrimaryKey() {
 		return _className + StringPool.POUND + _classPK;
 	}
@@ -102,6 +111,10 @@ public class DataEventImpl implements DataEvent {
 
 	public String getSummary() {
 		return _summary;
+	}
+
+	public void setAttributes(Map<String, Object> attributes) {
+		_attributes = attributes;
 	}
 
 	public void setClassName(String className) {
@@ -126,10 +139,6 @@ public class DataEventImpl implements DataEvent {
 
 	public void setOccurDate(Date occurDate) {
 		_occurDate = occurDate;
-	}
-
-	public void setOriginalObject(Object originalObject) {
-		_originalObject = originalObject;
 	}
 
 	public void setPrimaryKey(String primaryKey) {
@@ -160,13 +169,13 @@ public class DataEventImpl implements DataEvent {
 		return date.getTime() - System.currentTimeMillis();
 	}
 
+	private Map<String, Object> _attributes;
 	private String _className;
 	private long _classPK;
 	private long _companyId;
 	private Date _endDate;
 	private boolean _extended;
 	private Date _occurDate;
-	private Object _originalObject;
 	private Date _startDate;
 	private long _subjectId;
 	private String _summary;

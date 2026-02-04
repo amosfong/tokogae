@@ -25,13 +25,14 @@ import org.osgi.service.component.annotations.Component;
 public class ExerciseServiceImpl extends ExerciseServiceBaseImpl {
 
 	public Exercise addExercise(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			String name, long duration, double quantity, String quantityUnit)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, long duration,
+			double quantity, String quantityUnit)
 		throws PortalException {
 
 		return exerciseLocalService.addExercise(
-			getUserId(), subjectId, occurDayBaseTime, occurDayNativeTime, name,
-			duration, quantity, quantityUnit);
+			getUserId(), subjectId, phraseId, occurDayBaseTime,
+			occurDayNativeTime, name, duration, quantity, quantityUnit);
 	}
 
 	public Exercise deleteExercise(long exerciseId) throws PortalException {

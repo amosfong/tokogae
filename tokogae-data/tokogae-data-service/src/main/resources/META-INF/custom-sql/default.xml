@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.tokogae.data.service.persistence.PhraseUsageFinder.findByTopUsage">
+		<![CDATA[
+			SELECT
+				MIN(phraseUsageId) AS phraseUsageId, classNameid, attributesHashCode, COUNT(*)
+			FROM
+				TokogaeData_PhraseUsage
+			WHERE
+				phraseId = ?
+			GROUP BY
+				classNameId, attributesHashCode
+			ORDER BY
+				COUNT(*) DESC
+		]]>
+	</sql>
+</custom-sql>

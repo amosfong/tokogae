@@ -41,15 +41,21 @@
 		<column name="phraseId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="attributesHashCode" type="int" />
 
 		<!-- Finder methods -->
 
 		<finder name="PhraseId" return-type="Collection">
 			<finder-column name="phraseId" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
+		<finder name="C_C" return-type="PhraseUsage">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_AHC" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="attributesHashCode" />
 		</finder>
 	</entity>
 </service-builder>

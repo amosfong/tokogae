@@ -8,11 +8,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import com.tokogae.data.event.exception.NoSuchExerciseException;
 import com.tokogae.data.event.exception.NoSuchFoodItemException;
@@ -30,10 +27,6 @@ import com.tokogae.web.internal.constants.TokogaePortletKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
-
-import java.text.DateFormat;
-
-import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,26 +85,11 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private long _getOccurDatyBaseTime(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String occurDay = ParamUtil.getString(actionRequest, "occurDay");
-
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd", themeDisplay.getTimeZone());
-
-		Date occurDayBaseDate = dateFormat.parse(occurDay);
-
-		return occurDayBaseDate.getTime();
-	}
-
 	private void _updateExercise(ActionRequest actionRequest) throws Exception {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
+		long phraseId = ParamUtil.getLong(actionRequest, "phraseId");
+		long occurDayBaseTime = getOccurDayBaseTime(actionRequest);
 		long occurDayNativeTime = ParamUtil.getLong(
 			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -122,7 +100,7 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_exerciseService.addExercise(
-				getSubjectId(actionRequest), occurDayBaseTime,
+				getSubjectId(actionRequest), phraseId, occurDayBaseTime,
 				occurDayNativeTime, name, duration, quantity, quantityUnit);
 		}
 		else {
@@ -135,7 +113,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateFoodItem(ActionRequest actionRequest) throws Exception {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
+		long phraseId = ParamUtil.getLong(actionRequest, "phraseId");
+		long occurDayBaseTime = getOccurDayBaseTime(actionRequest);
 		long occurDayNativeTime = ParamUtil.getLong(
 			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -148,7 +127,7 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_foodItemService.addFoodItem(
-				getSubjectId(actionRequest), occurDayBaseTime,
+				getSubjectId(actionRequest), phraseId, occurDayBaseTime,
 				occurDayNativeTime, name, locationOfOrigin, brand, quantity,
 				quantityUnit);
 		}
@@ -162,14 +141,15 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateSleep(ActionRequest actionRequest) throws Exception {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
+		long phraseId = ParamUtil.getLong(actionRequest, "phraseId");
+		long occurDayBaseTime = getOccurDayBaseTime(actionRequest);
 		long occurDayNativeTime = ParamUtil.getLong(
 			actionRequest, "occurDayNativeTime");
 		long duration = ParamUtil.getLong(actionRequest, "duration");
 
 		if (classPK <= 0) {
 			_sleepService.addSleep(
-				getSubjectId(actionRequest), occurDayBaseTime,
+				getSubjectId(actionRequest), phraseId, occurDayBaseTime,
 				occurDayNativeTime, duration);
 		}
 		else {
@@ -181,7 +161,8 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateSymptom(ActionRequest actionRequest) throws Exception {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		long occurDayBaseTime = _getOccurDatyBaseTime(actionRequest);
+		long phraseId = ParamUtil.getLong(actionRequest, "phraseId");
+		long occurDayBaseTime = getOccurDayBaseTime(actionRequest);
 		long occurDayNativeTime = ParamUtil.getLong(
 			actionRequest, "occurDayNativeTime");
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -193,7 +174,7 @@ public class EditDataEventMVCActionCommand extends BaseMVCActionCommand {
 
 		if (classPK <= 0) {
 			_symptomService.addSymptom(
-				getSubjectId(actionRequest), occurDayBaseTime,
+				getSubjectId(actionRequest), phraseId, occurDayBaseTime,
 				occurDayNativeTime, duration, name, affectedArea,
 				intensityLevel);
 		}

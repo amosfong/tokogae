@@ -1,3 +1,8 @@
 Bundle-Name: Tokogae Data API
 Bundle-SymbolicName: com.tokogae.data.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.tokogae.data.exception,\
+	com.tokogae.data.model,\
+	com.tokogae.data.service,\
+	com.tokogae.data.service.persistence

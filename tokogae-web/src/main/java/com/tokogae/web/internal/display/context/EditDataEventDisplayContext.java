@@ -5,8 +5,8 @@
 package com.tokogae.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,7 +29,9 @@ import jakarta.portlet.RenderResponse;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Amos Fong
@@ -70,14 +72,18 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 				_dataEvent = dataEventFactory.create(
 					symptomLocalService.getSymptom(_classPK));
 			}
+		}
 
-			_dataEventObject = _dataEvent.getOriginalObject();
+		if (_dataEvent != null) {
+			_dataEventAttributes = _dataEvent.getAttributes();
+		}
+		else {
+			_dataEventAttributes = new HashMap<>();
 		}
 	}
 
 	public String getAffectedArea() {
-		return BeanPropertiesUtil.getString(
-			_dataEventObject, "affectedArea", StringPool.BLANK);
+		return GetterUtil.getString(_dataEventAttributes.get("affectedArea"));
 	}
 
 	public List<String> getDataEventClassNames() {
@@ -85,11 +91,11 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	public long getDuration() {
-		return BeanPropertiesUtil.getLong(_dataEventObject, "duration", 0);
+		return GetterUtil.getLong(_dataEventAttributes.get("duration"));
 	}
 
 	public int getIntensityLevel() {
-		return BeanPropertiesUtil.getInteger(_dataEventObject, "intensity", 1);
+		return GetterUtil.getInteger(_dataEventAttributes.get("intensity"), 1);
 	}
 
 	public String getLabel(String className) {
@@ -110,14 +116,13 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	public String getName() {
-		return BeanPropertiesUtil.getString(
-			_dataEventObject, "name", StringPool.BLANK);
+		return GetterUtil.getString(_dataEventAttributes.get("name"));
 	}
 
 	public String getOccurDay() {
-		if (_dataEventObject != null) {
-			long occurDayBaseTime = BeanPropertiesUtil.getLong(
-				_dataEventObject, "occurDayBaseTime");
+		if (_dataEvent != null) {
+			long occurDayBaseTime = GetterUtil.getLong(
+				_dataEventAttributes.get("occurDayBaseTime"));
 
 			return format.format(new Date(occurDayBaseTime));
 		}
@@ -126,9 +131,9 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	public int getOccurDaySegment() {
-		if (_dataEventObject != null) {
-			long occurDayNativeTime = BeanPropertiesUtil.getLong(
-				_dataEventObject, "occurDayNativeTime");
+		if (_dataEvent != null) {
+			long occurDayNativeTime = GetterUtil.getLong(
+				_dataEventAttributes.get("occurDayNativeTime"));
 
 			return DaySegments.getDaySegment(Math.abs(occurDayNativeTime));
 		}
@@ -137,12 +142,11 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	}
 
 	public int getQuantity() {
-		return BeanPropertiesUtil.getInteger(_dataEventObject, "quantity", 1);
+		return GetterUtil.getInteger(_dataEventAttributes.get("quantity"), 1);
 	}
 
 	public String getQuantityUnit() {
-		return BeanPropertiesUtil.getString(
-			_dataEventObject, "quantityUnit", StringPool.BLANK);
+		return GetterUtil.getString(_dataEventAttributes.get("quantityUnit"));
 	}
 
 	public String getTitle() {
@@ -189,6 +193,7 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 	private String _className;
 	private long _classPK;
 	private DataEvent _dataEvent;
+	private Map<String, Object> _dataEventAttributes;
 	private List<String> _dataEventClassNames = new ArrayList<String>() {
 		{
 			add(Exercise.class.getName());
@@ -197,6 +202,5 @@ public class EditDataEventDisplayContext extends HomeDisplayContext {
 			add(Symptom.class.getName());
 		}
 	};
-	private Object _dataEventObject;
 
 }

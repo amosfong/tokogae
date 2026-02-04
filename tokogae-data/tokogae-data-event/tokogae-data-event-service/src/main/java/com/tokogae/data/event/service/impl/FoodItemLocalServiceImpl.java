@@ -15,6 +15,8 @@ import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.FoodItem;
 import com.tokogae.data.event.service.base.FoodItemLocalServiceBaseImpl;
+import com.tokogae.data.model.PhraseUsage;
+import com.tokogae.data.service.PhraseUsageLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 	public FoodItem addFoodItem(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, String name, String locationOfOrigin,
 			String brand, double quantity, String quantityUnit)
 		throws PortalException {
@@ -53,6 +55,12 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 		foodItem = foodItemPersistence.update(foodItem);
 
 		DataEvent dataEvent = _dataEventFactory.create(foodItem);
+
+		if (phraseId > 0) {
+			_phraseUsageLocalService.addPhraseUsage(
+				userId, phraseId, dataEvent.getClassName(),
+				dataEvent.getClassPK(), dataEvent.getAttributesHashCode());
+		}
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -106,6 +114,15 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 		DataEvent dataEvent = _dataEventFactory.create(foodItem);
 
+		PhraseUsage phraseUsage = _phraseUsageLocalService.fetchPhraseUsage(
+			dataEvent.getClassName(), dataEvent.getClassPK());
+
+		if (phraseUsage != null) {
+			_phraseUsageLocalService.updatePhraseUsage(
+				phraseUsage.getPhraseUsageId(),
+				dataEvent.getAttributesHashCode());
+		}
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
@@ -124,6 +141,9 @@ public class FoodItemLocalServiceImpl extends FoodItemLocalServiceBaseImpl {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private PhraseUsageLocalService _phraseUsageLocalService;
 
 	@Reference
 	private SubjectLocalService _subjectLocalService;

@@ -15,6 +15,8 @@ import com.tokogae.data.event.model.DataEvent;
 import com.tokogae.data.event.model.DataEventFactory;
 import com.tokogae.data.event.model.Symptom;
 import com.tokogae.data.event.service.base.SymptomLocalServiceBaseImpl;
+import com.tokogae.data.model.PhraseUsage;
+import com.tokogae.data.service.PhraseUsageLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	public Symptom addSymptom(
-			long userId, long subjectId, long occurDayBaseTime,
+			long userId, long subjectId, long phraseId, long occurDayBaseTime,
 			long occurDayNativeTime, long duration, String name,
 			String affectedArea, int intensityLevel)
 		throws PortalException {
@@ -52,6 +54,12 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 		symptom = symptomPersistence.update(symptom);
 
 		DataEvent dataEvent = _dataEventFactory.create(symptom);
+
+		if (phraseId > 0) {
+			_phraseUsageLocalService.addPhraseUsage(
+				userId, phraseId, dataEvent.getClassName(),
+				dataEvent.getClassPK(), dataEvent.getAttributesHashCode());
+		}
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -103,6 +111,15 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 		DataEvent dataEvent = _dataEventFactory.create(symptom);
 
+		PhraseUsage phraseUsage = _phraseUsageLocalService.fetchPhraseUsage(
+			dataEvent.getClassName(), dataEvent.getClassPK());
+
+		if (phraseUsage != null) {
+			_phraseUsageLocalService.updatePhraseUsage(
+				phraseUsage.getPhraseUsageId(),
+				dataEvent.getAttributesHashCode());
+		}
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				Indexer<DataEvent> indexer = _indexerRegistry.getIndexer(
@@ -121,6 +138,9 @@ public class SymptomLocalServiceImpl extends SymptomLocalServiceBaseImpl {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private PhraseUsageLocalService _phraseUsageLocalService;
 
 	@Reference
 	private SubjectLocalService _subjectLocalService;

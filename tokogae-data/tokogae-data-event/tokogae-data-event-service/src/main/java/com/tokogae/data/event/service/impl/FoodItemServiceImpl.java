@@ -25,14 +25,15 @@ import org.osgi.service.component.annotations.Component;
 public class FoodItemServiceImpl extends FoodItemServiceBaseImpl {
 
 	public FoodItem addFoodItem(
-			long subjectId, long occurDayBaseTime, long occurDayNativeTime,
-			String name, String locationOfOrigin, String brand, double quantity,
-			String quantityUnit)
+			long subjectId, long phraseId, long occurDayBaseTime,
+			long occurDayNativeTime, String name, String locationOfOrigin,
+			String brand, double quantity, String quantityUnit)
 		throws PortalException {
 
 		return foodItemLocalService.addFoodItem(
-			getUserId(), subjectId, occurDayBaseTime, occurDayNativeTime, name,
-			locationOfOrigin, brand, quantity, quantityUnit);
+			getUserId(), subjectId, phraseId, occurDayBaseTime,
+			occurDayNativeTime, name, locationOfOrigin, brand, quantity,
+			quantityUnit);
 	}
 
 	public FoodItem deleteFoodItem(long foodItemId) throws PortalException {
